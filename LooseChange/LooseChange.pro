@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,13 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp \
     DAO/LooseChangeDAO.cpp \
     DTO/LooseChangeDTO.cpp \
-    Presenter/LooseChangePresenter.cpp
+    Presenter/LooseChangePresenter.cpp \
+    Test/LooseChangeDAOTest.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
     DTO/LooseChangeDTO.h \
     Presenter/LooseChangePresenter.h \
-    Utility/Type.h
+    Utility/Type.h \
+    Utility/Categories.h
 
 FORMS    += loosechangepresenter.ui
 

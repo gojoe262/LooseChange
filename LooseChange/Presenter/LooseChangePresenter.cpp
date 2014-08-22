@@ -12,10 +12,3 @@ LooseChangePresenter::~LooseChangePresenter()
 {
     delete ui;
 }
-
-void LooseChangePresenter::on_pushButtonOpenFile_clicked()
-{
-    QString file = looseChangeDAO.FetchFileLocation(this);
-    looseChangeDAO.ReadFile(file);
-
-}

@@ -10,24 +10,26 @@ public:
     LooseChangeDAO();
 
     /**
-     * @brief dtoList
+     * @brief OpenFile - Opens a file and returns the list
+     *        of LooseChangeDTOs represented by the file
+     * @return List of LooseChangeDTO's
      */
-    QList<LooseChangeDTO> dtoList;
+    QList<LooseChangeDTO> OpenFile(QString fileLocation);
+
+    bool SaveFile(QString fileLocation, QList<LooseChangeDTO> dtoList);
 
 
+
+
+private:
     /**
      * @brief ReadFile - Parses data file.
      * @param inFileName
      * @return List of LooseChangeDTOs
      */
-    QList<LooseChangeDTO> ReadFile(QString inFileName);
+    QList<LooseChangeDTO> ReadFile(QString fileLocation);
 
-    /**
-     * @brief FetchFileLocation - Opens dialog to open a file.
-     * @return Locatiom of the chosen file
-     */
-    QString FetchFileLocation(QWidget* parent);
-
+    bool WriteFile(QString fileName, QList<LooseChangeDTO> dtoList);
 };
 
 #endif // LOOSECHAGEDAO_H

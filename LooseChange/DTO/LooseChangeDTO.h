@@ -3,6 +3,7 @@
 
 #include <QDate>
 #include <Utility/Type.h>
+#include <Utility/Categories.h>
 
 class LooseChangeDTO
 {
@@ -14,9 +15,11 @@ public:
      * @param inDate
      * @param inAmount
      * @param inType
+     * @param inCategory
      * @param inComment
      */
-    LooseChangeDTO(QDate inDate, float inAmount, Type inType, QString inComment);
+    LooseChangeDTO(QDate inDate, float inAmount, Type inType, Category inCategory, QString inComment);
+
 
     /**
      * @brief date - Transaction Date
@@ -34,12 +37,14 @@ public:
     Type type;
 
     /**
+     * @brief category - Transaction Category
+     */
+    Category category;
+
+    /**
      * @brief comment - Transation Comment
      */
     QString comment;
-
-    //QString category??
-
 
 
 };
