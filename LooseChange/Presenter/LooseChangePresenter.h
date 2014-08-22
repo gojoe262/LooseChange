@@ -2,7 +2,7 @@
 #define LOOSECHANGEPRESENTER_H
 
 #include <QMainWindow>
-#include <LooseChangeDAO.h>
+#include <DAO/LooseChangeDAO.h>
 
 namespace Ui {
 class LooseChangePresenter;

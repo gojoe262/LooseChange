@@ -15,12 +15,19 @@ TEMPLATE = app
 SOURCES += main.cpp \
     LooseChangePresenter.cpp \
     LooseChangeDTO.cpp \
-    LooseChangeDAO.cpp
+    LooseChangeDAO.cpp \
+    DAO/LooseChangeDAO.cpp \
+    DTO/LooseChangeDTO.cpp \
+    Presenter/LooseChangePresenter.cpp
 
 HEADERS  += \
     LooseChangePresenter.h \
     LooseChangeDTO.h \
     Type.h \
-    LooseChangeDAO.h
+    LooseChangeDAO.h \
+    DAO/LooseChangeDAO.h \
+    DTO/LooseChangeDTO.h \
+    Presenter/LooseChangePresenter.h \
+    Utility/Type.h
 
 FORMS    += loosechangepresenter.ui

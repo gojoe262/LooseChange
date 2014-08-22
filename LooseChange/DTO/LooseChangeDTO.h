@@ -2,7 +2,7 @@
 #define LOOSECHANGEDTO_H
 
 #include <QDate>
-#include <Type.h>
+#include <Utility/Type.h>
 
 class LooseChangeDTO
 {

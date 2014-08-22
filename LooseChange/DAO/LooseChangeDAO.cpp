@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QObject>
 #include <QFile>
-#include <Type.h>
+#include <Utility/Type.h>
 
 LooseChangeDAO::LooseChangeDAO()
 {
