@@ -2,7 +2,7 @@
 #define LOOSECHAGEDAO_H
 
 #include <QList>
-#include <LooseChangeDTO.h>
+#include <DTO/LooseChangeDTO.h>
 
 class LooseChangeDAO
 {

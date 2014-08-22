@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QFile>
 #include <Utility/Type.h>
+#include <Utility/Parse.h>
 
 LooseChangeDAO::LooseChangeDAO()
 {
@@ -24,12 +25,13 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString inFileName)
         while (!inStream.atEnd())
         {
             QString line = inStream.readLine();
-            QStringList lineData = line.split("|||", QString::KeepEmptyParts);
+            QStringList lineData = line.split(Parse.PARSE_STR, QString::KeepEmptyParts);
 
             QDate date = QDate::fromString(lineData[0], "yyyyMMdd");
             float amount = lineData[1].toFloat();
             Type type = (Type)lineData[2].toInt();
-            QString comment = lineData[3];
+            QString category = lineData[3];
+            QString comment = lineData[4];
 
             list.append(LooseChangeDTO(date, amount, type, comment));
         }
