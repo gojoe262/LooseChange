@@ -4,18 +4,22 @@
 
 #include <DAO/LooseChangeDAO.h>
 #include <QFileDialog>
+#include <Utility/Type.h>
+
 
 class LooseChangeDAOTest
 {
     LooseChangeDAO dao;
 public:
-    void OpenFile_ShouldOpenFileAndReturnData(QWidget* parent)
+    void OpenFile_ShouldReadFileAndReturnData(QWidget* parent)
     {
         QString fileLocation = QFileDialog::getOpenFileName(parent, QObject::tr("Open File"),"",
                                 QObject::tr("LooseChange Files (*.lc);;Text Files (*.txt)"));
-        if(dao.OpenFile(fileLocation).count() < 0)
-            qDebug("OpenFile_ShouldOpenFileAndReturnData FAILED!!");
-        qDebug("OpenFile_ShouldOpenFileAndReturnData passed");
+
+        if(dao.ReadFile(fileLocation).count() < 0)
+            qDebug("FAILED - OpenFile_ShouldOpenFileAndReturnData");
+        else
+            qDebug("Passed - OpenFile_ShouldOpenFileAndReturnData");
     }
 
     void SaveFile_ShouldWriteFileAndReturnTrue(QWidget* parent)
@@ -23,16 +27,16 @@ public:
         QString fileLocation = QFileDialog::getSaveFileName(parent,QObject::tr("Save File"),"",
                                                             QObject::tr("LooseChange Files (*.lc);;Text Files (*.txt)"));
         QList<LooseChangeDTO> list;
-//        LooseChangeDTO one;
-//        one.amount = 123.21;
-//        one.category = Category::GasTravel;
-//        one.comment = "TEST";
-        QDate d;
-        list.append(LooseChangeDTO(d.currentDate(),123.12,(Type)1, (Category)5, "TESTComment"));
-        list.append(LooseChangeDTO(d.currentDate(),123.12,(Type)0, (Category)4, "TESTComment2"));
 
-        dao.SaveFile(fileLocation, list);
-        qDebug("Check Save File");
+        QDate d;
+        list.append(LooseChangeDTO(d.currentDate(),123.12,IN, (Category)5, "TESTComment"));
+        list.append(LooseChangeDTO(d.currentDate(),123.12,OUT, (Category)4, "TESTComment2"));
+
+        if(dao.WriteFile(fileLocation, list))
+            qDebug("Passed - SaveFile_ShouldWriteFileAndReturnTrue");
+        else
+            qDebug("FAILED - SaveFile_ShouldWriteFileAndReturnTrue");
+        //Check save file
 
     }
 

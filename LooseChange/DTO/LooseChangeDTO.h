@@ -18,7 +18,7 @@ public:
      * @param inCategory
      * @param inComment
      */
-    LooseChangeDTO(QDate inDate, float inAmount, Type inType, Category inCategory, QString inComment);
+    LooseChangeDTO(QDate inDate, float inAmount, Type inTransactionType, Category inCategory, QString inComment);
 
 
     /**

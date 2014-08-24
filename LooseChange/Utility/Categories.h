@@ -3,7 +3,7 @@
 
 #include <QString>
 
-enum class Category
+enum Category
 {
     Other = 0,
     Groceries = 1,

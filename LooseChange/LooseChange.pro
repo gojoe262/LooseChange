@@ -16,14 +16,16 @@ SOURCES += main.cpp \
     DAO/LooseChangeDAO.cpp \
     DTO/LooseChangeDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
-    Test/LooseChangeDAOTest.cpp
+    Test/LooseChangeDAOTest.cpp \
+    Model/TableModel.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
     DTO/LooseChangeDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Type.h \
-    Utility/Categories.h
+    Utility/Categories.h \
+    Model/TableModel.h
 
 FORMS    += loosechangepresenter.ui
 

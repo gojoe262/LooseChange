@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-
-/* //Run Unit Tests
+/*
+ //Run Unit Tests
 #include <Test/LooseChangeDAOTest.cpp>
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     // LooseChangeDAOTests
     LooseChangeDAOTest testDao;
-    testDao.OpenFile_ShouldOpenFileAndReturnData(parent);
+    testDao.OpenFile_ShouldReadFileAndReturnData(parent);
     testDao.SaveFile_ShouldWriteFileAndReturnTrue(parent);
 
 
@@ -30,4 +30,4 @@ int main(int argc, char *argv[])
     delete parent;
     return 0;
 }
-/*
+*/

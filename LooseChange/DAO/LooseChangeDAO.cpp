@@ -15,21 +15,6 @@ LooseChangeDAO::LooseChangeDAO()
 }
 
 
-QList<LooseChangeDTO> LooseChangeDAO::OpenFile(QString fileLocation)
-{
-    return ReadFile(fileLocation);
-
-            /*ReadFile(QFileDialog::getOpenFileName(    // MOVE UI STUFF UP
-                        QObject::tr("Open File"),"",
-                        QObject::tr("LooseChange Files (*.lc);;Text Files (*.txt)")));*/
-}
-
-bool LooseChangeDAO::SaveFile(QString fileLocation, QList<LooseChangeDTO> dtoList)
-{
-    return WriteFile(fileLocation, dtoList);
-
-}
-
 //SEE Examples: http://qt-project.org/doc/qt-5/QFile.html
 //              http://qt-project.org/doc/qt-5/qstring.html (Split)
 QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)

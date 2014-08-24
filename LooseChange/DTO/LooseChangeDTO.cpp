@@ -4,11 +4,11 @@ LooseChangeDTO::LooseChangeDTO()
 {
 }
 
-LooseChangeDTO::LooseChangeDTO(QDate inDate, float inAmount, Type inType, Category inCategory, QString inComment)
+LooseChangeDTO::LooseChangeDTO(QDate inDate, float inAmount, Type inTransactionType, Category inCategory, QString inComment)
 {
     date = inDate;
     amount = inAmount;
-    type = inType;
+    type = inTransactionType;
     category = inCategory;
     comment = inComment;
 }
