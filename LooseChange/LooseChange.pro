@@ -17,7 +17,9 @@ SOURCES += main.cpp \
     DTO/LooseChangeDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
-    Model/TableModel.cpp
+    Model/TableModel.cpp \
+    Utility/Categories.cpp \
+    Utility/Type.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \

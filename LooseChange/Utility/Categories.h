@@ -3,39 +3,18 @@
 
 #include <QString>
 
-enum Category
-{
-    Other = 0,
-    Groceries = 1,
-    Shopping = 2,
-    Restaurants = 3,
-    GasTravel = 4,
-    Phone = 5,
-    Laundry = 6
-};
-
-class CategoryLookup
+class Category
 {
 public:
-    CategoryLookup(){}
+    Category();
+    Category(int inCategoryCode);
 
-//    QString Description(Category inCategory)
-//    {
-//        switch(inCategory)
-//        {
-//            case Category::Other:
-//                return "Other";
-//            case Category::Groceries:
-//                return "Groceries";
-//            case Category::Shopping:
-//                return "Shopping";
-//            default:
-//                return "Other";
-//            // todo implement rest
-//        }
-//    }
+    QString Description();
+
+
+private:
+    int categoryCode;
 
 };
-
 
 #endif // CATEGORIES_H

@@ -7,6 +7,13 @@ enum Type
     OUT = 1
 };
 
+class Type
+{
+public:
+    Type ();
+    Type(int inTransactionTypeCode)
+};
+
 
 
 

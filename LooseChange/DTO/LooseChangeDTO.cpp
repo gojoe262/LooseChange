@@ -8,7 +8,7 @@ LooseChangeDTO::LooseChangeDTO(QDate inDate, float inAmount, Type inTransactionT
 {
     date = inDate;
     amount = inAmount;
-    type = inTransactionType;
-    category = inCategory;
+    transactionType = inTransactionType;
+    category = inCategoryCode;
     comment = inComment;
 }
