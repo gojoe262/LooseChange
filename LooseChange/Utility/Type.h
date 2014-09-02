@@ -11,7 +11,10 @@ class Type
 {
 public:
     Type ();
-    Type(int inTransactionTypeCode)
+    Type(int inTransactionTypeCode);
+
+private:
+    int transactionTypeCode;
 };
 
 
