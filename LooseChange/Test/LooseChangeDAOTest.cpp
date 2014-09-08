@@ -4,7 +4,7 @@
 
 #include <DAO/LooseChangeDAO.h>
 #include <QFileDialog>
-#include <Utility/Type.h>
+#include <Utility/TransactionType.h>
 
 
 class LooseChangeDAOTest

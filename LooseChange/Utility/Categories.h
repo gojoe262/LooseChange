@@ -3,18 +3,31 @@
 
 #include <QString>
 
-class Category
+enum Category
 {
-public:
-    Category();
-    Category(int inCategoryCode);
+    Other = 0,
+    Groceries = 1,
+    Shopping = 2,
+    Restaurants = 3,
+    GasTravel = 3,
+    Phone = 4,
+    Laundry = 5
 
-    QString Description();
-
-
-private:
-    int categoryCode;
 
 };
+
+//class Category
+//{
+//public:
+//    Category();
+//    Category(int inCategoryCode);
+
+//    QString Description();
+
+
+//private:
+//    int categoryCode;
+
+//};
 
 #endif // CATEGORIES_H

@@ -19,15 +19,15 @@ SOURCES += main.cpp \
     Test/LooseChangeDAOTest.cpp \
     Model/TableModel.cpp \
     Utility/Categories.cpp \
-    Utility/Type.cpp
+    Utility/TransactionType.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
     DTO/LooseChangeDTO.h \
     Presenter/LooseChangePresenter.h \
-    Utility/Type.h \
     Utility/Categories.h \
-    Model/TableModel.h
+    Model/TableModel.h \
+    Utility/TransactionType.h
 
 FORMS    += loosechangepresenter.ui
 

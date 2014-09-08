@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QObject>
 #include <QFile>
-#include <Utility/Type.h>
+#include <Utility/TransactionType.h>
 #include <Utility/Categories.h>
 
 
@@ -31,8 +31,8 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
 
             QDate date = QDate::fromString(lineData[0], "yyyyMMdd");
             float amount = lineData[1].toFloat();
-            Type type = (Type)lineData[2].toInt();
-            Category category = Category(lineData[3].toInt());
+            TransactionType type = (TransactionType)lineData[2].toInt();
+            Category category = (Category)lineData[3].toInt();
             QString comment = lineData[4];
 
             list.append(LooseChangeDTO(date, amount, type, category, comment));
@@ -51,7 +51,7 @@ bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoLi
         {
             outStream << dto.date.toString("yyyyMMdd") << "|---|"
                       << dto.amount << "|---|"
-                      << (int)dto.type << "|---|"
+                      << (int)dto.transactionType << "|---|"
                       << (int)dto.category<< "|---|"
                       << dto.comment << "\n";
         }
