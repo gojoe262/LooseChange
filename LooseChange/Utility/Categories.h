@@ -9,25 +9,17 @@ enum Category
     Groceries = 1,
     Shopping = 2,
     Restaurants = 3,
-    GasTravel = 3,
-    Phone = 4,
-    Laundry = 5
+    GasTravel = 4,
+    Phone = 5,
+    Laundry = 6
 
 
 };
 
-//class Category
-//{
-//public:
-//    Category();
-//    Category(int inCategoryCode);
-
-//    QString Description();
-
-
-//private:
-//    int categoryCode;
-
-//};
+class CategoryHelper
+{
+public:
+    static QString ToQString(Category inCategory);
+};
 
 #endif // CATEGORIES_H

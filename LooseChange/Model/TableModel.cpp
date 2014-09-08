@@ -42,7 +42,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
          else if (index.column() == 2)
              return dto.transactionType;
          else if (index.column() == 3)
-             return dto.category;
+             return CategoryHelper::ToQString(dto.category);
          else if (index.column() == 4)
              return dto.comment;
      }
