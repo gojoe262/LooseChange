@@ -1,0 +1,11 @@
+﻿Run command to locate all used libraries of the executable. This command will display the path to all .so files used by the executable. 
+	ldd ExecutableName | grep libQt
+
+Copy all the listed libraries to the same directory (or lib folder) as the executable. 
+
+Create a start script to launch the executable.
+	#!/bin/sh
+	export LD_LIBRARY_PATH=.
+	./ExecutableName $*
+
+
