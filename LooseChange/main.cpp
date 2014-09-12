@@ -1,6 +1,10 @@
 #include "Presenter/LooseChangePresenter.h"
 #include <QApplication>
 
+//#define TESTING //Toggle to switch between testing and running program
+
+
+#ifndef TESTING
 //Run Application
 int main(int argc, char *argv[])
 {
@@ -11,7 +15,12 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-/*
+
+#endif
+
+
+
+#ifdef TESTING
  //Run Unit Tests
 #include <Test/LooseChangeDAOTest.cpp>
 int main(int argc, char *argv[])
@@ -30,4 +39,5 @@ int main(int argc, char *argv[])
     delete parent;
     return 0;
 }
-*/
+
+#endif

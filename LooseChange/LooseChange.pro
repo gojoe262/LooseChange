@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     Test/LooseChangeDAOTest.cpp \
     Model/TableModel.cpp \
     Utility/Categories.cpp \
-    Utility/TransactionType.cpp
+    Utility/TransactionType.cpp \
+    Utility/FileDialog.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
@@ -27,9 +28,11 @@ HEADERS  += \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
     Model/TableModel.h \
-    Utility/TransactionType.h
+    Utility/TransactionType.h \
+    Utility/FileDialog.h
 
 FORMS    += loosechangepresenter.ui
 
 OTHER_FILES += \
-    Test/test.lc
+    Test/test.lc \
+    Icons/OpenIcon.png

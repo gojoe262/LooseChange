@@ -20,7 +20,9 @@ public:
     ~LooseChangePresenter();
 
 private slots:
-    void on_pushButtonOpenFile_clicked();
+    void on_toolButtonOpen_clicked();
+
+    void on_toolButtonSave_clicked();
 
 private:
     Ui::LooseChangePresenter *ui;

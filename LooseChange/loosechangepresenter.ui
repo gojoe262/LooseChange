@@ -6,62 +6,91 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>687</width>
-    <height>356</height>
+    <width>853</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>LooseChangePresenter</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButtonOpenFile">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>99</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>OPEN</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>99</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>SAVE</string>
-    </property>
-   </widget>
    <widget class="QTableView" name="tableView">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>10</y>
-      <width>561</width>
-      <height>281</height>
+      <x>73</x>
+      <y>9</y>
+      <width>761</width>
+      <height>431</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonOpen">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>145</y>
+      <width>26</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true"/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Icons/OpenIcon.png</normaloff>Icons/OpenIcon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonSave">
+    <property name="geometry">
+     <rect>
+      <x>41</x>
+      <y>145</y>
+      <width>26</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true"/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Icons/SaveIcon.png</normaloff>Icons/SaveIcon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
     </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>687</width>
+     <width>853</width>
      <height>25</height>
     </rect>
    </property>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -69,7 +98,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

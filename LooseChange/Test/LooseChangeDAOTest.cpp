@@ -5,6 +5,7 @@
 #include <DAO/LooseChangeDAO.h>
 #include <QFileDialog>
 #include <Utility/TransactionType.h>
+#include <Utility/FileDialog.h>
 
 
 class LooseChangeDAOTest
@@ -13,29 +14,28 @@ class LooseChangeDAOTest
 public:
     void OpenFile_ShouldReadFileAndReturnData(QWidget* parent)
     {
-        QString fileLocation = QFileDialog::getOpenFileName(parent, QObject::tr("Open File"),"",
-                                QObject::tr("LooseChange Files (*.lc);;Text Files (*.txt)"));
+
+        QString fileLocation = FileDialog::ShowOpenFileDialog(parent);
 
         if(dao.ReadFile(fileLocation).count() < 0)
-            qDebug("FAILED - OpenFile_ShouldOpenFileAndReturnData");
+            qDebug() << "FAILED - " << Q_FUNC_INFO;
         else
-            qDebug("Passed - OpenFile_ShouldOpenFileAndReturnData");
+            qDebug() << "Passed - " << Q_FUNC_INFO;
     }
 
     void SaveFile_ShouldWriteFileAndReturnTrue(QWidget* parent)
     {
-        QString fileLocation = QFileDialog::getSaveFileName(parent,QObject::tr("Save File"),"",
-                                                            QObject::tr("LooseChange Files (*.lc);;Text Files (*.txt)"));
+        QString fileLocation = FileDialog::ShowSaveFileDialog(parent);
         QList<LooseChangeDTO> list;
 
         QDate d;
-        list.append(LooseChangeDTO(d.currentDate(),123.12,IN, (Category)5, "TESTComment"));
-        list.append(LooseChangeDTO(d.currentDate(),123.12,OUT, (Category)4, "TESTComment2"));
+        list.append(LooseChangeDTO(d.currentDate(),123.12,IN, Groceries, "TESTComment"));
+        list.append(LooseChangeDTO(d.currentDate(),123.12,OUT, GasTravel, "TESTComment2"));
 
         if(dao.WriteFile(fileLocation, list))
-            qDebug("Passed - SaveFile_ShouldWriteFileAndReturnTrue");
+            qDebug() << "Passed - " << Q_FUNC_INFO;
         else
-            qDebug("FAILED - SaveFile_ShouldWriteFileAndReturnTrue");
+            qDebug() << "FAILED - " << Q_FUNC_INFO;
         //Check save file
 
     }

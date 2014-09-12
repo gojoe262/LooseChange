@@ -8,6 +8,7 @@
 #include <QFile>
 #include <Utility/TransactionType.h>
 #include <Utility/Categories.h>
+#include <QMessageBox>
 
 
 LooseChangeDAO::LooseChangeDAO()
@@ -57,5 +58,9 @@ bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoLi
         }
         return true;
     }
-    return false;
+    else
+    {
+        QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
+        return false;
+    }
 }
