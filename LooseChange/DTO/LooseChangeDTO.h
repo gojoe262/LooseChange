@@ -12,15 +12,17 @@ public:
 
     /**
      * @brief LooseChangeDTO - Constructs a LooseChangeDTO
+     * @param inId
      * @param inDate
      * @param inAmount
      * @param inType
      * @param inCategory
      * @param inComment
      */
-    LooseChangeDTO(QDate inDate, float inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
+    LooseChangeDTO(int inId, QDate inDate, float inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
 
 
+    int id;
     /**
      * @brief date - Transaction Date
      */

@@ -21,7 +21,7 @@ int TableModel::rowCount(const QModelIndex &parent) const
 int TableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;   //Current no. of properties in LooseChangeDTO
+    return 6;   //Current no. of properties in LooseChangeDTO
 }
 
 QVariant TableModel::data(const QModelIndex &index, int role) const
@@ -36,14 +36,16 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
          LooseChangeDTO dto = dtoList.at(index.row());
 
          if (index.column() == 0)
-             return dto.date;
+             return dto.id;
          else if (index.column() == 1)
-             return dto.amount;
+             return dto.date;
          else if (index.column() == 2)
-             return dto.transactionType;
+             return dto.amount;
          else if (index.column() == 3)
-             return CategoryHelper::ToQString(dto.category);
+             return dto.transactionType;
          else if (index.column() == 4)
+             return CategoryHelper::ToQString(dto.category);
+         else if (index.column() == 5)
              return dto.comment;
      }
      return QVariant();
@@ -57,14 +59,16 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
      if (orientation == Qt::Horizontal) {
          switch (section) {
              case 0:
-                 return tr("Date");
+                 return tr("Id");
              case 1:
-                 return tr("Amount");
+                 return tr("Date");
              case 2:
-                 return tr("Type");
+                 return tr("Amount");
              case 3:
-                 return tr("Category");
+                 return tr("Type");
              case 4:
+                 return tr("Category");
+             case 5:
                  return tr("Comment");
              default:
                  return QVariant();

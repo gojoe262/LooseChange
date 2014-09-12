@@ -30,13 +30,14 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
             QString line = inStream.readLine();
             QStringList lineData = line.split("|---|", QString::KeepEmptyParts);
 
-            QDate date = QDate::fromString(lineData[0], "yyyyMMdd");
-            float amount = lineData[1].toFloat();
-            TransactionType type = (TransactionType)lineData[2].toInt();
-            Category category = (Category)lineData[3].toInt();
-            QString comment = lineData[4];
+            int id = lineData[0].toInt();
+            QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
+            float amount = lineData[2].toFloat();
+            TransactionType type = (TransactionType)lineData[3].toInt();
+            Category category = (Category)lineData[4].toInt();
+            QString comment = lineData[5];
 
-            list.append(LooseChangeDTO(date, amount, type, category, comment));
+            list.append(LooseChangeDTO(id,date, amount, type, category, comment));
         }
     }
     return list;
@@ -50,7 +51,8 @@ bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoLi
         QTextStream outStream(&file);
         foreach (LooseChangeDTO dto, dtoList)
         {
-            outStream << dto.date.toString("yyyyMMdd") << "|---|"
+            outStream << dto.id << "|---|"
+                      << dto.date.toString("yyyyMMdd") << "|---|"
                       << dto.amount << "|---|"
                       << (int)dto.transactionType << "|---|"
                       << (int)dto.category<< "|---|"
