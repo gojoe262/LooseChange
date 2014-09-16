@@ -16,7 +16,15 @@ public:
      */
     QList<LooseChangeDTO> ReadFile(QString fileLocation);
 
+    /**
+     * @brief WriteFile - Writes the QList to the file.
+     * @param fileName
+     * @param dtoList
+     * @return
+     */
     bool WriteFile(QString fileName, QList<LooseChangeDTO> dtoList);
+
+
 };
 
 #endif // LOOSECHAGEDAO_H

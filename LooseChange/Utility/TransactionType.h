@@ -7,16 +7,7 @@ enum TransactionType
     IN = 1
 };
 
-//class TransactionType
-//{
-//public:
-//    TransactionType ();
-//    TransactionType (Type inTransactionType);
 
-
-//private:
-//    Type transactionTypeCode;
-//};
 
 
 

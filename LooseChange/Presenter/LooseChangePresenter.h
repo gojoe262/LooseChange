@@ -6,6 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
 #include <Model/TableModel.h>
+#include <DTO/CachedDTOList.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -24,11 +25,15 @@ private slots:
 
     void on_toolButtonSave_clicked();
 
+    void on_tableView_clicked(const QModelIndex &index);
+
 private:
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;
-    QList<LooseChangeDTO> dtoList;
+
+    CachedDTOList cachedDtoList;
+    //QList<LooseChangeDTO> dtoList;
     TableModel *tableModel;
 };
 

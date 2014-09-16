@@ -66,3 +66,6 @@ bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoLi
         return false;
     }
 }
+
+
+

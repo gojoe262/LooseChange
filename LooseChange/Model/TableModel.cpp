@@ -76,3 +76,34 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
      }
      return QVariant();
  }
+
+Qt::ItemFlags TableModel::flags (const QModelIndex &index) const
+{
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+}
+
+//bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+//{
+//    if (index.isValid() && role == Qt::EditRole)
+//    {
+//        int row = index.row();
+//        int column = index.column();
+
+
+
+//        QPair<QString, QString> p = listOfPairs.value(row);
+//        if (index.column() == 1)
+//        {
+
+//        }
+//        else if (index.column() == 1)
+//            p.second = value.toString();
+//        else
+//            return false;
+
+//        listOfPairs.replace(row, p);
+//        emit(dataChanged(index, index));
+//        return true;
+//    }
+//    return false;
+//}

@@ -16,13 +16,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 
     tableModel = new TableModel(this);
 
-
-
-
-
-
-
-
+    ui->centralWidget = ui->tabWidget;
 
 
 }
@@ -38,10 +32,12 @@ LooseChangePresenter::~LooseChangePresenter()
 void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
     QString fileLocation = FileDialog::ShowOpenFileDialog(this);
-    dtoList = looseChangeDAO.ReadFile(fileLocation);
+
+    QList<LooseChangeDTO> dtoList = looseChangeDAO.ReadFile(fileLocation);
+    cachedDtoList = CachedDTOList(dtoList);
 
     delete tableModel;
-    tableModel = new TableModel(dtoList, this);
+    tableModel = new TableModel(cachedDtoList.GetDtoList(), this);
 
     ui->tableView->setModel(tableModel);
 }
@@ -49,5 +45,23 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
 void LooseChangePresenter::on_toolButtonSave_clicked()
 {
     QString fileLocation = FileDialog::ShowSaveFileDialog(this);
-    looseChangeDAO.WriteFile(fileLocation, dtoList);
+    looseChangeDAO.WriteFile(fileLocation, cachedDtoList.GetDtoList());
 }
+
+void LooseChangePresenter::on_tableView_clicked(const QModelIndex &index)
+{
+    if(index.row() >= 0)
+    {
+        int selectedId = index.sibling(index.row(),0).data().toInt();
+        LooseChangeDTO selectedDto = cachedDtoList.GetDTO(selectedId);
+        ui->lineEditAmount->setText(QString::number(selectedDto.amount));
+        ui->lineEditId->setText(QString::number(selectedDto.id));
+    }
+    else
+    {
+        ui->lineEditAmount->setText("");
+        ui->lineEditId->setText("");
+    }
+}
+
+

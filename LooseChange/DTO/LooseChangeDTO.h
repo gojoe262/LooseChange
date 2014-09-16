@@ -21,8 +21,11 @@ public:
      */
     LooseChangeDTO(int inId, QDate inDate, float inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
 
-
+    /**
+     * @brief id - Unique Id of the Transaction
+     */
     int id;
+
     /**
      * @brief date - Transaction Date
      */

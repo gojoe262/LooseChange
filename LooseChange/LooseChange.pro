@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     Model/TableModel.cpp \
     Utility/Categories.cpp \
     Utility/TransactionType.cpp \
-    Utility/FileDialog.cpp
+    Utility/FileDialog.cpp \
+    Presenter/LooseChangePresenterHelper.cpp \
+    DTO/CachedDTOList.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
@@ -29,7 +31,10 @@ HEADERS  += \
     Utility/Categories.h \
     Model/TableModel.h \
     Utility/TransactionType.h \
-    Utility/FileDialog.h
+    Utility/FileDialog.h \
+    Presenter/LooseChangePresenterHelper.h \
+    DTO/CachedDTOList.h \
+    View/TableView.h
 
 FORMS    += loosechangepresenter.ui
 

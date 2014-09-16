@@ -12,13 +12,16 @@ enum Category
     GasTravel = 4,
     Phone = 5,
     Laundry = 6
-
-
 };
 
 class CategoryHelper
 {
 public:
+    /**
+     * @brief ToQString - Converts enum Category to a string.
+     * @param inCategory
+     * @return
+     */
     static QString ToQString(Category inCategory);
 };
 
