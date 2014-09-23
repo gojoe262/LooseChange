@@ -90,9 +90,8 @@ Qt::ItemFlags TableModel::flags (const QModelIndex &index) const
 //        int column = index.column();
 
 
-
 //        QPair<QString, QString> p = listOfPairs.value(row);
-//        if (index.column() == 1)
+//        if (index.column() == 0)
 //        {
 
 //        }

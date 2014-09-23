@@ -19,8 +19,8 @@ LooseChangeDAO::LooseChangeDAO()
 //SEE Examples: http://qt-project.org/doc/qt-5/QFile.html
 //              http://qt-project.org/doc/qt-5/qstring.html (Split)
 QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
-{
-    QList<LooseChangeDTO> list = QList<LooseChangeDTO>();
+{    
+    cachedList.ClearList();
     QFile file(fileLocation);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -32,19 +32,22 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
 
             int id = lineData[0].toInt();
             QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
-            float amount = lineData[2].toFloat();
+            double amount = lineData[2].toDouble();
             TransactionType type = (TransactionType)lineData[3].toInt();
             Category category = (Category)lineData[4].toInt();
             QString comment = lineData[5];
 
-            list.append(LooseChangeDTO(id,date, amount, type, category, comment));
+            cachedList.Add(LooseChangeDTO(id,date, amount, type, category, comment));
         }
     }
-    return list;
+    isDirty = false;
+    return cachedList.GetList();
 }
 
-bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoList)
+bool LooseChangeDAO::WriteFile(QString fileLocation)
 {
+    QList<LooseChangeDTO> dtoList = cachedList.GetList();
+
     QFile file(fileLocation);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -58,14 +61,51 @@ bool LooseChangeDAO::WriteFile(QString fileLocation, QList<LooseChangeDTO> dtoLi
                       << (int)dto.category<< "|---|"
                       << dto.comment << "\n";
         }
+        isDirty = false;
         return true;
     }
     else
     {
         QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
+        isDirty = true;
         return false;
     }
 }
+
+QList<LooseChangeDTO> LooseChangeDAO::GetList()
+{
+    return cachedList.GetList();
+}
+
+bool LooseChangeDAO::Add(LooseChangeDTO inDto)
+{
+    cachedList.Add(inDto);
+    isDirty = true;
+}
+
+bool LooseChangeDAO::Update(LooseChangeDTO inDto)
+{
+    cachedList.Update(inDto);
+    isDirty = true;
+}
+
+bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
+{
+    cachedList.Delete(inDto);
+    isDirty = true;
+}
+
+bool LooseChangeDAO::IsDirty()
+{
+    return isDirty;
+}
+
+void LooseChangeDAO::MarkDirty()
+{
+    isDirty = true;
+}
+
+
 
 
 

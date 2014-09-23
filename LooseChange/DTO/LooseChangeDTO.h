@@ -19,7 +19,7 @@ public:
      * @param inCategory
      * @param inComment
      */
-    LooseChangeDTO(int inId, QDate inDate, float inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
+    LooseChangeDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
 
     /**
      * @brief id - Unique Id of the Transaction
@@ -34,7 +34,7 @@ public:
     /**
      * @brief amount - Transaction Amount
      */
-    float amount;
+    double amount;
 
     /**
      * @brief type - Transaction Type (in, out)
