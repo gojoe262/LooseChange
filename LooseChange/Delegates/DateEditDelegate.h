@@ -2,7 +2,7 @@
 #define DATEEDITDELEGATE_H
 
 #include <QItemDelegate>
-
+#include <QDate>
 class DateEditDelegate : public QItemDelegate
 {
 public:
@@ -18,6 +18,10 @@ public:
 
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+signals:
+    void DataChanged(QModelIndex index, QDate date);
+
 
 };
 

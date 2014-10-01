@@ -10,6 +10,7 @@ TableModel::TableModel(QList<LooseChangeDTO> inList, QObject *parent) :
     QAbstractTableModel(parent)
 {
     dtoList = inList;
+
 }
 
 int TableModel::rowCount(const QModelIndex &parent) const

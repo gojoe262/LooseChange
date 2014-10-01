@@ -27,11 +27,25 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 
 
 
-   /// http://iconsetc.com/icon/bfa_folder-open/?style=simple-black
+    /// http://iconsetc.com/icon/bfa_folder-open/?style=simple-black
     //Used to set edit triggers. Ex: signal or double click
-    ui->tableWidgetRawView->setEditTriggers(QAbstractItemView::DoubleClicked);
+    ui->tableWidgetRawView->setEditTriggers(QAbstractItemView::CurrentChanged);
+
+
     LoadDataToTableWidgetRawView();
 
+
+}
+
+
+void LooseChangePresenter::Initialize()
+{
+    QStringList args = QCoreApplication::arguments();
+    if(args.count() > 1)
+    {
+        looseChangeDAO.ReadFile(args.at(1));
+        LoadDataToTableWidgetRawView();
+    }
 
 }
 
@@ -68,7 +82,14 @@ void LooseChangePresenter::LoadDataToTableWidgetRawView()
     ui->tableWidgetRawView->setColumnCount(6);
     ui->tableWidgetRawView->setRowCount(count);
 
-    ui->tableWidgetRawView->setItemDelegateForColumn(1, new DateEditDelegate());
+
+
+    DateEditDelegate *dateEditDelegate = new DateEditDelegate();
+    connect(dateEditDelegate, DataChanged(QModelIndex,QDate), &this, Update(QModelIndex, QDate));
+
+
+
+    ui->tableWidgetRawView->setItemDelegateForColumn(1, dateEditDelegate);
     ui->tableWidgetRawView->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());
 
     for(int i = 0; i < count; i++)
@@ -77,6 +98,7 @@ void LooseChangePresenter::LoadDataToTableWidgetRawView()
         QModelIndex index;
         /// Column 0
        /// ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
+
 
         /// Column 1
         index = ui->tableWidgetRawView->model()->index(i, 1, QModelIndex());
@@ -120,7 +142,15 @@ QList<LooseChangeDTO> LooseChangePresenter::GetDataFromTableWidgetRawView()
     for(int i = 0; i < count; i++)
     {
         QDate date = ((QDateEdit*)ui->tableWidgetRawView->cellWidget(i,1))->date();
+
     }
+}
+
+
+
+void LooseChangePresenter::Update(QModelIndex index, QDate date)
+{
+    ui->tableWidgetRawView->
 }
 
 

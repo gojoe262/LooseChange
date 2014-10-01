@@ -19,6 +19,7 @@ public:
     explicit LooseChangePresenter(QWidget *parent = 0);
     ~LooseChangePresenter();
 
+    void Initialize ();
     void LoadDataToTableWidgetRawView();
     QList<LooseChangeDTO> GetDataFromTableWidgetRawView();
 
@@ -29,6 +30,8 @@ private slots:
 
 
 private:
+
+    void Update(QModelIndex index, QDate date);
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;

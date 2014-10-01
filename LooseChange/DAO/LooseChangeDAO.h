@@ -66,16 +66,17 @@ public:
      */
     bool IsDirty();
 
-    /**
-     * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not
-     */
-    void MarkDirty();
 
 private:
     /**
      * @brief cachedDtoList - The cached List of Dtos.
      */
     CachedDTOList cachedList;
+
+    /**
+     * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not
+     */
+    void MarkDirty();
 
     /**
      * @brief isDirty - Determines if the cachedList has pending changes
