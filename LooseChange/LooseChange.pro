@@ -17,28 +17,28 @@ SOURCES += main.cpp \
     DTO/LooseChangeDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
-    Model/TableModel.cpp \
     Utility/Categories.cpp \
     Utility/TransactionType.cpp \
     Utility/FileDialog.cpp \
     Presenter/LooseChangePresenterHelper.cpp \
     DTO/CachedDTOList.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
-    Delegates/DateEditDelegate.cpp
+    Delegates/DateEditDelegate.cpp \
+    Model/TableModelRaw.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
     DTO/LooseChangeDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
-    Model/TableModel.h \
     Utility/TransactionType.h \
     Utility/FileDialog.h \
     Presenter/LooseChangePresenterHelper.h \
     DTO/CachedDTOList.h \
     View/TableView.h \
     Delegates/DoubleSpinBoxDelegate.h \
-    Delegates/DateEditDelegate.h
+    Delegates/DateEditDelegate.h \
+    Model/TableModelRaw.h
 
 FORMS    += loosechangepresenter.ui
 

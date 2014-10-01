@@ -62,11 +62,26 @@
        <attribute name="title">
         <string>Raw View</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="1">
-         <widget class="QTableWidget" name="tableWidgetRawView"/>
-        </item>
-       </layout>
+       <widget class="QTableWidget" name="tableWidgetRawView">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>9</y>
+          <width>256</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableViewRaw">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>20</y>
+          <width>256</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

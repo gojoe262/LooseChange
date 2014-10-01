@@ -4,18 +4,18 @@
 #include <QAbstractTableModel>
 #include <DTO/LooseChangeDTO.h>
 
-class TableModel : public QAbstractTableModel
+class TableModelRaw : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    TableModel(QObject *parent = 0);
+    TableModelRaw(QObject *parent = 0);
 
     /**
      * @brief TableModel - creates a Table Model and loads the list to the table
      * @param inList
      * @param parent
      */
-    TableModel(QList<LooseChangeDTO> inList, QObject *parent = 0);
+    TableModelRaw(QList<LooseChangeDTO> inList, QObject *parent = 0);
 
     /**
      * @brief rowCount - Get the current row count. (OVERRIDDEN FUNCTION)
@@ -34,8 +34,6 @@ public:
     bool insertRows(int position, int rows, const QModelIndex &index=QModelIndex());
     bool removeRows(int position, int rows, const QModelIndex &index=QModelIndex());*/
    // QList<LooseChangeDTO> getList();
-
-    QList<LooseChangeDTO> dtoList;
 };
 
 #endif // TABLEMODEL_H

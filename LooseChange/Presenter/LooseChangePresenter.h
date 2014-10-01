@@ -34,6 +34,7 @@ private:
     void Update(QModelIndex index, QDate date);
     Ui::LooseChangePresenter *ui;
 
+    TableModelRaw tableModel;
     LooseChangeDAO looseChangeDAO;
 
 

@@ -3,7 +3,7 @@
 
 #include <QList>
 #include <DTO/LooseChangeDTO.h>
-#include <DTO/CachedDTOList.h>
+
 
 class LooseChangeDAO
 {

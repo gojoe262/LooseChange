@@ -75,6 +75,13 @@ void LooseChangePresenter::on_toolButtonSave_clicked()
 
 void LooseChangePresenter::LoadDataToTableWidgetRawView()
 {
+    ui->tableViewRaw->setModel(&this->tableModel);
+
+
+
+
+
+
     QList<LooseChangeDTO> dtoList = looseChangeDAO.GetList();
     int count = dtoList.count();
 

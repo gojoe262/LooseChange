@@ -1,31 +1,31 @@
 #include "TableModel.h"
 
-TableModel::TableModel(QObject *parent) :
+TableModelRaw::TableModelRaw(QObject *parent) :
     QAbstractTableModel(parent)
 {
 }
 
 
-TableModel::TableModel(QList<LooseChangeDTO> inList, QObject *parent) :
+TableModelRaw::TableModelRaw(QList<LooseChangeDTO> inList, QObject *parent) :
     QAbstractTableModel(parent)
 {
     dtoList = inList;
 
 }
 
-int TableModel::rowCount(const QModelIndex &parent) const
+int TableModelRaw::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return dtoList.size();
 }
 
-int TableModel::columnCount(const QModelIndex &parent) const
+int TableModelRaw::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 6;   //Current no. of properties in LooseChangeDTO
 }
 
-QVariant TableModel::data(const QModelIndex &index, int role) const
+QVariant TableModelRaw::data(const QModelIndex &index, int role) const
  {
      if (!index.isValid())
          return QVariant();
@@ -52,7 +52,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
      return QVariant();
  }
 
-QVariant TableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TableModelRaw::headerData(int section, Qt::Orientation orientation, int role) const
  {
      if (role != Qt::DisplayRole)
          return QVariant();
@@ -78,7 +78,7 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
      return QVariant();
  }
 
-Qt::ItemFlags TableModel::flags (const QModelIndex &index) const
+Qt::ItemFlags TableModelRaw::flags (const QModelIndex &index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
