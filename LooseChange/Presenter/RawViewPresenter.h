@@ -1,5 +1,5 @@
-#ifndef RAWVIEWPRESENTERHELPER_H
-#define RAWVIEWPRESENTERHELPER_H
+#ifndef RAWVIEWPRESENTER_H
+#define RAWVIEWPRESENTER_H
 
 #include <DAO/LooseChangeDAO.h>
 #include <QTableWidget>
@@ -8,7 +8,7 @@ class RawViewPresenter
 {
 public:
     RawViewPresenter();
-    RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget);
+    RawViewPresenter(QTableWidget *tableWidget);
 
     void Load(LooseChangeDAO dao);
 
@@ -16,4 +16,4 @@ private:
     QTableWidget *table;
 };
 
-#endif // RAWVIEWPRESENTERHELPER_H
+#endif // RAWVIEWPRESENTER_H

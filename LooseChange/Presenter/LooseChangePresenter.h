@@ -5,7 +5,7 @@
 #include <DAO/LooseChangeDAO.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
-#include <Presenter/RawViewPresenterHelper.h>
+#include <Presenter/RawViewPresenter.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -19,9 +19,6 @@ public:
     explicit LooseChangePresenter(QWidget *parent = 0);
     ~LooseChangePresenter();
 
-    void Initialize ();
-    void LoadDataToTableWidgetRawView();
-    QList<LooseChangeDTO> GetDataFromTableWidgetRawView();
 
 private slots:
     void on_toolButtonOpen_clicked();
@@ -30,13 +27,13 @@ private slots:
 
 
 private:
-
+    QList<LooseChangeDTO> GetDataFromTableWidgetRawView();
     void Update(QModelIndex index, QDate date);
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;
 
-    RawViewPresenterHelper rawView;
+    RawViewPresenter rawView;
 
 
 };

@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     LooseChangePresenter w;
-    w.Initialize();
     w.show();
 
     return a.exec();

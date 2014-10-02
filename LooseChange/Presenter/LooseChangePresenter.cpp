@@ -29,25 +29,16 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 
     /// http://iconsetc.com/icon/bfa_folder-open/?style=simple-black
     //Used to set edit triggers. Ex: signal or double click
-    ui->tableWidgetRawView->setEditTriggers(QAbstractItemView::CurrentChanged);
 
 
-    LoadDataToTableWidgetRawView();
+    rawView = RawViewPresenter(ui->tableWidgetRawView);
+    rawView.Load(looseChangeDAO);
 
 
 }
 
 
-void LooseChangePresenter::Initialize()
-{
-    QStringList args = QCoreApplication::arguments();
-    if(args.count() > 1)
-    {
-        looseChangeDAO.ReadFile(args.at(1));
-        LoadDataToTableWidgetRawView();
-    }
 
-}
 
 LooseChangePresenter::~LooseChangePresenter()
 {
@@ -61,9 +52,9 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./", tr("LooseChange Files (*.lc);;All Files (*.* *"));
 
     looseChangeDAO.ReadFile(fileLocation);
+    rawView.Load(looseChangeDAO);
 
-    ui->tableWidgetRawView->clear();
-    LoadDataToTableWidgetRawView();
+
 }
 
 void LooseChangePresenter::on_toolButtonSave_clicked()
@@ -75,74 +66,6 @@ void LooseChangePresenter::on_toolButtonSave_clicked()
 }
 
 
-void LooseChangePresenter::LoadDataToTableWidgetRawView()
-{
-
-
-
-
-
-
-
-    QList<LooseChangeDTO> dtoList = looseChangeDAO.GetList();
-    int count = dtoList.count();
-
-    ui->tableWidgetRawView->clear();
-    ui->tableWidgetRawView->setColumnCount(6);
-    ui->tableWidgetRawView->setRowCount(count);
-
-
-
-    DateEditDelegate *dateEditDelegate = new DateEditDelegate();
-
-
-
-
-    ui->tableWidgetRawView->setItemDelegateForColumn(1, dateEditDelegate);
-    ui->tableWidgetRawView->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());
-
-    for(int i = 0; i < count; i++)
-    {
-        LooseChangeDTO dto = dtoList.at(i);
-        QModelIndex index;
-        /// Column 0
-       /// ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
-
-
-        /// Column 1
-        index = ui->tableWidgetRawView->model()->index(i, 1, QModelIndex());
-        ui->tableWidgetRawView->model()->setData(index, QVariant(dto.date));
-
-
-
-        /// Column 2
-        index = ui->tableWidgetRawView->model()->index(i, 2, QModelIndex());
-        ui->tableWidgetRawView->model()->setData(index, QVariant(dto.amount));
-
-        /// Column 3
-        /// Column 4
-
-
-
-
-
-
-
-
-
-
-
-//        ui->tableWidgetRawView->setItem(i,2, new QTableWidgetItem(QString::number(dto.amount)));
-//        ui->tableWidgetRawView->setItem(i,3,new QTableWidgetItem(TransationTypeHelper::ToString(dto.transactionType)));
-//        ui->tableWidgetRawView->setItem(i, 4, new QTableWidgetItem(dto.comment));
-//        ui->tableWidgetRawView->setItem(i,5, new QTableWidgetItem(CategoryHelper::ToQString(dto.category)));
-        double amount = ui->tableWidgetRawView->model()->data(ui->tableWidgetRawView->model()->index(i,2)).toDouble();
-        qDebug() << amount;
-    }
-
-
-
-}
 
 QList<LooseChangeDTO> LooseChangePresenter::GetDataFromTableWidgetRawView()
 {
