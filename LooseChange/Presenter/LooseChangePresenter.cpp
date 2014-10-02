@@ -6,7 +6,6 @@
 #include <QFileDialog>
 #include <QDateEdit>
 #include <QDoubleSpinBox>
-#include <Utility/FileDialog.h>
 #include <Utility/TransactionType.h>
 #include <Utility/Categories.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
@@ -58,7 +57,7 @@ LooseChangePresenter::~LooseChangePresenter()
 
 void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
-    QString fileLocation = FileDialog::ShowOpenFileDialog(this);
+    QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./", tr("LooseChange Files (*.lc);;All Files (*.* *"));
 
     looseChangeDAO.ReadFile(fileLocation);
 
@@ -68,14 +67,16 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
 
 void LooseChangePresenter::on_toolButtonSave_clicked()
 {
-    QString fileLocation = FileDialog::ShowSaveFileDialog(this);
+    QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                        "./untitled.lc",
+                                                        tr("LooseChange Files (*.lc);;All Files (*.* *"));
     looseChangeDAO.WriteFile(fileLocation);
 }
 
 
 void LooseChangePresenter::LoadDataToTableWidgetRawView()
 {
-    ui->tableViewRaw->setModel(&this->tableModel);
+
 
 
 
@@ -92,7 +93,7 @@ void LooseChangePresenter::LoadDataToTableWidgetRawView()
 
 
     DateEditDelegate *dateEditDelegate = new DateEditDelegate();
-    connect(dateEditDelegate, DataChanged(QModelIndex,QDate), &this, Update(QModelIndex, QDate));
+
 
 
 
@@ -157,7 +158,7 @@ QList<LooseChangeDTO> LooseChangePresenter::GetDataFromTableWidgetRawView()
 
 void LooseChangePresenter::Update(QModelIndex index, QDate date)
 {
-    ui->tableWidgetRawView->
+   // ui->tableWidgetRawView->
 }
 
 

@@ -62,26 +62,11 @@
        <attribute name="title">
         <string>Raw View</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidgetRawView">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTableView" name="tableViewRaw">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>20</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTableWidget" name="tableWidgetRawView"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

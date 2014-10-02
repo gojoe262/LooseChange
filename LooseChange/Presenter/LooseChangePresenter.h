@@ -5,7 +5,6 @@
 #include <DAO/LooseChangeDAO.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
-#include <Model/TableModel.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -34,7 +33,6 @@ private:
     void Update(QModelIndex index, QDate date);
     Ui::LooseChangePresenter *ui;
 
-    TableModelRaw tableModel;
     LooseChangeDAO looseChangeDAO;
 
 

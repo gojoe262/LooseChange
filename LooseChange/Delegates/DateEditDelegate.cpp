@@ -34,7 +34,6 @@ void DateEditDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     QDate value = dateEdit->date();
 
     model->setData(index, value, Qt::EditRole);
-    emit DataChanged(index, value);
 }
 
 void DateEditDelegate::updateEditorGeometry(QWidget *editor,
