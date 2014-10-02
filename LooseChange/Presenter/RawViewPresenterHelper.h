@@ -4,11 +4,11 @@
 #include <DAO/LooseChangeDAO.h>
 #include <QTableWidget>
 
-class RawViewPresenterHelper
+class RawViewPresenter
 {
 public:
-    RawViewPresenterHelper();
-    RawViewPresenterHelper::RawViewPresenterHelper(QTableWidget *tableWidget);
+    RawViewPresenter();
+    RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget);
 
     void Load(LooseChangeDAO dao);
 

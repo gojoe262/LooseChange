@@ -1,17 +1,17 @@
 #include "RawViewPresenterHelper.h"
 #include <Delegates/DateEditDelegate.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
-RawViewPresenterHelper::RawViewPresenterHelper()
+RawViewPresenter::RawViewPresenterHelper()
 {
 }
 
-RawViewPresenterHelper::RawViewPresenterHelper(QTableWidget *tableWidget)
+RawViewPresenter::RawViewPresenterHelper(QTableWidget *tableWidget)
 {
     table = tableWidget;
 }
 
 
-void RawViewPresenterHelper::Load(LooseChangeDAO dao)
+void RawViewPresenter::Load(LooseChangeDAO dao)
 {
 
     QList<LooseChangeDTO> dtoList = dao.GetList();
