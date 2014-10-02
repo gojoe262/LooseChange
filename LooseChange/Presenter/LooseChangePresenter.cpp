@@ -11,6 +11,7 @@
 #include <Delegates/DoubleSpinBoxDelegate.h>
 #include <Delegates/DateEditDelegate.h>
 
+
 LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LooseChangePresenter)

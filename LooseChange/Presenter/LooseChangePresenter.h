@@ -5,6 +5,7 @@
 #include <DAO/LooseChangeDAO.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
+#include <Presenter/RawViewPresenterHelper.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -34,6 +35,8 @@ private:
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;
+
+    RawViewPresenterHelper rawView;
 
 
 };
