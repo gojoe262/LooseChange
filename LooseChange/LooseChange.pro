@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
     DAO/CachedDTOList.cpp \
-    Presenter/RawViewPresenter.cpp
+    Presenter/RawViewPresenter.cpp \
+    Delegates/ComboBoxDelegate.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \
     DAO/CachedDTOList.h \
-    Presenter/RawViewPresenter.h
+    Presenter/RawViewPresenter.h \
+    Delegates/ComboBoxDelegate.h
 
 FORMS    += loosechangepresenter.ui
 

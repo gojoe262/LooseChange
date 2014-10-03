@@ -8,7 +8,7 @@ enum TransactionType
     IN = 1
 };
 
-class TransationTypeHelper
+class TransactionTypeHelper
 {
 public:
     QString static ToString(TransactionType type)
@@ -19,6 +19,15 @@ public:
             return "OUT";
         else
             return "";
+    }
+
+    TransactionType static FromString(QString strType)
+    {
+        if(strType == "OUT")
+            return OUT;
+        else if(strType == "IN")
+            return IN;
+
     }
 };
 

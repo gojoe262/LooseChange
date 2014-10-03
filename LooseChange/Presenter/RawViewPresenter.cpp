@@ -1,6 +1,7 @@
 #include "RawViewPresenter.h"
 #include <Delegates/DateEditDelegate.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
+#include <Delegates/ComboBoxDelegate.h>
 
 RawViewPresenter::RawViewPresenter()
 {
@@ -25,6 +26,7 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
 
     table->setItemDelegateForColumn(1, new DateEditDelegate());
     table->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());
+    table->setItemDelegateForColumn(3, new ComboBoxDelegate());
 
     for(int i = 0; i < count; i++)
     {
@@ -42,6 +44,8 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
         table->model()->setData(index, QVariant(dto.amount));
 
         /// Column 3
+        index = table->model()->index(i, 3, QModelIndex());
+        table->model()->setData(index, QVariant(TransactionTypeHelper::ToString(dto.transactionType)));
 
         /// Column 4
 
