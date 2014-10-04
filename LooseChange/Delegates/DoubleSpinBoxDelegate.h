@@ -23,6 +23,9 @@ public:
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
+signals:
+    void static ValueChanged(double value) const;
+
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

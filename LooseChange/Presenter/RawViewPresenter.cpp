@@ -7,10 +7,11 @@ RawViewPresenter::RawViewPresenter()
 {
 }
 
-RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget)
+RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO)
 {
     table = tableWidget;
-    table->setEditTriggers(QAbstractItemView::CurrentChanged);
+    dao = inDAO;
+    table->setEditTriggers(QAbstractItemView::CurrentChanged);  
 }
 
 
@@ -23,6 +24,11 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
     table->clear();
     table->setColumnCount(6);
     table->setRowCount(count);
+
+    DoubleSpinBoxDelegate *d = new DoubleSpinBoxDelegate();
+
+
+    //QObject::connect(d, SIGNAL(DataChanged(double)) )
 
     table->setItemDelegateForColumn(1, new DateEditDelegate());
     table->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());

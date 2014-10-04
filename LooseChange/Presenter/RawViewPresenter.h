@@ -8,12 +8,13 @@ class RawViewPresenter
 {
 public:
     RawViewPresenter();
-    RawViewPresenter(QTableWidget *tableWidget);
+    RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO);
 
     void Load(LooseChangeDAO dao);
 
 private:
     QTableWidget *table;
+    LooseChangeDAO *dao;
 };
 
 #endif // RAWVIEWPRESENTER_H

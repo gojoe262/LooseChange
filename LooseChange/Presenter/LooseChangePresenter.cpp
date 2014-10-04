@@ -31,7 +31,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     //Used to set edit triggers. Ex: signal or double click
 
 
-    rawView = RawViewPresenter(ui->tableWidgetRawView);
+    rawView = RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO);
     rawView.Load(looseChangeDAO);
 
 

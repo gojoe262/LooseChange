@@ -36,6 +36,10 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     double value = spinBox->value();
 
     model->setData(index, value, Qt::EditRole);
+
+    //PUT SIGNAL HERE
+    emit ValueChanged(value);
+
 }
 
 void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor,
@@ -43,3 +47,5 @@ void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor,
 {
     editor->setGeometry(option.rect);
 }
+
+
