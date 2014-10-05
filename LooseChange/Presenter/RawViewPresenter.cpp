@@ -26,9 +26,9 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
     table->setRowCount(count);
 
     DoubleSpinBoxDelegate *d = new DoubleSpinBoxDelegate();
+    RawViewPresenter *rvp = (RawViewPresenter*)this;
 
-
-    //QObject::connect(d, SIGNAL(DataChanged(double)) )
+   //QObject::connect(d, SIGNAL(ValueChanged(double*)), rvp, SLOT(AmountValueChanged(double*)));
 
     table->setItemDelegateForColumn(1, new DateEditDelegate());
     table->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());
@@ -62,4 +62,11 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
 //        double amount = table->model()->data(table->model()->index(i,2)).toDouble();
 //        qDebug() << amount;
     }
+}
+
+void RawViewPresenter::AmountValueChanged(double *value)
+{
+
+    dao->Update(LooseChangeDTO(1,QDate(5,5,5),*value,IN,GasTravel,"TESTCOMMENT"));
+
 }

@@ -15,6 +15,9 @@ public:
 private:
     QTableWidget *table;
     LooseChangeDAO *dao;
+
+private slots:
+    void AmountValueChanged(double* value);
 };
 
 #endif // RAWVIEWPRESENTER_H
