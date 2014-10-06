@@ -10,6 +10,7 @@ class RawViewPresenter : public QObject
 public:
     RawViewPresenter();
     RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO);
+    ~RawViewPresenter();
 
     void Load();
 

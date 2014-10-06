@@ -28,12 +28,12 @@ private slots:
 
 private:
     QList<LooseChangeDTO> GetDataFromTableWidgetRawView();
-    void Update(QModelIndex index, QDate date);
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;
-
     RawViewPresenter *rawView;
+
+    QString fileLocTemp = "";
 
 
 };

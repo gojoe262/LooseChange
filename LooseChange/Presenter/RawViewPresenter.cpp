@@ -14,6 +14,10 @@ RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *in
     table->setEditTriggers(QAbstractItemView::CurrentChanged);  
 }
 
+RawViewPresenter::~RawViewPresenter()
+{
+}
+
 
 void RawViewPresenter::Load()
 {
@@ -36,19 +40,19 @@ void RawViewPresenter::Load()
     {
         LooseChangeDTO dto = dtoList.at(i);
         QModelIndex index;
-        /// Column 0
+        /// Column 0 - ID
         ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
         table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
 
-        /// Column 1
+        /// Column 1 - DATE
         index = table->model()->index(i, 1, QModelIndex());
         table->model()->setData(index, QVariant(dto.date));
 
-        /// Column 2
+        /// Column 2 - AMOUNT
         index = table->model()->index(i, 2, QModelIndex());
         table->model()->setData(index, QVariant(dto.amount));
 
-        /// Column 3
+        /// Column 3 - TRANSACTION TYPE
         index = table->model()->index(i, 3, QModelIndex());
         table->model()->setData(index, QVariant(TransactionTypeHelper::ToString(dto.transactionType)));
 

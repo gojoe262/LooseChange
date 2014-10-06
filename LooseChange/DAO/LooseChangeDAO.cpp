@@ -33,7 +33,7 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
             int id = lineData[0].toInt();
             QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
             double amount = lineData[2].toDouble();
-            TransactionType type = (TransactionType)lineData[3].toInt();
+            TransactionType type = TransactionTypeHelper::FromString(lineData[3]);
             Category category = (Category)lineData[4].toInt();
             QString comment = lineData[5];
 
@@ -57,7 +57,7 @@ bool LooseChangeDAO::WriteFile(QString fileLocation)
             outStream << dto.id << "|---|"
                       << dto.date.toString("yyyyMMdd") << "|---|"
                       << dto.amount << "|---|"
-                      << (int)dto.transactionType << "|---|"
+                      << TransactionTypeHelper::ToString(dto.transactionType) << "|---|"
                       << (int)dto.category<< "|---|"
                       << dto.comment << "\n";
         }
@@ -95,7 +95,11 @@ void LooseChangeDAO::UpdateAmount(int id, double amount)
     isDirty = true;
 }
 
-
+void LooseChangeDAO::UpdateDate(int id, QDate date)
+{
+    cachedList.UpdateDate(id, date);
+    isDirty = true;
+}
 
 bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
 {

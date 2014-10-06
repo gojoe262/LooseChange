@@ -53,3 +53,14 @@ void CachedDTOList::Delete(LooseChangeDTO inDto)
         }
     }
 }
+
+void CachedDTOList::UpdateDate(int id, QDate date)
+{
+    for(int i = 0; i < dtoList.count(); i++)
+    {
+        if(dtoList.at(i).id == id)
+        {
+            dtoList[i].date = date;
+        }
+    }
+}

@@ -49,7 +49,19 @@ public:
      */
     bool Update(LooseChangeDTO inDto);
 
+    /**
+     * @brief UpdateAmount - Updates the amount on the dto with the matching Id
+     * @param id
+     * @param amount
+     */
     void UpdateAmount(int id, double amount);
+
+    /**
+     * @brief UpdateDate - Updates the date on the dto with the matching Id
+     * @param id
+     * @param date
+     */
+    void UpdateDate(int id, QDate date);
 
     /**
      * @brief Delete - Deletes the dto in cachedList with the matching id to inDto

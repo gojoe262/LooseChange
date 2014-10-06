@@ -50,7 +50,7 @@ LooseChangePresenter::~LooseChangePresenter()
 void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./", tr("LooseChange Files (*.lc);;All Files (*.* *"));
-
+    fileLocTemp = fileLocation;
     looseChangeDAO.ReadFile(fileLocation);
     rawView->Load();
 
@@ -60,7 +60,7 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
 void LooseChangePresenter::on_toolButtonSave_clicked()
 {
     QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                        "./untitled.lc",
+                                                        fileLocTemp,
                                                         tr("LooseChange Files (*.lc);;All Files (*.* *"));
     looseChangeDAO.WriteFile(fileLocation);
 }
@@ -80,10 +80,7 @@ QList<LooseChangeDTO> LooseChangePresenter::GetDataFromTableWidgetRawView()
 
 
 
-void LooseChangePresenter::Update(QModelIndex index, QDate date)
-{
-   // ui->tableWidgetRawView->
-}
+
 
 
 
