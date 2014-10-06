@@ -33,7 +33,7 @@ private:
 
     LooseChangeDAO looseChangeDAO;
 
-    RawViewPresenter rawView;
+    RawViewPresenter *rawView;
 
 
 };

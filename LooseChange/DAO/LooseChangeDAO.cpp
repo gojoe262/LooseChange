@@ -89,6 +89,14 @@ bool LooseChangeDAO::Update(LooseChangeDTO inDto)
     isDirty = true;
 }
 
+void LooseChangeDAO::UpdateAmount(int id, double amount)
+{
+    cachedList.UpdateAmount(id, amount);
+    isDirty = true;
+}
+
+
+
 bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
 {
     cachedList.Delete(inDto);

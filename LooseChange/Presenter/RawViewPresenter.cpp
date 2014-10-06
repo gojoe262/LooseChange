@@ -15,10 +15,9 @@ RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *in
 }
 
 
-void RawViewPresenter::Load(LooseChangeDAO dao)
+void RawViewPresenter::Load()
 {
-
-    QList<LooseChangeDTO> dtoList = dao.GetList();
+    QList<LooseChangeDTO> dtoList = dao->GetList();
     int count = dtoList.count();
 
     table->clear();
@@ -26,12 +25,11 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
     table->setRowCount(count);
 
     DoubleSpinBoxDelegate *d = new DoubleSpinBoxDelegate();
-    RawViewPresenter *rvp = (RawViewPresenter*)this;
 
-   //QObject::connect(d, SIGNAL(ValueChanged(double*)), rvp, SLOT(AmountValueChanged(double*)));
+    QObject::connect(d, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(AmountValueChanged(double, QModelIndex)));
 
     table->setItemDelegateForColumn(1, new DateEditDelegate());
-    table->setItemDelegateForColumn(2, new DoubleSpinBoxDelegate());
+    table->setItemDelegateForColumn(2, d);
     table->setItemDelegateForColumn(3, new ComboBoxDelegate());
 
     for(int i = 0; i < count; i++)
@@ -39,7 +37,8 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
         LooseChangeDTO dto = dtoList.at(i);
         QModelIndex index;
         /// Column 0
-        /// ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
+        ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
+        table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
 
         /// Column 1
         index = table->model()->index(i, 1, QModelIndex());
@@ -62,11 +61,12 @@ void RawViewPresenter::Load(LooseChangeDAO dao)
 //        double amount = table->model()->data(table->model()->index(i,2)).toDouble();
 //        qDebug() << amount;
     }
+    table->hideColumn(0);
 }
 
-void RawViewPresenter::AmountValueChanged(double *value)
+void RawViewPresenter::AmountValueChanged(double value, QModelIndex index)
 {
-
-    dao->Update(LooseChangeDTO(1,QDate(5,5,5),*value,IN,GasTravel,"TESTCOMMENT"));
+    int id = table->model()->data(table->model()->index(index.row(),0)).toInt();
+    dao->UpdateAmount(id, value);
 
 }

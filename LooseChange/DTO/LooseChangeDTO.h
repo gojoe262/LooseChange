@@ -35,6 +35,10 @@ public:
      * @brief amount - Transaction Amount
      */
     double amount;
+    void SetAmount(double amount)
+    {
+        this->amount = amount;
+    }
 
     /**
      * @brief type - Transaction Type (in, out)
@@ -50,6 +54,8 @@ public:
      * @brief comment - Transation Comment
      */
     QString comment;
+
+
 
 
 };

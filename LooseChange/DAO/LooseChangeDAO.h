@@ -49,10 +49,7 @@ public:
      */
     bool Update(LooseChangeDTO inDto);
 
-    bool Update(int id, double amount)
-    {
-
-    }
+    void UpdateAmount(int id, double amount);
 
     /**
      * @brief Delete - Deletes the dto in cachedList with the matching id to inDto

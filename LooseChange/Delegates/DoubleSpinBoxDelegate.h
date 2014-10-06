@@ -1,8 +1,6 @@
 #ifndef DOUBLESPINBOXDELEGATE_H
 #define DOUBLESPINBOXDELEGATE_H
 
-#define Q_OBJECT
-
 #include <QItemDelegate>
 #include <QModelIndex>
 #include <QObject>
@@ -11,6 +9,7 @@
 
 class DoubleSpinBoxDelegate : public QItemDelegate
 {
+    Q_OBJECT
 public:
     DoubleSpinBoxDelegate(QObject *parent = 0);
 
@@ -26,9 +25,8 @@ public:
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 signals:
-    void ValueChanged(double value) const;
-public slots:
-    void emitValueChanged(double value);
+    void ValueChanged(double value, QModelIndex index) const;
+
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

@@ -16,6 +16,8 @@ public:
 
     void Update(LooseChangeDTO inDto);
 
+    void UpdateAmount(int id, double amount);
+
     void Delete(LooseChangeDTO inDto);
 
 private:

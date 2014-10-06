@@ -31,8 +31,8 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     //Used to set edit triggers. Ex: signal or double click
 
 
-    rawView = RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO);
-    rawView.Load(looseChangeDAO);
+    rawView = new RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO);
+    rawView->Load();
 
 
 }
@@ -52,7 +52,7 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./", tr("LooseChange Files (*.lc);;All Files (*.* *"));
 
     looseChangeDAO.ReadFile(fileLocation);
-    rawView.Load(looseChangeDAO);
+    rawView->Load();
 
 
 }

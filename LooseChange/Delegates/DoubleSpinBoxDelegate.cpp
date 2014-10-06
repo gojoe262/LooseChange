@@ -11,7 +11,6 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent,
     const QModelIndex &/* index */) const
 {
     QDoubleSpinBox *editor = new QDoubleSpinBox(parent);
-    connect(editor, SIGNAL(valueChanged(double)), this, SLOT(emitValueChanged(double)));
     return editor;
 }
 
@@ -34,12 +33,12 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 {
     QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(editor);
     spinBox->interpretText();
-    double num = spinBox->value();
+    double value = spinBox->value();
 
-    model->setData(index, num, Qt::EditRole);
+    model->setData(index, value, Qt::EditRole);
 
     //PUT SIGNAL HERE
-
+    emit this->ValueChanged(value, index);
 
 
 }
@@ -51,10 +50,7 @@ void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor,
 }
 
 
-void DoubleSpinBoxDelegate::emitValueChanged(double value)
-{
-    emit this->ValueChanged(value);
-}
+
 
 
 
