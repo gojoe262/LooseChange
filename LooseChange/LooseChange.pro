@@ -31,7 +31,6 @@ HEADERS  += \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
     Utility/TransactionType.h \
-    View/TableView.h \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \
     DAO/CachedDTOList.h \

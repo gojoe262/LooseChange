@@ -6,10 +6,13 @@
 #include <DAO/CachedDTOList.h>
 
 
-class LooseChangeDAO
+class LooseChangeDAO : public QObject
 {
+    Q_OBJECT
 public:
-    LooseChangeDAO();
+    LooseChangeDAO(QWidget *parent = 0);
+
+    ~LooseChangeDAO();
 
     /**
      * @brief ReadFile - Parses data file. Loads the cached list
@@ -25,9 +28,6 @@ public:
      * @return
      */
     bool WriteFile(QString fileName);
-
-
-
 
     /**
      * @brief GetList - Gets the currently cached list
@@ -70,10 +70,6 @@ public:
      */
     bool Delete(LooseChangeDTO inDto);
 
-
-
-
-
     /**
      * @brief IsDirty - Determines if the cachedList has pending changes
      * that are not saved to the file.
@@ -81,6 +77,8 @@ public:
      */
     bool IsDirty();
 
+signals:
+    void DataChanged(bool changed);
 
 private:
     /**
@@ -91,7 +89,7 @@ private:
     /**
      * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not
      */
-    void MarkDirty();
+    void MarkDirty(bool dirty);
 
     /**
      * @brief isDirty - Determines if the cachedList has pending changes

@@ -31,30 +31,28 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     //Used to set edit triggers. Ex: signal or double click
 
 
-    rawView = new RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO);
+    rawView = new RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO, this);
+    connect(&looseChangeDAO, SIGNAL(DataChanged(bool)), this, SLOT(SaveButtonEnabled(bool)));
+
     rawView->Load();
 
 
 }
-
-
-
 
 LooseChangePresenter::~LooseChangePresenter()
 {
+    delete rawView;
     delete ui;
+
 }
-
-
 
 void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
-    QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./", tr("LooseChange Files (*.lc);;All Files (*.* *"));
+    QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./",
+                                                        tr("LooseChange Files (*.lc);;All Files (*.* *"));
     fileLocTemp = fileLocation;
     looseChangeDAO.ReadFile(fileLocation);
     rawView->Load();
-
-
 }
 
 void LooseChangePresenter::on_toolButtonSave_clicked()
@@ -63,21 +61,14 @@ void LooseChangePresenter::on_toolButtonSave_clicked()
                                                         fileLocTemp,
                                                         tr("LooseChange Files (*.lc);;All Files (*.* *"));
     looseChangeDAO.WriteFile(fileLocation);
+    looseChangeDAO.ReadFile(fileLocation);
+    rawView->Load();
 }
 
-
-
-QList<LooseChangeDTO> LooseChangePresenter::GetDataFromTableWidgetRawView()
+void LooseChangePresenter::SaveButtonEnabled(bool enabled)
 {
-    QList<LooseChangeDTO> dtoList;
-    int count = ui->tableWidgetRawView->rowCount();
-    for(int i = 0; i < count; i++)
-    {
-        QDate date = ((QDateEdit*)ui->tableWidgetRawView->cellWidget(i,1))->date();
-
-    }
+    ui->toolButtonSave->setEnabled(enabled);
 }
-
 
 
 

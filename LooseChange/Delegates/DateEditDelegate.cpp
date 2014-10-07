@@ -1,8 +1,13 @@
 #include "DateEditDelegate.h"
 #include <QDateEdit>
+#include <QtGui>
 
 DateEditDelegate::DateEditDelegate(QObject *parent)
     :QItemDelegate(parent)
+{
+}
+
+DateEditDelegate::~DateEditDelegate()
 {
 }
 
@@ -36,6 +41,7 @@ void DateEditDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     model->setData(index, value, Qt::EditRole);
 
     //PUT SIGNAL HERE
+    emit this->ValueChanged(value, index);
 }
 
 void DateEditDelegate::updateEditorGeometry(QWidget *editor,

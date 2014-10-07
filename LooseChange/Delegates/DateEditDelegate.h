@@ -2,17 +2,23 @@
 #define DATEEDITDELEGATE_H
 
 #include <QItemDelegate>
+#include <QModelIndex>
+#include <QObject>
+#include <QSize>
 #include <QDate>
+
 class DateEditDelegate : public QItemDelegate
 {
+    Q_OBJECT
 public:
     DateEditDelegate(QObject *parent = 0);
+    ~DateEditDelegate();
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;
 
-
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
+
     void setModelData(QWidget *editor, QAbstractItemModel *model,
                       const QModelIndex &index) const;
 
@@ -20,7 +26,7 @@ public:
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 signals:
-    void DataChanged(QModelIndex index, QDate date);
+    void ValueChanged(QDate value, QModelIndex index) const;
 
 
 };

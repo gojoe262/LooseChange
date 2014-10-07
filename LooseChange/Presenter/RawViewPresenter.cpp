@@ -7,7 +7,8 @@ RawViewPresenter::RawViewPresenter()
 {
 }
 
-RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO)
+RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO, QWidget *parent) :
+    QObject(parent)
 {
     table = tableWidget;
     dao = inDAO;
@@ -28,20 +29,23 @@ void RawViewPresenter::Load()
     table->setColumnCount(6);
     table->setRowCount(count);
 
-    DoubleSpinBoxDelegate *d = new DoubleSpinBoxDelegate();
+    DateEditDelegate *dateEdit = new DateEditDelegate(this);
+    DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
 
-    QObject::connect(d, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(AmountValueChanged(double, QModelIndex)));
+    QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
+    QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
 
-    table->setItemDelegateForColumn(1, new DateEditDelegate());
-    table->setItemDelegateForColumn(2, d);
+    table->setItemDelegateForColumn(1, dateEdit);
+    table->setItemDelegateForColumn(2, doubleSpinBox);
     table->setItemDelegateForColumn(3, new ComboBoxDelegate());
 
+
+    ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
     for(int i = 0; i < count; i++)
     {
         LooseChangeDTO dto = dtoList.at(i);
         QModelIndex index;
         /// Column 0 - ID
-        ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
         table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
 
         /// Column 1 - DATE
@@ -68,9 +72,21 @@ void RawViewPresenter::Load()
     table->hideColumn(0);
 }
 
-void RawViewPresenter::AmountValueChanged(double value, QModelIndex index)
+int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const
 {
-    int id = table->model()->data(table->model()->index(index.row(),0)).toInt();
-    dao->UpdateAmount(id, value);
-
+   return table->model()->data(table->model()->index(index.row(),0)).toInt();
 }
+
+void RawViewPresenter::ChangeAmount(double value, QModelIndex index)
+{ 
+    dao->UpdateAmount(GetIdFromModelIndex(index), value);
+}
+
+void RawViewPresenter::ChangeDate(QDate date, QModelIndex index)
+{
+    dao->UpdateDate(GetIdFromModelIndex(index), date);
+}
+
+
+
+

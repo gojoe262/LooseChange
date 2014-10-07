@@ -6,6 +6,10 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent)
 {
 }
 
+DoubleSpinBoxDelegate::~DoubleSpinBoxDelegate()
+{
+}
+
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent,
     const QStyleOptionViewItem &/* option */,
     const QModelIndex &/* index */) const
@@ -39,8 +43,6 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 
     //PUT SIGNAL HERE
     emit this->ValueChanged(value, index);
-
-
 }
 
 void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor,

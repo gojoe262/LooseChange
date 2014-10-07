@@ -31,15 +31,21 @@ void CachedDTOList::Update(LooseChangeDTO inDto)
     }
 }
 
-void CachedDTOList::UpdateAmount(int id, double amount)
+bool CachedDTOList::UpdateAmount(int id, double amount)
 {
+    bool changesMade = false;
     for(int i = 0; i < dtoList.count(); i++)
     {
         if(dtoList.at(i).id == id)
         {
-            dtoList[i].amount = amount;
+            if(dtoList[i].amount != amount)
+            {
+                dtoList[i].amount = amount;
+                changesMade = true;
+            }
         }
     }
+    return changesMade;
 }
 
 void CachedDTOList::Delete(LooseChangeDTO inDto)
@@ -54,13 +60,19 @@ void CachedDTOList::Delete(LooseChangeDTO inDto)
     }
 }
 
-void CachedDTOList::UpdateDate(int id, QDate date)
+bool CachedDTOList::UpdateDate(int id, QDate date)
 {
+    bool changesMade = false;
     for(int i = 0; i < dtoList.count(); i++)
     {
         if(dtoList.at(i).id == id)
         {
-            dtoList[i].date = date;
+            if(dtoList[i].date != date)
+            {
+                dtoList[i].date = date;
+                changesMade = true;
+            }
         }
     }
+    return changesMade;
 }

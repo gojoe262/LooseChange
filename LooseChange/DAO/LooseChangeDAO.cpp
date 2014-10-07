@@ -11,7 +11,11 @@
 #include <QMessageBox>
 
 
-LooseChangeDAO::LooseChangeDAO()
+LooseChangeDAO::LooseChangeDAO(QWidget *parent) : QObject(parent)
+{
+}
+
+LooseChangeDAO::~LooseChangeDAO()
 {
 }
 
@@ -40,7 +44,7 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
             cachedList.Add(LooseChangeDTO(id,date, amount, type, category, comment));
         }
     }
-    isDirty = false;
+    MarkDirty(false);
     return cachedList.GetList();
 }
 
@@ -61,13 +65,13 @@ bool LooseChangeDAO::WriteFile(QString fileLocation)
                       << (int)dto.category<< "|---|"
                       << dto.comment << "\n";
         }
-        isDirty = false;
+        MarkDirty(false);
         return true;
     }
     else
     {
         QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
-        isDirty = true;
+        MarkDirty(true);
         return false;
     }
 }
@@ -80,25 +84,29 @@ QList<LooseChangeDTO> LooseChangeDAO::GetList()
 bool LooseChangeDAO::Add(LooseChangeDTO inDto)
 {
     cachedList.Add(inDto);
-    isDirty = true;
+    isDirty = true; //MARKDIRTY
 }
 
 bool LooseChangeDAO::Update(LooseChangeDTO inDto)
 {
     cachedList.Update(inDto);
-    isDirty = true;
+    isDirty = true;//MARKDIRTY
 }
 
 void LooseChangeDAO::UpdateAmount(int id, double amount)
 {
-    cachedList.UpdateAmount(id, amount);
-    isDirty = true;
+    if(cachedList.UpdateAmount(id, amount))
+    {
+        MarkDirty(true);
+    }
 }
 
 void LooseChangeDAO::UpdateDate(int id, QDate date)
 {
-    cachedList.UpdateDate(id, date);
-    isDirty = true;
+    if(cachedList.UpdateDate(id, date))
+    {
+        MarkDirty(true);
+    }
 }
 
 bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
@@ -112,9 +120,10 @@ bool LooseChangeDAO::IsDirty()
     return isDirty;
 }
 
-void LooseChangeDAO::MarkDirty()
+void LooseChangeDAO::MarkDirty(bool dirty)
 {
-    isDirty = true;
+    isDirty = dirty;
+    emit this->DataChanged(isDirty);
 }
 
 

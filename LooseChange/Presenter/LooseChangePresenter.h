@@ -25,6 +25,8 @@ private slots:
 
     void on_toolButtonSave_clicked();
 
+    void SaveButtonEnabled(bool enabled);
+
 
 private:
     QList<LooseChangeDTO> GetDataFromTableWidgetRawView();

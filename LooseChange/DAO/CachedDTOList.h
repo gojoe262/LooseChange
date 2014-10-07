@@ -43,14 +43,14 @@ public:
      * @param id
      * @param amount
      */
-    void UpdateAmount(int id, double amount);
+    bool UpdateAmount(int id, double amount);
 
     /**
      * @brief UpdateDate - Updates the date on the dto with the matching id
      * @param id
      * @param date
      */
-    void UpdateDate(int id, QDate date);
+    bool UpdateDate(int id, QDate date);
 
 
 
