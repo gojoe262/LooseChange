@@ -1,9 +1,13 @@
 #include "ComboBoxDelegate.h"
 
 #include <Utility/TransactionType.h>
-
+#include <QtGui>
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent)
     :QItemDelegate(parent)
+{
+}
+
+ComboBoxDelegate::~ComboBoxDelegate()
 {
 }
 
@@ -19,15 +23,15 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent,
 }
 
 
-//void ComboBoxDelegate::setEditorData(QWidget *editor,
-//                                     const QModelIndex &index) //const
-//{
-//    QComboBox *comboBox = static_cast<QComboBox*>(editor);
-//    TransactionType value = (TransactionType)index.model()->data(index, Qt::EditRole).toInt();
+void ComboBoxDelegate::setEditorData(QWidget *editor,
+                                     const QModelIndex &index) //const
+{
+    QComboBox *comboBox = static_cast<QComboBox*>(editor);
+    TransactionType value = (TransactionType)index.model()->data(index, Qt::EditRole).toInt();
 
-//    prevSelected = (int)value;
-//    comboBox->setCurrentIndex(comboBox->findData(value));
-//}
+    prevSelected = (int)value;
+    comboBox->setCurrentIndex(comboBox->findData(value));
+}
 
 void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                     const QModelIndex &index) const
@@ -38,8 +42,8 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 
     model->setData(index, TransactionTypeHelper::ToString(value), Qt::EditRole);
 
-
     //PUT SIGNAL HERE
+    emit ValueChanged(value, index);
 }
 
 void ComboBoxDelegate::updateEditorGeometry(QWidget *editor,

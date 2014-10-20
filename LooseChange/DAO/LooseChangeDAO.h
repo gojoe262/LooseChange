@@ -64,6 +64,13 @@ public:
     void UpdateDate(int id, QDate date);
 
     /**
+     * @brief UpdateTransactionType - Updates the transaction type on the dto with the matchin Id
+     * @param id
+     * @param type
+     */
+    void UpdateTransactionType(int id, TransactionType type);
+
+    /**
      * @brief Delete - Deletes the dto in cachedList with the matching id to inDto
      * @param inDto
      * @return

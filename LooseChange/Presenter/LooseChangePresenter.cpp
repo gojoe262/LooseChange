@@ -50,9 +50,11 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./",
                                                         tr("LooseChange Files (*.lc);;All Files (*.* *"));
-    fileLocTemp = fileLocation;
-    looseChangeDAO.ReadFile(fileLocation);
-    rawView->Load();
+    if(fileLocation != "")
+    {
+        looseChangeDAO.ReadFile(fileLocation);
+        rawView->Load();
+    }
 }
 
 void LooseChangePresenter::on_toolButtonSave_clicked()

@@ -84,13 +84,13 @@ QList<LooseChangeDTO> LooseChangeDAO::GetList()
 bool LooseChangeDAO::Add(LooseChangeDTO inDto)
 {
     cachedList.Add(inDto);
-    isDirty = true; //MARKDIRTY
+    MarkDirty(true);
 }
 
 bool LooseChangeDAO::Update(LooseChangeDTO inDto)
 {
     cachedList.Update(inDto);
-    isDirty = true;//MARKDIRTY
+    MarkDirty(true);
 }
 
 void LooseChangeDAO::UpdateAmount(int id, double amount)
@@ -104,6 +104,14 @@ void LooseChangeDAO::UpdateAmount(int id, double amount)
 void LooseChangeDAO::UpdateDate(int id, QDate date)
 {
     if(cachedList.UpdateDate(id, date))
+    {
+        MarkDirty(true);
+    }
+}
+
+void LooseChangeDAO::UpdateTransactionType(int id, TransactionType type)
+{
+    if(cachedList.UpdateTransactionType(id, type))
     {
         MarkDirty(true);
     }

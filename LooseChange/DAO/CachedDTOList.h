@@ -52,7 +52,13 @@ public:
      */
     bool UpdateDate(int id, QDate date);
 
-
+    /**
+     * @brief UpdateTransactionType - Updates the transaction type on the dto with the matching id
+     * @param id
+     * @param type
+     * @return
+     */
+    bool UpdateTransactionType(int id, TransactionType type);
 
 private:
     QList<LooseChangeDTO> dtoList;

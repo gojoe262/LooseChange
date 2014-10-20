@@ -31,13 +31,15 @@ void RawViewPresenter::Load()
 
     DateEditDelegate *dateEdit = new DateEditDelegate(this);
     DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
+    ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
 
     QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
+    QObject::connect(comboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
     table->setItemDelegateForColumn(2, doubleSpinBox);
-    table->setItemDelegateForColumn(3, new ComboBoxDelegate());
+    table->setItemDelegateForColumn(3, comboBox);
 
 
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
@@ -85,6 +87,11 @@ void RawViewPresenter::ChangeAmount(double value, QModelIndex index)
 void RawViewPresenter::ChangeDate(QDate date, QModelIndex index)
 {
     dao->UpdateDate(GetIdFromModelIndex(index), date);
+}
+
+void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex index)
+{
+    dao->UpdateTransactionType(GetIdFromModelIndex(index), type);
 }
 
 

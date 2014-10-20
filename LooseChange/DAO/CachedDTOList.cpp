@@ -76,3 +76,20 @@ bool CachedDTOList::UpdateDate(int id, QDate date)
     }
     return changesMade;
 }
+
+bool CachedDTOList::UpdateTransactionType(int id, TransactionType type)
+{
+    bool changesMade = false;
+    for(int i = 0; i < dtoList.count(); i++)
+    {
+        if(dtoList.at(i).id == id)
+        {
+            if(dtoList[i].transactionType != type)
+            {
+                dtoList[i].transactionType = type;
+                changesMade = true;
+            }
+        }
+    }
+    return changesMade;
+}

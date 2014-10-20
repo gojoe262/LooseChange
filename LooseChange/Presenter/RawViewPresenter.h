@@ -42,6 +42,13 @@ public slots:
      * @param index
      */
     void ChangeDate(QDate date, QModelIndex index);
+
+    /**
+     * @brief ChangeTransactionType
+     * @param type
+     * @param index
+     */
+    void ChangeTransactionType(TransactionType type, QModelIndex index);
 };
 
 #endif // RAWVIEWPRESENTER_H
