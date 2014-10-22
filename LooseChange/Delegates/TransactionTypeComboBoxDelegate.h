@@ -1,5 +1,5 @@
-#ifndef COMBOBOXDELEGATE_H
-#define COMBOBOXDELEGATE_H
+#ifndef TRANSACTIONTYPECOMBOBOXDELEGATE_H
+#define TRANSACTIONTYPECOMBOBOXDELEGATE_H
 
 #include <QItemDelegate>
 #include <QModelIndex>
@@ -7,12 +7,12 @@
 #include <QComboBox>
 #include <Utility/TransactionType.h>
 
-class ComboBoxDelegate : public QItemDelegate
+class TransactionTypeComboBoxDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    ComboBoxDelegate(QObject *parent = 0);
-    ~ComboBoxDelegate();
+    TransactionTypeComboBoxDelegate(QObject *parent = 0);
+    ~TransactionTypeComboBoxDelegate();
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;
@@ -32,4 +32,4 @@ private:
 
 
 };
-#endif // COMBOBOXDELEGATE_H
+#endif // TRANSACTIONTYPECOMBOBOXDELEGATE_H

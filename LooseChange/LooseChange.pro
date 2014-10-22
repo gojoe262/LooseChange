@@ -23,7 +23,7 @@ SOURCES += main.cpp \
     Delegates/DateEditDelegate.cpp \
     DAO/CachedDTOList.cpp \
     Presenter/RawViewPresenter.cpp \
-    Delegates/ComboBoxDelegate.cpp
+    Delegates/TransactionTypeComboBoxDelegate.cpp
 
 HEADERS  += \
     DAO/LooseChangeDAO.h \
@@ -35,7 +35,7 @@ HEADERS  += \
     Delegates/DateEditDelegate.h \
     DAO/CachedDTOList.h \
     Presenter/RawViewPresenter.h \
-    Delegates/ComboBoxDelegate.h
+    Delegates/TransactionTypeComboBoxDelegate.h
 
 FORMS    += loosechangepresenter.ui
 

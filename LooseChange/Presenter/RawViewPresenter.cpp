@@ -1,7 +1,7 @@
 #include "RawViewPresenter.h"
 #include <Delegates/DateEditDelegate.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
-#include <Delegates/ComboBoxDelegate.h>
+#include <Delegates/TransactionTypeComboBoxDelegate.h>
 
 RawViewPresenter::RawViewPresenter()
 {
@@ -31,15 +31,15 @@ void RawViewPresenter::Load()
 
     DateEditDelegate *dateEdit = new DateEditDelegate(this);
     DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-    ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+    TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
 
     QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
-    QObject::connect(comboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
+    QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
     table->setItemDelegateForColumn(2, doubleSpinBox);
-    table->setItemDelegateForColumn(3, comboBox);
+    table->setItemDelegateForColumn(3, transactionTypeComboBox);
 
 
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
@@ -71,7 +71,7 @@ void RawViewPresenter::Load()
 //        double amount = table->model()->data(table->model()->index(i,2)).toDouble();
 //        qDebug() << amount;
     }
-    table->hideColumn(0);
+    //table->hideColumn(0);
 }
 
 int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const

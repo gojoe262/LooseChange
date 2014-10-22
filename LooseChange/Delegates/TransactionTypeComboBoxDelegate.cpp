@@ -1,17 +1,17 @@
-#include "ComboBoxDelegate.h"
+#include "TransactionTypeComboBoxDelegate.h"
 
 #include <Utility/TransactionType.h>
 #include <QtGui>
-ComboBoxDelegate::ComboBoxDelegate(QObject *parent)
+TransactionTypeComboBoxDelegate::TransactionTypeComboBoxDelegate(QObject *parent)
     :QItemDelegate(parent)
 {
 }
 
-ComboBoxDelegate::~ComboBoxDelegate()
+TransactionTypeComboBoxDelegate::~TransactionTypeComboBoxDelegate()
 {
 }
 
-QWidget *ComboBoxDelegate::createEditor(QWidget *parent,
+QWidget *TransactionTypeComboBoxDelegate::createEditor(QWidget *parent,
     const QStyleOptionViewItem &/* option */,
     const QModelIndex &/* index */) const
 {
@@ -23,7 +23,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent,
 }
 
 
-void ComboBoxDelegate::setEditorData(QWidget *editor,
+void TransactionTypeComboBoxDelegate::setEditorData(QWidget *editor,
                                      const QModelIndex &index) //const
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
@@ -33,7 +33,7 @@ void ComboBoxDelegate::setEditorData(QWidget *editor,
     comboBox->setCurrentIndex(comboBox->findData(value));
 }
 
-void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+void TransactionTypeComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                     const QModelIndex &index) const
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
@@ -46,7 +46,7 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     emit ValueChanged(value, index);
 }
 
-void ComboBoxDelegate::updateEditorGeometry(QWidget *editor,
+void TransactionTypeComboBoxDelegate::updateEditorGeometry(QWidget *editor,
      const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
 {
     editor->setGeometry(option.rect);

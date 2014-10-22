@@ -23,6 +23,8 @@ public:
      * @return
      */
     static QString ToQString(Category inCategory);
+
+    static Category FromString(QString inCategoryStr);
 };
 
 #endif // CATEGORIES_H
