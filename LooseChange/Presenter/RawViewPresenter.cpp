@@ -2,6 +2,7 @@
 #include <Delegates/DateEditDelegate.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
 #include <Delegates/TransactionTypeComboBoxDelegate.h>
+#include <Delegates/CategoryComboBoxDelegate.h>
 
 RawViewPresenter::RawViewPresenter()
 {
@@ -32,14 +33,17 @@ void RawViewPresenter::Load()
     DateEditDelegate *dateEdit = new DateEditDelegate(this);
     DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
     TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
+    CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(this);
 
     QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
     QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
+    QObject::connect(categoryComboBox, SIGNAL(ValueChanged(Category,QModelIndex)), this, SLOT(ChangeCategory(Category,QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
     table->setItemDelegateForColumn(2, doubleSpinBox);
     table->setItemDelegateForColumn(3, transactionTypeComboBox);
+    table->setItemDelegateForColumn(4, categoryComboBox);
 
 
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
@@ -62,7 +66,10 @@ void RawViewPresenter::Load()
         index = table->model()->index(i, 3, QModelIndex());
         table->model()->setData(index, QVariant(TransactionTypeHelper::ToString(dto.transactionType)));
 
-        /// Column 4
+        /// Column 4 - CATEGORY
+        index = table->model()->index(i, 4, QModelIndex());
+        table->model()->setData(index, QVariant(CategoryHelper::ToString(dto.category)));
+
 
 //        ui->tableWidgetRawView->setItem(i,2, new QTableWidgetItem(QString::number(dto.amount)));
 //        ui->tableWidgetRawView->setItem(i,3,new QTableWidgetItem(TransationTypeHelper::ToString(dto.transactionType)));
@@ -92,6 +99,11 @@ void RawViewPresenter::ChangeDate(QDate date, QModelIndex index)
 void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex index)
 {
     dao->UpdateTransactionType(GetIdFromModelIndex(index), type);
+}
+
+void RawViewPresenter::ChangeCategory(Category category, QModelIndex index)
+{
+    dao->UpdateCategory(GetIdFromModelIndex(index), category);
 }
 
 

@@ -49,6 +49,13 @@ public slots:
      * @param index
      */
     void ChangeTransactionType(TransactionType type, QModelIndex index);
+
+    /**
+     * @brief ChangeCategory
+     * @param category
+     * @param index
+     */
+    void ChangeCategory(Category category, QModelIndex index);
 };
 
 #endif // RAWVIEWPRESENTER_H

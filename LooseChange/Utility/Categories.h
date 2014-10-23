@@ -3,6 +3,12 @@
 
 #include <QString>
 
+
+//Maybe iterate through the list of categories by number. Would need refactoring in
+//usages. By doing this, categories can be read in, edited and saved to the file.
+//Maybe it would be best to create a category list Class. This will suffice for now though.
+//See Trello - "Create CategoryList Class"
+
 enum Category
 {
     Other = 0,
@@ -22,7 +28,7 @@ public:
      * @param inCategory
      * @return
      */
-    static QString ToQString(Category inCategory);
+    static QString ToString(Category inCategory);
 
     static Category FromString(QString inCategoryStr);
 };

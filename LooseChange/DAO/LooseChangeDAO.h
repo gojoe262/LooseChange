@@ -64,11 +64,18 @@ public:
     void UpdateDate(int id, QDate date);
 
     /**
-     * @brief UpdateTransactionType - Updates the transaction type on the dto with the matchin Id
+     * @brief UpdateTransactionType - Updates the transaction type on the dto with the matching Id
      * @param id
      * @param type
      */
     void UpdateTransactionType(int id, TransactionType type);
+
+    /**
+     * @brief UpdateCategory - Updates the Category on the dto with the matching Id
+     * @param id
+     * @param category
+     */
+    void UpdateCategory(int id, Category category);
 
     /**
      * @brief Delete - Deletes the dto in cachedList with the matching id to inDto
@@ -96,7 +103,12 @@ private:
     /**
      * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not
      */
-    void MarkDirty(bool dirty);
+    void MarkDirty();
+
+    /**
+     * @brief MarkClean
+     */
+    void MarkClean();
 
     /**
      * @brief isDirty - Determines if the cachedList has pending changes

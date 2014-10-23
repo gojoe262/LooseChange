@@ -38,13 +38,13 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
             QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
             double amount = lineData[2].toDouble();
             TransactionType type = TransactionTypeHelper::FromString(lineData[3]);
-            Category category = (Category)lineData[4].toInt();
+            Category category = CategoryHelper::FromString(lineData[4]);
             QString comment = lineData[5];
 
             cachedList.Add(LooseChangeDTO(id,date, amount, type, category, comment));
         }
     }
-    MarkDirty(false);
+    MarkClean();
     return cachedList.GetList();
 }
 
@@ -62,16 +62,16 @@ bool LooseChangeDAO::WriteFile(QString fileLocation)
                       << dto.date.toString("yyyyMMdd") << "|---|"
                       << dto.amount << "|---|"
                       << TransactionTypeHelper::ToString(dto.transactionType) << "|---|"
-                      << (int)dto.category<< "|---|"
+                      << CategoryHelper::ToString(dto.category)<< "|---|"
                       << dto.comment << "\n";
         }
-        MarkDirty(false);
+        MarkClean();
         return true;
     }
     else
     {
         QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
-        MarkDirty(true);
+        MarkDirty();
         return false;
     }
 }
@@ -84,20 +84,20 @@ QList<LooseChangeDTO> LooseChangeDAO::GetList()
 bool LooseChangeDAO::Add(LooseChangeDTO inDto)
 {
     cachedList.Add(inDto);
-    MarkDirty(true);
+    MarkDirty();
 }
 
 bool LooseChangeDAO::Update(LooseChangeDTO inDto)
 {
     cachedList.Update(inDto);
-    MarkDirty(true);
+    MarkDirty();
 }
 
 void LooseChangeDAO::UpdateAmount(int id, double amount)
 {
     if(cachedList.UpdateAmount(id, amount))
     {
-        MarkDirty(true);
+        MarkDirty();
     }
 }
 
@@ -105,7 +105,7 @@ void LooseChangeDAO::UpdateDate(int id, QDate date)
 {
     if(cachedList.UpdateDate(id, date))
     {
-        MarkDirty(true);
+        MarkDirty();
     }
 }
 
@@ -113,7 +113,15 @@ void LooseChangeDAO::UpdateTransactionType(int id, TransactionType type)
 {
     if(cachedList.UpdateTransactionType(id, type))
     {
-        MarkDirty(true);
+        MarkDirty();
+    }
+}
+
+void LooseChangeDAO::UpdateCategory(int id, Category category)
+{
+    if(cachedList.UpdateCategory(id, category))
+    {
+        MarkDirty();
     }
 }
 
@@ -128,12 +136,17 @@ bool LooseChangeDAO::IsDirty()
     return isDirty;
 }
 
-void LooseChangeDAO::MarkDirty(bool dirty)
+void LooseChangeDAO::MarkDirty()
 {
-    isDirty = dirty;
-    emit this->DataChanged(isDirty);
+    isDirty = true;
+    emit this->DataChanged(true);
 }
 
+void LooseChangeDAO::MarkClean()
+{
+    isDirty = false;
+    emit this->DataChanged(false);
+}
 
 
 

@@ -60,6 +60,14 @@ public:
      */
     bool UpdateTransactionType(int id, TransactionType type);
 
+    /**
+     * @brief UpdateCategory
+     * @param id
+     * @param category
+     * @return
+     */
+    bool UpdateCategory(int id, Category category);
+
 private:
     QList<LooseChangeDTO> dtoList;
 };

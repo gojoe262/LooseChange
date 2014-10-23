@@ -1,7 +1,7 @@
 #include <Utility/Categories.h>
 
 
-QString CategoryHelper::ToQString(Category inCategory)
+QString CategoryHelper::ToString(Category inCategory)
 {
     switch (inCategory)
     {
@@ -24,25 +24,22 @@ QString CategoryHelper::ToQString(Category inCategory)
     }
 }
 
-//Category CategoryHelper::FromString(QString inCategoryStr)
-//{
-//    switch (inCategoryStr)
-//    {
-//        case "Other":
-//            return Other;
-//        case "Groceries":
-//            return Groceries;
-//        case "Shopping":
-//            return Shopping;
-//        case "Restaurants":
-//            return Restaurants;
-//        case "Gas/Travel":
-//            return GasTravel;
-//        case "Phone":
-//            return Phone;
-//        case "Laundry":
-//            return Laundry;
-//        default:
-//            return Other;
-//    }
-//}
+Category CategoryHelper::FromString(QString inCategoryStr)
+{
+    if(inCategoryStr == ToString(Other))
+        return Other;
+    else if(inCategoryStr == ToString(Groceries))
+        return Groceries;
+    else if(inCategoryStr == ToString(Shopping))
+        return Shopping;
+    else if(inCategoryStr == ToString(Restaurants))
+        return Restaurants;
+    else if(inCategoryStr == ToString(GasTravel))
+        return GasTravel;
+    else if(inCategoryStr == ToString(Phone))
+        return Phone;
+    else if(inCategoryStr == ToString(Laundry))
+        return Laundry;
+    else
+        return Other;
+}
