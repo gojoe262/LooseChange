@@ -78,6 +78,13 @@ public:
     void UpdateCategory(int id, Category category);
 
     /**
+     * @brief UpdateComment - Updates the comment on the dto with the matching Id
+     * @param id
+     * @param comment
+     */
+    void UpdateComment(int id, QString comment);
+
+    /**
      * @brief Delete - Deletes the dto in cachedList with the matching id to inDto
      * @param inDto
      * @return

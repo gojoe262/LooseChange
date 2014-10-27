@@ -56,6 +56,13 @@ public slots:
      * @param index
      */
     void ChangeCategory(Category category, QModelIndex index);
+
+    /**
+     * @brief ChangeComment
+     * @param comment
+     * @param index
+     */
+    void ChangeComment(QString comment, QModelIndex index);
 };
 
 #endif // RAWVIEWPRESENTER_H

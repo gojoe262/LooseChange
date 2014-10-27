@@ -125,6 +125,14 @@ void LooseChangeDAO::UpdateCategory(int id, Category category)
     }
 }
 
+void LooseChangeDAO::UpdateComment(int id, QString comment)
+{
+    if(cachedList.UpdateComment(id, comment))
+    {
+        MarkDirty();
+    }
+}
+
 bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
 {
     cachedList.Delete(inDto);

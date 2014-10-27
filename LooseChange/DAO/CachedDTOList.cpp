@@ -110,3 +110,20 @@ bool CachedDTOList::UpdateCategory(int id, Category category)
     }
     return changesMade;
 }
+
+bool CachedDTOList::UpdateComment(int id, QString comment)
+{
+    bool changesMade = false;
+    for(int i = 0; i < dtoList.count(); i++)
+    {
+        if(dtoList.at(i).id == id)
+        {
+            if(dtoList[i].comment != comment)
+            {
+                dtoList[i].comment = comment;
+                changesMade = true;
+            }
+        }
+    }
+    return changesMade;
+}

@@ -3,6 +3,7 @@
 #include <Delegates/DoubleSpinBoxDelegate.h>
 #include <Delegates/TransactionTypeComboBoxDelegate.h>
 #include <Delegates/CategoryComboBoxDelegate.h>
+#include <Delegates/CommentLineEditDelegate.h>
 
 RawViewPresenter::RawViewPresenter()
 {
@@ -34,16 +35,20 @@ void RawViewPresenter::Load()
     DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
     TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
     CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(this);
+    CommentLineEditDelegate *commentLineEdit = new CommentLineEditDelegate(this);
+
 
     QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
     QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
     QObject::connect(categoryComboBox, SIGNAL(ValueChanged(Category,QModelIndex)), this, SLOT(ChangeCategory(Category,QModelIndex)));
+    QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QString,QModelIndex)), this, SLOT(ChangeComment(QString, QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
     table->setItemDelegateForColumn(2, doubleSpinBox);
     table->setItemDelegateForColumn(3, transactionTypeComboBox);
     table->setItemDelegateForColumn(4, categoryComboBox);
+    table->setItemDelegateForColumn(5, commentLineEdit);
 
 
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
@@ -70,6 +75,9 @@ void RawViewPresenter::Load()
         index = table->model()->index(i, 4, QModelIndex());
         table->model()->setData(index, QVariant(CategoryHelper::ToString(dto.category)));
 
+        /// Column 5 - COMMENT
+        index = table->model()->index(i, 5, QModelIndex());
+        table->model()->setData(index, QVariant(dto.comment));
 
 //        ui->tableWidgetRawView->setItem(i,2, new QTableWidgetItem(QString::number(dto.amount)));
 //        ui->tableWidgetRawView->setItem(i,3,new QTableWidgetItem(TransationTypeHelper::ToString(dto.transactionType)));
@@ -104,6 +112,11 @@ void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex i
 void RawViewPresenter::ChangeCategory(Category category, QModelIndex index)
 {
     dao->UpdateCategory(GetIdFromModelIndex(index), category);
+}
+
+void RawViewPresenter::ChangeComment(QString comment, QModelIndex index)
+{
+    dao->UpdateComment(GetIdFromModelIndex(index), comment);
 }
 
 

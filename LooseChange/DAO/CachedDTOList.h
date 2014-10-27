@@ -68,6 +68,14 @@ public:
      */
     bool UpdateCategory(int id, Category category);
 
+    /**
+     * @brief UpdateComment
+     * @param id
+     * @param comment
+     * @return
+     */
+    bool UpdateComment(int id, QString comment);
+
 private:
     QList<LooseChangeDTO> dtoList;
 };
