@@ -8,6 +8,8 @@
 #include <QFile>
 #include <Utility/TransactionType.h>
 #include <Utility/Categories.h>
+#include <DataAccess/FileAccess/FileReader.h>
+#include <DataAccess/FileAccess/FileWriter.h>
 #include <QMessageBox>
 
 
@@ -24,55 +26,25 @@ LooseChangeDAO::~LooseChangeDAO()
 //              http://qt-project.org/doc/qt-5/qstring.html (Split)
 QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
 {    
+    FileReader reader;
     cachedList.ClearList();
-    QFile file(fileLocation);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QTextStream inStream(&file);
-        while (!inStream.atEnd())
-        {
-            QString line = inStream.readLine();
-            QStringList lineData = line.split("|---|", QString::KeepEmptyParts);
-
-            int id = lineData[0].toInt();
-            QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
-            double amount = lineData[2].toDouble();
-            TransactionType type = TransactionTypeHelper::FromString(lineData[3]);
-            Category category = CategoryHelper::FromString(lineData[4]);
-            QString comment = lineData[5];
-
-            cachedList.Add(LooseChangeDTO(id,date, amount, type, category, comment));
-        }
-    }
+    cachedList.SetList(reader.ReadFile(fileLocation));
     MarkClean();
     return cachedList.GetList();
 }
 
-bool LooseChangeDAO::WriteFile(QString fileLocation)
+void LooseChangeDAO::WriteFile(QString fileLocation)
 {
     QList<LooseChangeDTO> dtoList = cachedList.GetList();
+    FileWriter writer;
 
-    QFile file(fileLocation);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    if(writer.WriteFile(dtoList, fileLocation))
     {
-        QTextStream outStream(&file);
-        foreach (LooseChangeDTO dto, dtoList)
-        {
-            outStream << dto.id << "|---|"
-                      << dto.date.toString("yyyyMMdd") << "|---|"
-                      << dto.amount << "|---|"
-                      << TransactionTypeHelper::ToString(dto.transactionType) << "|---|"
-                      << CategoryHelper::ToString(dto.category)<< "|---|"
-                      << dto.comment << "\n";
-        }
         MarkClean();
-        return true;
     }
     else
     {
-        QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
         MarkDirty();
-        return false;
     }
 }
 

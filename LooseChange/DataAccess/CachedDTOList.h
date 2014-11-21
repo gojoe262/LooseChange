@@ -1,7 +1,7 @@
 #ifndef CACHEDDTOLIST_H
 #define CACHEDDTOLIST_H
 
-#include <DTO/LooseChangeDTO.h>
+#include <DataAccess/DTO/LooseChangeDTO.h>
 
 class CachedDTOList
 {
@@ -9,10 +9,22 @@ public:
     CachedDTOList();
 
     /**
+     * @brief GetList - Gets the list
+     * @return
+     */
+    QList<LooseChangeDTO> GetList();
+    
+    /**
+     * @brief SetList - Clears and Sets the list to the passed in parameter
+     * @param dtoList
+     */
+    void SetList(QList<LooseChangeDTO> inDtoList);
+    
+    /**
      * @brief ClearList - Removes all items from the list
      */
     void ClearList();
-
+    
     /**
      * @brief Add - Adds the dto to the list
      * @param dto
@@ -24,13 +36,7 @@ public:
      * @param inDto
      */
     void Delete(LooseChangeDTO inDto);
-
-    /**
-     * @brief GetList - Gets the list
-     * @return
-     */
-    QList<LooseChangeDTO> GetList();
-
+    
     /**
      * @brief Update - Update the dto with the matching id to inDto
      * @param inDto

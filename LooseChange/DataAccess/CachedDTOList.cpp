@@ -4,6 +4,17 @@ CachedDTOList::CachedDTOList()
 {
 }
 
+QList<LooseChangeDTO> CachedDTOList::GetList()
+{
+    return dtoList;
+}
+
+void CachedDTOList::SetList(QList<LooseChangeDTO> inDtoList)
+{
+    dtoList.clear();
+    dtoList = inDtoList;
+}
+
 void CachedDTOList::ClearList()
 {
     dtoList.clear();
@@ -13,12 +24,6 @@ void CachedDTOList::Add(LooseChangeDTO dto)
 {
     dtoList.append(dto);
 }
-
-QList<LooseChangeDTO> CachedDTOList::GetList()
-{
-    return dtoList;
-}
-
 
 void CachedDTOList::Update(LooseChangeDTO inDto)
 {

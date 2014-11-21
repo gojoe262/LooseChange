@@ -2,7 +2,7 @@
 #define LOOSECHANGEPRESENTER_H
 
 #include <QMainWindow>
-#include <DAO/LooseChangeDAO.h>
+#include <DataAccess/LooseChangeDAO.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
 #include <Presenter/RawViewPresenter.h>

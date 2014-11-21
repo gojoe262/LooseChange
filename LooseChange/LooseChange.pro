@@ -13,33 +13,37 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    DAO/LooseChangeDAO.cpp \
-    DTO/LooseChangeDTO.cpp \
+    DataAccess/LooseChangeDAO.cpp \
+    DataAccess/DTO/LooseChangeDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
     Utility/Categories.cpp \
     Utility/TransactionType.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
-    DAO/CachedDTOList.cpp \
+    DataAccess/CachedDTOList.cpp \
     Presenter/RawViewPresenter.cpp \
     Delegates/TransactionTypeComboBoxDelegate.cpp \
     Delegates/CategoryComboBoxDelegate.cpp \
-    Delegates/CommentLineEditDelegate.cpp
+    Delegates/CommentLineEditDelegate.cpp \
+    DataAccess/FileAccess/FileReader.cpp \
+    DataAccess/FileAccess/FileWriter.cpp
 
 HEADERS  += \
-    DAO/LooseChangeDAO.h \
-    DTO/LooseChangeDTO.h \
+    DataAccess/LooseChangeDAO.h \
+    DataAccess/DTO/LooseChangeDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
     Utility/TransactionType.h \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \
-    DAO/CachedDTOList.h \
+    DataAccess/CachedDTOList.h \
     Presenter/RawViewPresenter.h \
     Delegates/TransactionTypeComboBoxDelegate.h \
     Delegates/CategoryComboBoxDelegate.h \
-    Delegates/CommentLineEditDelegate.h
+    Delegates/CommentLineEditDelegate.h \
+    DataAccess/FileAccess/FileReader.h \
+    DataAccess/FileAccess/FileWriter.h
 
 FORMS    += loosechangepresenter.ui
 

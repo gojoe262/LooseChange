@@ -2,8 +2,8 @@
 #define LOOSECHAGEDAO_H
 
 #include <QList>
-#include <DTO/LooseChangeDTO.h>
-#include <DAO/CachedDTOList.h>
+#include <DataAccess/DTO/LooseChangeDTO.h>
+#include <DataAccess/CachedDTOList.h>
 
 
 class LooseChangeDAO : public QObject
@@ -27,7 +27,7 @@ public:
      * @param dtoList
      * @return
      */
-    bool WriteFile(QString fileName);
+    void WriteFile(QString fileName);
 
     /**
      * @brief GetList - Gets the currently cached list

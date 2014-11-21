@@ -1,7 +1,7 @@
 #ifndef RAWVIEWPRESENTER_H
 #define RAWVIEWPRESENTER_H
 
-#include <DAO/LooseChangeDAO.h>
+#include <DataAccess/LooseChangeDAO.h>
 #include <QTableWidget>
 
 class RawViewPresenter : public QObject
