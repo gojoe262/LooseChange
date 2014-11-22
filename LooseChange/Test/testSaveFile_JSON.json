@@ -1,0 +1,20 @@
+{
+    "TRANSACTIONS": [
+        {
+            "AMOUNT": 123.45,
+            "CATEGORY": "Gas/Travel",
+            "COMMENT": "Another Test Comment",
+            "DATE": "20140922",
+            "ID": "1",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 17653.5,
+            "CATEGORY": "Gas/Travel",
+            "COMMENT": "This is just a test",
+            "DATE": "20140918",
+            "ID": "2",
+            "TRANSACTION_TYPE": "IN"
+        }
+    ]
+}

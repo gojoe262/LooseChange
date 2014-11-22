@@ -51,6 +51,7 @@ void RawViewPresenter::Load()
     table->setItemDelegateForColumn(5, commentLineEdit);
 
 
+
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
     for(int i = 0; i < count; i++)
     {
@@ -87,6 +88,7 @@ void RawViewPresenter::Load()
 //        qDebug() << amount;
     }
     //table->hideColumn(0);
+    //table->sortItems(1);
 }
 
 int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const

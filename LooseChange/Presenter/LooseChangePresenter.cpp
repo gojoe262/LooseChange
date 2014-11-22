@@ -49,7 +49,7 @@ LooseChangePresenter::~LooseChangePresenter()
 void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./",
-                                                        tr("LooseChange Files (*.lc);;All Files (*.* *"));
+                                                        tr("LooseChange Files (*.json);;All Files (*.* *"));
     if(fileLocation != "")
     {
         looseChangeDAO.ReadFile(fileLocation);
@@ -61,7 +61,7 @@ void LooseChangePresenter::on_toolButtonSave_clicked()
 {
     QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         fileLocTemp,
-                                                        tr("LooseChange Files (*.lc);;All Files (*.* *"));
+                                                        tr("LooseChange Files (*.json);;All Files (*.* *"));
     looseChangeDAO.WriteFile(fileLocation);
     looseChangeDAO.ReadFile(fileLocation);
     rawView->Load();

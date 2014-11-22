@@ -2,6 +2,10 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 
 FileReader::FileReader()
 {
@@ -11,23 +15,36 @@ QList<LooseChangeDTO> FileReader::ReadFile(QString fileLocation)
 {
     QList<LooseChangeDTO> dtoList;
     QFile file(fileLocation);
+
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QTextStream inStream(&file);
-        while (!inStream.atEnd())
+        // Get Raw Data from file
+        QByteArray rawData = file.readAll();
+
+        // Parse document
+        QJsonDocument doc(QJsonDocument::fromJson(rawData));
+
+        // Get the Json Object
+        QJsonObject json = doc.object();
+
+        // Access properties
+        QJsonArray transacitonsArray = json["TRANSACTIONS"].toArray();
+
+        int size = transacitonsArray.size();
+        for (int i = 0; i < size; i++)
         {
-            QString line = inStream.readLine();
-            QStringList lineData = line.split("|---|", QString::KeepEmptyParts);
+            QJsonObject transaction = transacitonsArray.at(i).toObject();
+            int id = transaction["ID"].toString().toInt();
+            QDate date = QDate::fromString(transaction["DATE"].toString(), "yyyyMMdd");
+            double amount = transaction["AMOUNT"].toDouble();
+            TransactionType type = TransactionTypeHelper::FromString(transaction["TRANSACTION_TYPE"].toString());
+            Category category = CategoryHelper::FromString(transaction["CATEGORY"].toString());
+            QString comment = transaction["COMMENT"].toString();
 
-            int id = lineData[0].toInt();
-            QDate date = QDate::fromString(lineData[1], "yyyyMMdd");
-            double amount = lineData[2].toDouble();
-            TransactionType type = TransactionTypeHelper::FromString(lineData[3]);
-            Category category = CategoryHelper::FromString(lineData[4]);
-            QString comment = lineData[5];
-
-            dtoList.append(LooseChangeDTO(id,date, amount, type, category, comment));
+            dtoList.append(LooseChangeDTO(id, date, amount, type, category, comment));
         }
     }
     return dtoList;
 }
+
+
