@@ -11,9 +11,9 @@ FileReader::FileReader()
 {
 }
 
-QList<LooseChangeDTO> FileReader::ReadFile(QString fileLocation)
+QList<TransactionDTO> FileReader::ReadFile(QString fileLocation)
 {
-    QList<LooseChangeDTO> dtoList;
+    QList<TransactionDTO> dtoList;
     QFile file(fileLocation);
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -41,7 +41,7 @@ QList<LooseChangeDTO> FileReader::ReadFile(QString fileLocation)
             Category category = CategoryHelper::FromString(transaction["CATEGORY"].toString());
             QString comment = transaction["COMMENT"].toString();
 
-            dtoList.append(LooseChangeDTO(id, date, amount, type, category, comment));
+            dtoList.append(TransactionDTO(id, date, amount, type, category, comment));
         }
     }
     return dtoList;

@@ -14,7 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     DataAccess/LooseChangeDAO.cpp \
-    DataAccess/DTO/LooseChangeDTO.cpp \
+    DataAccess/DTO/TransactionDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
     Utility/Categories.cpp \
@@ -31,7 +31,7 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     DataAccess/LooseChangeDAO.h \
-    DataAccess/DTO/LooseChangeDTO.h \
+    DataAccess/DTO/TransactionDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
     Utility/TransactionType.h \

@@ -2,7 +2,7 @@
 #define LOOSECHAGEDAO_H
 
 #include <QList>
-#include <DataAccess/DTO/LooseChangeDTO.h>
+#include <DataAccess/DTO/TransactionDTO.h>
 #include <DataAccess/CachedDTOList.h>
 
 
@@ -17,9 +17,9 @@ public:
     /**
      * @brief ReadFile - Parses data file. Loads the cached list
      * @param inFileName
-     * @return List of LooseChangeDTOs
+     * @return List of TransactionDTOs
      */
-    QList<LooseChangeDTO> ReadFile(QString fileLocation);
+    QList<TransactionDTO> ReadFile(QString fileLocation);
 
     /**
      * @brief WriteFile - Writes the currently cachedList to the file.
@@ -33,21 +33,21 @@ public:
      * @brief GetList - Gets the currently cached list
      * @return
      */
-    QList<LooseChangeDTO> GetList();
+    QList<TransactionDTO> GetList();
 
     /**
      * @brief Add - Adds the dto to the cached List
      * @param inDto
      * @return
      */
-    bool Add(LooseChangeDTO inDto);
+    bool Add(TransactionDTO inDto);
 
     /**
      * @brief Update - Update the dto in cachedList with the matching id to inDto
      * @param inDto
      * @return
      */
-    bool Update(LooseChangeDTO inDto);
+    bool Update(TransactionDTO inDto);
 
     /**
      * @brief UpdateAmount - Updates the amount on the dto with the matching Id
@@ -89,7 +89,7 @@ public:
      * @param inDto
      * @return
      */
-    bool Delete(LooseChangeDTO inDto);
+    bool Delete(TransactionDTO inDto);
 
     /**
      * @brief IsDirty - Determines if the cachedList has pending changes

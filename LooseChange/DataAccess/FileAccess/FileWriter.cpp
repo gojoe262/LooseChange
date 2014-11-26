@@ -13,14 +13,14 @@ FileWriter::FileWriter()
 }
 
 
-bool FileWriter::WriteFile(QList<LooseChangeDTO> dtoList, QString fileLocation)
+bool FileWriter::WriteFile(QList<TransactionDTO> dtoList, QString fileLocation)
 {
     QFile file(fileLocation);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonArray transactionArray;
 
-        foreach (LooseChangeDTO dto, dtoList)
+        foreach (TransactionDTO dto, dtoList)
         {
             //Write to individual Transaction
             QJsonObject transaction;

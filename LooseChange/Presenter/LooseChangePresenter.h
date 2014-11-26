@@ -21,15 +21,26 @@ public:
 
 
 private slots:
+    /**
+     * @brief on_toolButtonOpen_clicked - Opens the open file dialog.
+     * Used to open a LooseChange file
+     */
     void on_toolButtonOpen_clicked();
 
+    /**
+     * @brief on_toolButtonSave_clicked - Opens the save file dialog.
+     * Used to save to a LooseChange File.
+     */
     void on_toolButtonSave_clicked();
 
+    /**
+     * @brief SaveButtonEnabled - Enables/Disables the Save button.
+     * @param enabled
+     */
     void SaveButtonEnabled(bool enabled);
 
 
 private:
-    QList<LooseChangeDTO> GetDataFromTableWidgetRawView();
     Ui::LooseChangePresenter *ui;
 
     LooseChangeDAO looseChangeDAO;

@@ -1,24 +1,25 @@
 #ifndef CACHEDDTOLIST_H
 #define CACHEDDTOLIST_H
 
-#include <DataAccess/DTO/LooseChangeDTO.h>
+#include <DataAccess/DTO/TransactionDTO.h>
 
 class CachedDTOList
 {
 public:
     CachedDTOList();
+    ~CachedDTOList();
 
     /**
      * @brief GetList - Gets the list
      * @return
      */
-    QList<LooseChangeDTO> GetList();
+    QList<TransactionDTO> GetList();
     
     /**
      * @brief SetList - Clears and Sets the list to the passed in parameter
      * @param dtoList
      */
-    void SetList(QList<LooseChangeDTO> inDtoList);
+    void SetList(QList<TransactionDTO> inDtoList);
     
     /**
      * @brief ClearList - Removes all items from the list
@@ -29,20 +30,20 @@ public:
      * @brief Add - Adds the dto to the list
      * @param dto
      */
-    void Add(LooseChangeDTO dto);
+    void Add(TransactionDTO dto);
 
     /**
      * @brief Delete - Removes the dto with the matching id
      * @param inDto
      */
-    void Delete(LooseChangeDTO inDto);
+    void Delete(TransactionDTO inDto);
     
     /**
      * @brief Update - Update the dto with the matching id to inDto
      * @param inDto
      * @return
      */
-    void Update(LooseChangeDTO inDto);
+    void Update(TransactionDTO inDto);
 
     /**
      * @brief UpdateAmount - Updates the amount on the dto with the matching id
@@ -83,7 +84,7 @@ public:
     bool UpdateComment(int id, QString comment);
 
 private:
-    QList<LooseChangeDTO> dtoList;
+    QList<TransactionDTO> dtoList;
 };
 
 #endif // CACHEDDTOLIST_H

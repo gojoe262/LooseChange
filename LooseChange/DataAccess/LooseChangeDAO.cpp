@@ -24,7 +24,7 @@ LooseChangeDAO::~LooseChangeDAO()
 
 //SEE Examples: http://qt-project.org/doc/qt-5/QFile.html
 //              http://qt-project.org/doc/qt-5/qstring.html (Split)
-QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
+QList<TransactionDTO> LooseChangeDAO::ReadFile(QString fileLocation)
 {    
     FileReader reader;
     cachedList.ClearList();
@@ -35,7 +35,7 @@ QList<LooseChangeDTO> LooseChangeDAO::ReadFile(QString fileLocation)
 
 void LooseChangeDAO::WriteFile(QString fileLocation)
 {
-    QList<LooseChangeDTO> dtoList = cachedList.GetList();
+    QList<TransactionDTO> dtoList = cachedList.GetList();
     FileWriter writer;
 
     if(writer.WriteFile(dtoList, fileLocation))
@@ -48,18 +48,18 @@ void LooseChangeDAO::WriteFile(QString fileLocation)
     }
 }
 
-QList<LooseChangeDTO> LooseChangeDAO::GetList()
+QList<TransactionDTO> LooseChangeDAO::GetList()
 {
     return cachedList.GetList();
 }
 
-bool LooseChangeDAO::Add(LooseChangeDTO inDto)
+bool LooseChangeDAO::Add(TransactionDTO inDto)
 {
     cachedList.Add(inDto);
     MarkDirty();
 }
 
-bool LooseChangeDAO::Update(LooseChangeDTO inDto)
+bool LooseChangeDAO::Update(TransactionDTO inDto)
 {
     cachedList.Update(inDto);
     MarkDirty();
@@ -105,7 +105,7 @@ void LooseChangeDAO::UpdateComment(int id, QString comment)
     }
 }
 
-bool LooseChangeDAO::Delete(LooseChangeDTO inDto)
+bool LooseChangeDAO::Delete(TransactionDTO inDto)
 {
     cachedList.Delete(inDto);
     isDirty = true;

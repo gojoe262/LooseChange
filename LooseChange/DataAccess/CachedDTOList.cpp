@@ -4,12 +4,17 @@ CachedDTOList::CachedDTOList()
 {
 }
 
-QList<LooseChangeDTO> CachedDTOList::GetList()
+CachedDTOList::~CachedDTOList()
+{
+    dtoList.clear();
+}
+
+QList<TransactionDTO> CachedDTOList::GetList()
 {
     return dtoList;
 }
 
-void CachedDTOList::SetList(QList<LooseChangeDTO> inDtoList)
+void CachedDTOList::SetList(QList<TransactionDTO> inDtoList)
 {
     dtoList.clear();
     dtoList = inDtoList;
@@ -20,12 +25,12 @@ void CachedDTOList::ClearList()
     dtoList.clear();
 }
 
-void CachedDTOList::Add(LooseChangeDTO dto)
+void CachedDTOList::Add(TransactionDTO dto)
 {
     dtoList.append(dto);
 }
 
-void CachedDTOList::Update(LooseChangeDTO inDto)
+void CachedDTOList::Update(TransactionDTO inDto)
 {
     for(int i = 0; i < dtoList.count(); i++)
     {
@@ -53,7 +58,7 @@ bool CachedDTOList::UpdateAmount(int id, double amount)
     return changesMade;
 }
 
-void CachedDTOList::Delete(LooseChangeDTO inDto)
+void CachedDTOList::Delete(TransactionDTO inDto)
 {
     for(int i = 0; i < dtoList.count(); i++)
     {

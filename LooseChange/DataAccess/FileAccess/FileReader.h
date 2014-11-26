@@ -1,14 +1,19 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include <DataAccess/DTO/LooseChangeDTO.h>
+#include <DataAccess/DTO/TransactionDTO.h>
 
 class FileReader
 {
 public:
     FileReader();
     
-    QList<LooseChangeDTO> ReadFile(QString fileLocation);
+    /**
+     * @brief ReadFile - Reads in a JSON file and returns a QList of transactionDTOs.
+     * @param fileLocation
+     * @return
+     */
+    QList<TransactionDTO> ReadFile(QString fileLocation);
 };
 
 #endif // FILEREADER_H

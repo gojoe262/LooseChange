@@ -24,7 +24,7 @@ RawViewPresenter::~RawViewPresenter()
 
 void RawViewPresenter::Load()
 {
-    QList<LooseChangeDTO> dtoList = dao->GetList();
+    QList<TransactionDTO> dtoList = dao->GetList();
     int count = dtoList.count();
 
     table->clear();
@@ -55,7 +55,7 @@ void RawViewPresenter::Load()
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
     for(int i = 0; i < count; i++)
     {
-        LooseChangeDTO dto = dtoList.at(i);
+        TransactionDTO dto = dtoList.at(i);
         QModelIndex index;
         /// Column 0 - ID
         table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
@@ -79,13 +79,6 @@ void RawViewPresenter::Load()
         /// Column 5 - COMMENT
         index = table->model()->index(i, 5, QModelIndex());
         table->model()->setData(index, QVariant(dto.comment));
-
-//        ui->tableWidgetRawView->setItem(i,2, new QTableWidgetItem(QString::number(dto.amount)));
-//        ui->tableWidgetRawView->setItem(i,3,new QTableWidgetItem(TransationTypeHelper::ToString(dto.transactionType)));
-//        ui->tableWidgetRawView->setItem(i, 4, new QTableWidgetItem(dto.comment));
-//        ui->tableWidgetRawView->setItem(i,5, new QTableWidgetItem(CategoryHelper::ToQString(dto.category)));
-//        double amount = table->model()->data(table->model()->index(i,2)).toDouble();
-//        qDebug() << amount;
     }
     //table->hideColumn(0);
     //table->sortItems(1);

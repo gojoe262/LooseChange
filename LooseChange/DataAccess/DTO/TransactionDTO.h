@@ -1,14 +1,14 @@
-#ifndef LOOSECHANGEDTO_H
-#define LOOSECHANGEDTO_H
+#ifndef TRANSACTIONDTO_H
+#define TRANSACTIONDTO_H
 
 #include <QDate>
 #include <Utility/TransactionType.h>
 #include <Utility/Categories.h>
 
-class LooseChangeDTO
+class TransactionDTO
 {
 public:
-    LooseChangeDTO();
+    TransactionDTO();
 
     /**
      * @brief LooseChangeDTO - Constructs a LooseChangeDTO
@@ -19,7 +19,7 @@ public:
      * @param inCategory
      * @param inComment
      */
-    LooseChangeDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
+    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
 
     /**
      * @brief id - Unique Id of the Transaction
@@ -60,4 +60,4 @@ public:
 
 };
 
-#endif // LOOSECHANGEDTO_H
+#endif // TRANSACTIONDTO_H

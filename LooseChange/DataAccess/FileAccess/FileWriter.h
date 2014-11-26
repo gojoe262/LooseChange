@@ -2,14 +2,20 @@
 #define FILEWRITER_H
 
 #include <QString>
-#include <DataAccess/DTO/LooseChangeDTO.h>
+#include <DataAccess/DTO/TransactionDTO.h>
 
 class FileWriter
 {
 public:
     FileWriter();
     
-    bool WriteFile(QList<LooseChangeDTO> dtoList, QString fileLocation);
+    /**
+     * @brief WriteFile - Writes the QList of dtos to the file.
+     * @param dtoList
+     * @param fileLocation
+     * @return True if successfully written, otherwise false.
+     */
+    bool WriteFile(QList<TransactionDTO> dtoList, QString fileLocation);
     
 };
 

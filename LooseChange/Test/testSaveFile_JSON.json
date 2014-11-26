@@ -1,15 +1,15 @@
 {
     "TRANSACTIONS": [
         {
-            "AMOUNT": 123.45,
+            "AMOUNT": 123.48999999999999,
             "CATEGORY": "Gas/Travel",
             "COMMENT": "Another Test Comment",
-            "DATE": "20140922",
+            "DATE": "20140924",
             "ID": "1",
             "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 17653.5,
+            "AMOUNT": 17653.59,
             "CATEGORY": "Gas/Travel",
             "COMMENT": "This is just a test",
             "DATE": "20140918",
