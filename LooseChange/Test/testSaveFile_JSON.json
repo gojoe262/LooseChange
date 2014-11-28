@@ -1,7 +1,7 @@
 {
     "TRANSACTIONS": [
         {
-            "AMOUNT": 123.48999999999999,
+            "AMOUNT": 122.48999999999999,
             "CATEGORY": "Gas/Travel",
             "COMMENT": "Another Test Comment",
             "DATE": "20140924",
@@ -9,12 +9,12 @@
             "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 17653.59,
+            "AMOUNT": 17651.09,
             "CATEGORY": "Gas/Travel",
             "COMMENT": "This is just a test",
-            "DATE": "20140918",
+            "DATE": "20140910",
             "ID": "2",
-            "TRANSACTION_TYPE": "IN"
+            "TRANSACTION_TYPE": "OUT"
         }
     ]
 }

@@ -24,13 +24,30 @@ LooseChangeDAO::~LooseChangeDAO()
 
 //SEE Examples: http://qt-project.org/doc/qt-5/QFile.html
 //              http://qt-project.org/doc/qt-5/qstring.html (Split)
-QList<TransactionDTO> LooseChangeDAO::ReadFile(QString fileLocation)
+void LooseChangeDAO::ReadFile(QString fileLocation)
 {    
     FileReader reader;
     cachedList.ClearList();
     cachedList.SetList(reader.ReadFile(fileLocation));
+
+    categoryList.clear();
+    QList<TransactionDTO> transactions = cachedList.GetList();
+    foreach (TransactionDTO transaction, transactions) //Loop through all transactions
+    {
+        bool found = false;
+        foreach(CategoryDTO category, categoryList)
+        {
+            if(category.category == transaction.category.category) // if a matching category is already found, set found to false
+            {
+                found = true;
+            }
+        }
+        if(!found) // if not found, add the new category to the list
+        {
+            categoryList.append(transaction.category);
+        }
+    }
     MarkClean();
-    return cachedList.GetList();
 }
 
 void LooseChangeDAO::WriteFile(QString fileLocation)
@@ -48,9 +65,14 @@ void LooseChangeDAO::WriteFile(QString fileLocation)
     }
 }
 
-QList<TransactionDTO> LooseChangeDAO::GetList()
+QList<TransactionDTO> LooseChangeDAO::GetTransactionList()
 {
     return cachedList.GetList();
+}
+
+QList<CategoryDTO> LooseChangeDAO::GetCategoryList()
+{
+    return categoryList;
 }
 
 bool LooseChangeDAO::Add(TransactionDTO inDto)
@@ -89,7 +111,7 @@ void LooseChangeDAO::UpdateTransactionType(int id, TransactionType type)
     }
 }
 
-void LooseChangeDAO::UpdateCategory(int id, Category category)
+void LooseChangeDAO::UpdateCategory(int id, CategoryDTO category)
 {
     if(cachedList.UpdateCategory(id, category))
     {

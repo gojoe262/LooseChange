@@ -55,7 +55,7 @@ public slots:
      * @param category
      * @param index
      */
-    void ChangeCategory(Category category, QModelIndex index);
+    void ChangeCategory(CategoryDTO category, QModelIndex index);
 
     /**
      * @brief ChangeComment

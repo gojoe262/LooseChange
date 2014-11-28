@@ -28,21 +28,27 @@ bool FileWriter::WriteFile(QList<TransactionDTO> dtoList, QString fileLocation)
             transaction["DATE"] = dto.date.toString("yyyyMMdd");
             transaction["AMOUNT"] = dto.amount;
             transaction["TRANSACTION_TYPE"] = TransactionTypeHelper::ToString(dto.transactionType);
-            transaction["CATEGORY"] = CategoryHelper::ToString(dto.category);
+            transaction["CATEGORY"] = dto.category.category;
             transaction["COMMENT"] = QString(dto.comment);
 
             transactionArray.append(transaction);
         }
 
         //Write Section for all transactions
-        QJsonObject writer;
-        writer["TRANSACTIONS"] = transactionArray;
+        QJsonObject mainJsonObj;
+        mainJsonObj["TRANSACTIONS"] = transactionArray;
 
         //Write to the file
-        QJsonDocument doc(writer);
-        file.write(doc.toJson());
-
-        return true;
+        QJsonDocument doc(mainJsonObj);
+        if(file.write(doc.toJson()) < 0) //file.write(doc.toJson()) returns -1 if error
+        {
+            QMessageBox::information(0, "Error", "Error writing JSON Document to file.\n" + file.fileName());
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     else
     {

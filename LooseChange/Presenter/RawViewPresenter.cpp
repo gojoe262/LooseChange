@@ -24,8 +24,9 @@ RawViewPresenter::~RawViewPresenter()
 
 void RawViewPresenter::Load()
 {
-    QList<TransactionDTO> dtoList = dao->GetList();
-    int count = dtoList.count();
+    QList<TransactionDTO> transactionDtoList = dao->GetTransactionList();
+    QList<CategoryDTO> categoryList = dao->GetCategoryList();
+    int count = transactionDtoList.count();
 
     table->clear();
     table->setColumnCount(6);
@@ -34,14 +35,14 @@ void RawViewPresenter::Load()
     DateEditDelegate *dateEdit = new DateEditDelegate(this);
     DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
     TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
-    CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(this);
+    CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(categoryList, this);
     CommentLineEditDelegate *commentLineEdit = new CommentLineEditDelegate(this);
 
 
     QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
     QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
-    QObject::connect(categoryComboBox, SIGNAL(ValueChanged(Category,QModelIndex)), this, SLOT(ChangeCategory(Category,QModelIndex)));
+    QObject::connect(categoryComboBox, SIGNAL(ValueChanged(CategoryDTO,QModelIndex)), this, SLOT(ChangeCategory(CategoryDTO,QModelIndex)));
     QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QString,QModelIndex)), this, SLOT(ChangeComment(QString, QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
@@ -55,7 +56,7 @@ void RawViewPresenter::Load()
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
     for(int i = 0; i < count; i++)
     {
-        TransactionDTO dto = dtoList.at(i);
+        TransactionDTO dto = transactionDtoList.at(i);
         QModelIndex index;
         /// Column 0 - ID
         table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
@@ -74,7 +75,7 @@ void RawViewPresenter::Load()
 
         /// Column 4 - CATEGORY
         index = table->model()->index(i, 4, QModelIndex());
-        table->model()->setData(index, QVariant(CategoryHelper::ToString(dto.category)));
+        table->model()->setData(index, QVariant(dto.category.category));
 
         /// Column 5 - COMMENT
         index = table->model()->index(i, 5, QModelIndex());
@@ -104,7 +105,7 @@ void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex i
     dao->UpdateTransactionType(GetIdFromModelIndex(index), type);
 }
 
-void RawViewPresenter::ChangeCategory(Category category, QModelIndex index)
+void RawViewPresenter::ChangeCategory(CategoryDTO category, QModelIndex index)
 {
     dao->UpdateCategory(GetIdFromModelIndex(index), category);
 }

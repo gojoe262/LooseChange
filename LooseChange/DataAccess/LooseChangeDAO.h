@@ -19,7 +19,7 @@ public:
      * @param inFileName
      * @return List of TransactionDTOs
      */
-    QList<TransactionDTO> ReadFile(QString fileLocation);
+    void ReadFile(QString fileLocation);
 
     /**
      * @brief WriteFile - Writes the currently cachedList to the file.
@@ -29,11 +29,19 @@ public:
      */
     void WriteFile(QString fileName);
 
+    //LoadCategoryListFromTransactionList();
+
     /**
-     * @brief GetList - Gets the currently cached list
+     * @brief GetList - Gets the currently cached transaction list.
      * @return
      */
-    QList<TransactionDTO> GetList();
+    QList<TransactionDTO> GetTransactionList();
+
+    /**
+     * @brief GetCategoryList
+     * @return
+     */
+    QList<CategoryDTO> GetCategoryList();
 
     /**
      * @brief Add - Adds the dto to the cached List
@@ -75,7 +83,7 @@ public:
      * @param id
      * @param category
      */
-    void UpdateCategory(int id, Category category);
+    void UpdateCategory(int id, CategoryDTO category);
 
     /**
      * @brief UpdateComment - Updates the comment on the dto with the matching Id
@@ -106,6 +114,11 @@ private:
      * @brief cachedDtoList - The cached List of Dtos.
      */
     CachedDTOList cachedList;
+
+    /**
+     * @brief categoryList
+     */
+    QList<CategoryDTO> categoryList;
 
     /**
      * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not

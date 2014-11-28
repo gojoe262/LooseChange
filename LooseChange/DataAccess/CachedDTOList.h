@@ -73,7 +73,7 @@ public:
      * @param category
      * @return
      */
-    bool UpdateCategory(int id, Category category);
+    bool UpdateCategory(int id, CategoryDTO category);
 
     /**
      * @brief UpdateComment

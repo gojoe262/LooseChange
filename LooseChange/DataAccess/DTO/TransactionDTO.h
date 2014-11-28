@@ -3,7 +3,7 @@
 
 #include <QDate>
 #include <Utility/TransactionType.h>
-#include <Utility/Categories.h>
+#include <DataAccess/DTO/CategoryDTO.h>
 
 class TransactionDTO
 {
@@ -19,7 +19,7 @@ public:
      * @param inCategory
      * @param inComment
      */
-    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, Category inCategoryCode, QString inComment);
+    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, CategoryDTO inCategory, QString inComment);
 
     /**
      * @brief id - Unique Id of the Transaction
@@ -35,10 +35,6 @@ public:
      * @brief amount - Transaction Amount
      */
     double amount;
-    void SetAmount(double amount)
-    {
-        this->amount = amount;
-    }
 
     /**
      * @brief type - Transaction Type (in, out)
@@ -46,17 +42,14 @@ public:
     TransactionType transactionType;
 
     /**
-     * @brief category - Transaction Category
+     * @brief category - Category
      */
-    Category category;
+    CategoryDTO category;
 
     /**
      * @brief comment - Transation Comment
      */
     QString comment;
-
-
-
 
 };
 

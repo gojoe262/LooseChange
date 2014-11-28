@@ -25,10 +25,10 @@ QList<TransactionDTO> FileReader::ReadFile(QString fileLocation)
         QJsonDocument doc(QJsonDocument::fromJson(rawData));
 
         // Get the Json Object
-        QJsonObject json = doc.object();
+        QJsonObject mainJsonObj = doc.object();
 
         // Access properties
-        QJsonArray transacitonsArray = json["TRANSACTIONS"].toArray();
+        QJsonArray transacitonsArray = mainJsonObj["TRANSACTIONS"].toArray();
 
         int size = transacitonsArray.size();
         for (int i = 0; i < size; i++)
@@ -38,7 +38,7 @@ QList<TransactionDTO> FileReader::ReadFile(QString fileLocation)
             QDate date = QDate::fromString(transaction["DATE"].toString(), "yyyyMMdd");
             double amount = transaction["AMOUNT"].toDouble();
             TransactionType type = TransactionTypeHelper::FromString(transaction["TRANSACTION_TYPE"].toString());
-            Category category = CategoryHelper::FromString(transaction["CATEGORY"].toString());
+            CategoryDTO category = CategoryDTO(transaction["CATEGORY"].toString());
             QString comment = transaction["COMMENT"].toString();
 
             dtoList.append(TransactionDTO(id, date, amount, type, category, comment));

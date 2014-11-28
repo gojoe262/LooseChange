@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     Delegates/CategoryComboBoxDelegate.cpp \
     Delegates/CommentLineEditDelegate.cpp \
     DataAccess/FileAccess/FileReader.cpp \
-    DataAccess/FileAccess/FileWriter.cpp
+    DataAccess/FileAccess/FileWriter.cpp \
+    DataAccess/DTO/CategoryDTO.cpp
 
 HEADERS  += \
     DataAccess/LooseChangeDAO.h \
@@ -43,7 +44,8 @@ HEADERS  += \
     Delegates/CategoryComboBoxDelegate.h \
     Delegates/CommentLineEditDelegate.h \
     DataAccess/FileAccess/FileReader.h \
-    DataAccess/FileAccess/FileWriter.h
+    DataAccess/FileAccess/FileWriter.h \
+    DataAccess/DTO/CategoryDTO.h
 
 FORMS    += loosechangepresenter.ui
 

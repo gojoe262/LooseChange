@@ -104,14 +104,14 @@ bool CachedDTOList::UpdateTransactionType(int id, TransactionType type)
     return changesMade;
 }
 
-bool CachedDTOList::UpdateCategory(int id, Category category)
+bool CachedDTOList::UpdateCategory(int id, CategoryDTO category)
 {
     bool changesMade = false;
     for(int i = 0; i < dtoList.count(); i++)
     {
         if(dtoList.at(i).id == id)
         {
-            if(dtoList[i].category != category)
+            if(dtoList[i].category.category != category.category)
             {
                 dtoList[i].category = category;
                 changesMade = true;
