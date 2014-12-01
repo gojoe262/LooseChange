@@ -1,7 +1,8 @@
 #ifndef RAWVIEWPRESENTER_H
 #define RAWVIEWPRESENTER_H
 
-#include <DataAccess/LooseChangeDAO.h>
+#include <DataAccess/TransactionDAO.h>
+#include <DataAccess/CategoryDAO.h>
 #include <QTableWidget>
 
 class RawViewPresenter : public QObject
@@ -9,7 +10,7 @@ class RawViewPresenter : public QObject
     Q_OBJECT
 public:
     RawViewPresenter();
-    RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO, QWidget *parent = 0);
+    RawViewPresenter(QTableWidget *tableWidget, TransactionDAO *inTransactionDAO, CategoryDAO *inCategoryDAO, QWidget *parent = 0);
     ~RawViewPresenter();
 
     /**
@@ -26,8 +27,8 @@ private:
     int GetIdFromModelIndex(QModelIndex index) const;
 
     QTableWidget *table;
-    LooseChangeDAO *dao;
-
+    TransactionDAO *transactionDAO;
+    CategoryDAO *categoryDAO;
 public slots:
     /**
      * @brief ChangeAmount - Changes the amount

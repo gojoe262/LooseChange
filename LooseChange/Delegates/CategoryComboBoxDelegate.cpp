@@ -1,5 +1,7 @@
 #include "CategoryComboBoxDelegate.h"
+
 #include <QtGui>
+#include <QInputDialog>
 
 CategoryComboBoxDelegate::CategoryComboBoxDelegate(QList<CategoryDTO> inCategoryList, QObject *parent)
     :QItemDelegate(parent)
@@ -41,6 +43,18 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
 
     QString value = comboBox->currentData().toString();
+    if(value == "*ADD CATEGORY*")
+    {
+        //PUT SIGNAL HERE???
+        //   SIGNAL WILL BE CAUGHT BY THE LOOSECHANGEPRESENTER
+//        bool ok;
+//        QString text = QInputDialog::getText(, tr("Add Category"), tr("New Category:"), QLineEdit::Normal,&ok);
+//        if (ok && !text.isEmpty())
+//        {
+//            categoryList.append(CategoryDTO(text));
+//            value = text;
+//        }
+    }
 
     model->setData(index, value, Qt::EditRole);
 

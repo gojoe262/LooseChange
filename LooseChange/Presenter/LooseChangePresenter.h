@@ -2,7 +2,7 @@
 #define LOOSECHANGEPRESENTER_H
 
 #include <QMainWindow>
-#include <DataAccess/LooseChangeDAO.h>
+#include <DataAccess/TransactionDAO.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
 #include <Presenter/RawViewPresenter.h>
@@ -43,10 +43,11 @@ private slots:
 private:
     Ui::LooseChangePresenter *ui;
 
-    LooseChangeDAO looseChangeDAO;
+    TransactionDAO transactionDAO;
+    CategoryDAO categoryDAO;
     RawViewPresenter *rawView;
 
-    QString fileLocTemp = "";
+    QString fileLocationTemp;
 
 
 };

@@ -9,3 +9,8 @@ CategoryDTO::CategoryDTO(QString inCategory)
     category = inCategory;
 }
 
+QString CategoryDTO::ToString()
+{
+    return category;
+}
+

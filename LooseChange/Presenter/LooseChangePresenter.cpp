@@ -31,8 +31,8 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     //Used to set edit triggers. Ex: signal or double click
 
 
-    rawView = new RawViewPresenter(ui->tableWidgetRawView, &looseChangeDAO, this);
-    connect(&looseChangeDAO, SIGNAL(DataChanged(bool)), this, SLOT(SaveButtonEnabled(bool)));
+    rawView = new RawViewPresenter(ui->tableWidgetRawView, &transactionDAO, &categoryDAO, this);
+    connect(&transactionDAO, SIGNAL(DataChanged(bool)), this, SLOT(SaveButtonEnabled(bool)));
 
     rawView->Load();
 
@@ -52,18 +52,19 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
     if(fileLocation != "")
     {
-        looseChangeDAO.ReadFile(fileLocation);
+        transactionDAO.ReadFile(fileLocation);
         rawView->Load();
+        fileLocationTemp = fileLocation;
     }
 }
 
 void LooseChangePresenter::on_toolButtonSave_clicked()
 {
     QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                        fileLocTemp,
+                                                        fileLocationTemp,
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
-    looseChangeDAO.WriteFile(fileLocation);
-    looseChangeDAO.ReadFile(fileLocation);
+    transactionDAO.WriteFile(fileLocation);
+    transactionDAO.ReadFile(fileLocation);
     rawView->Load();
 }
 

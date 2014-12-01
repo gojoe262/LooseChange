@@ -1,18 +1,18 @@
-#ifndef LOOSECHAGEDAO_H
-#define LOOSECHAGEDAO_H
+#ifndef TRANSACTIONDAO_H
+#define TRANSACTIONDAO_H
 
 #include <QList>
 #include <DataAccess/DTO/TransactionDTO.h>
 #include <DataAccess/CachedDTOList.h>
 
 
-class LooseChangeDAO : public QObject
+class TransactionDAO : public QObject
 {
     Q_OBJECT
 public:
-    LooseChangeDAO(QWidget *parent = 0);
+    TransactionDAO(QWidget *parent = 0);
 
-    ~LooseChangeDAO();
+    ~TransactionDAO();
 
     /**
      * @brief ReadFile - Parses data file. Loads the cached list
@@ -36,12 +36,6 @@ public:
      * @return
      */
     QList<TransactionDTO> GetTransactionList();
-
-    /**
-     * @brief GetCategoryList
-     * @return
-     */
-    QList<CategoryDTO> GetCategoryList();
 
     /**
      * @brief Add - Adds the dto to the cached List
@@ -116,11 +110,6 @@ private:
     CachedDTOList cachedList;
 
     /**
-     * @brief categoryList
-     */
-    QList<CategoryDTO> categoryList;
-
-    /**
      * @brief MarkDirty - Marks the DAO as dirty (changes have been made that are not
      */
     void MarkDirty();
@@ -137,4 +126,4 @@ private:
 
 };
 
-#endif // LOOSECHAGEDAO_H
+#endif // TRANSACTIONDAO_H

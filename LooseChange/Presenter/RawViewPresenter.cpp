@@ -9,11 +9,12 @@ RawViewPresenter::RawViewPresenter()
 {
 }
 
-RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, LooseChangeDAO *inDAO, QWidget *parent) :
+RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, TransactionDAO *inTransactionDAO, CategoryDAO *inCategoryDAO, QWidget *parent) :
     QObject(parent)
 {
     table = tableWidget;
-    dao = inDAO;
+    transactionDAO = inTransactionDAO;
+    categoryDAO = inCategoryDAO;
     table->setEditTriggers(QAbstractItemView::CurrentChanged);  
 }
 
@@ -24,8 +25,8 @@ RawViewPresenter::~RawViewPresenter()
 
 void RawViewPresenter::Load()
 {
-    QList<TransactionDTO> transactionDtoList = dao->GetTransactionList();
-    QList<CategoryDTO> categoryList = dao->GetCategoryList();
+    QList<TransactionDTO> transactionDtoList = transactionDAO->GetTransactionList();
+    QList<CategoryDTO> categoryList = categoryDAO->GetCategories(transactionDtoList);
     int count = transactionDtoList.count();
 
     table->clear();
@@ -92,27 +93,27 @@ int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const
 
 void RawViewPresenter::ChangeAmount(double value, QModelIndex index)
 { 
-    dao->UpdateAmount(GetIdFromModelIndex(index), value);
+    transactionDAO->UpdateAmount(GetIdFromModelIndex(index), value);
 }
 
 void RawViewPresenter::ChangeDate(QDate date, QModelIndex index)
 {
-    dao->UpdateDate(GetIdFromModelIndex(index), date);
+    transactionDAO->UpdateDate(GetIdFromModelIndex(index), date);
 }
 
 void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex index)
 {
-    dao->UpdateTransactionType(GetIdFromModelIndex(index), type);
+    transactionDAO->UpdateTransactionType(GetIdFromModelIndex(index), type);
 }
 
 void RawViewPresenter::ChangeCategory(CategoryDTO category, QModelIndex index)
 {
-    dao->UpdateCategory(GetIdFromModelIndex(index), category);
+    transactionDAO->UpdateCategory(GetIdFromModelIndex(index), category);
 }
 
 void RawViewPresenter::ChangeComment(QString comment, QModelIndex index)
 {
-    dao->UpdateComment(GetIdFromModelIndex(index), comment);
+    transactionDAO->UpdateComment(GetIdFromModelIndex(index), comment);
 }
 
 

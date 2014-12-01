@@ -13,7 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    DataAccess/LooseChangeDAO.cpp \
+    DataAccess/TransactionDAO.cpp \
     DataAccess/DTO/TransactionDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
@@ -28,10 +28,11 @@ SOURCES += main.cpp \
     Delegates/CommentLineEditDelegate.cpp \
     DataAccess/FileAccess/FileReader.cpp \
     DataAccess/FileAccess/FileWriter.cpp \
-    DataAccess/DTO/CategoryDTO.cpp
+    DataAccess/DTO/CategoryDTO.cpp \
+    DataAccess/CategoryDAO.cpp
 
 HEADERS  += \
-    DataAccess/LooseChangeDAO.h \
+    DataAccess/TransactionDAO.h \
     DataAccess/DTO/TransactionDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
@@ -45,7 +46,8 @@ HEADERS  += \
     Delegates/CommentLineEditDelegate.h \
     DataAccess/FileAccess/FileReader.h \
     DataAccess/FileAccess/FileWriter.h \
-    DataAccess/DTO/CategoryDTO.h
+    DataAccess/DTO/CategoryDTO.h \
+    DataAccess/CategoryDAO.h
 
 FORMS    += loosechangepresenter.ui
 

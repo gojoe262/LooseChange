@@ -10,6 +10,8 @@ public:
 
     CategoryDTO(QString inCategory);
 
+    QString ToString();
+
     QString category;
 };
 
