@@ -4,6 +4,7 @@
 #include <Delegates/TransactionTypeComboBoxDelegate.h>
 #include <Delegates/CategoryComboBoxDelegate.h>
 #include <Delegates/CommentLineEditDelegate.h>
+#include <QInputDialog>
 
 RawViewPresenter::RawViewPresenter()
 {
@@ -44,6 +45,7 @@ void RawViewPresenter::Load()
     QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
     QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
     QObject::connect(categoryComboBox, SIGNAL(ValueChanged(CategoryDTO,QModelIndex)), this, SLOT(ChangeCategory(CategoryDTO,QModelIndex)));
+    QObject::connect(categoryComboBox, SIGNAL(AddCategoryRequested(QModelIndex)), this, SLOT(AddCategory(QModelIndex)));
     QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QString,QModelIndex)), this, SLOT(ChangeComment(QString, QModelIndex)));
 
     table->setItemDelegateForColumn(1, dateEdit);
@@ -114,6 +116,16 @@ void RawViewPresenter::ChangeCategory(CategoryDTO category, QModelIndex index)
 void RawViewPresenter::ChangeComment(QString comment, QModelIndex index)
 {
     transactionDAO->UpdateComment(GetIdFromModelIndex(index), comment);
+}
+
+void RawViewPresenter::AddCategory(QModelIndex index)
+{
+    bool ok;
+    QString text = QInputDialog::getText(table, tr("Add Category"), tr("New Category:"), QLineEdit::Normal, "", &ok);
+    if (ok && !text.isEmpty())
+    {
+        transactionDAO->UpdateCategory(GetIdFromModelIndex(index), CategoryDTO(text));
+    }
 }
 
 

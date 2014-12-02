@@ -64,6 +64,8 @@ public slots:
      * @param index
      */
     void ChangeComment(QString comment, QModelIndex index);
+
+    void AddCategory(QModelIndex index);
 };
 
 #endif // RAWVIEWPRESENTER_H

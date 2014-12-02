@@ -23,6 +23,7 @@ QWidget *CategoryComboBoxDelegate::createEditor(QWidget *parent,
     {
         editor->addItem(category.category, QVariant(category.category));
     }
+    editor->addItem("*ADD CATEGORY*", QVariant("*ADD CATEGORY*"));
 
     return editor;
 }
@@ -45,8 +46,10 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
     QString value = comboBox->currentData().toString();
     if(value == "*ADD CATEGORY*")
     {
+        emit AddCategoryRequested(index);
+        return;
         //PUT SIGNAL HERE???
-        //   SIGNAL WILL BE CAUGHT BY THE LOOSECHANGEPRESENTER
+        //SIGNAL WILL BE CAUGHT BY THE LOOSECHANGEPRESENTER
 //        bool ok;
 //        QString text = QInputDialog::getText(, tr("Add Category"), tr("New Category:"), QLineEdit::Normal,&ok);
 //        if (ok && !text.isEmpty())

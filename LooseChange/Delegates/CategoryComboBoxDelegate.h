@@ -27,6 +27,7 @@ public:
 
 signals:
     void ValueChanged(CategoryDTO category, QModelIndex index) const;
+    void AddCategoryRequested(QModelIndex index) const;
 
 private:
     QList<CategoryDTO> categoryList;
