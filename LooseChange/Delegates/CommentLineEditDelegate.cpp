@@ -30,7 +30,7 @@ void CommentLineEditDelegate::setModelData(QWidget *editor, QAbstractItemModel *
 
     model->setData(index, value, Qt::EditRole);
 
-    emit ValueChanged(value, index);
+    emit ValueChanged(index, value);
 }
 
 void CommentLineEditDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const

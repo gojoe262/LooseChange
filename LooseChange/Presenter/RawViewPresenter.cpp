@@ -10,25 +10,29 @@ RawViewPresenter::RawViewPresenter()
 {
 }
 
-RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, TransactionDAO *inTransactionDAO, CategoryDAO *inCategoryDAO, QWidget *parent) :
+RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, CachedData *inCachedDataPointer, QWidget *parent) :
     QObject(parent)
 {
     table = tableWidget;
-    transactionDAO = inTransactionDAO;
-    categoryDAO = inCategoryDAO;
-    table->setEditTriggers(QAbstractItemView::CurrentChanged);  
+    //cachedDataPointer = inCachedDataPointer;
+    transactionDAO = new TransactionDAO(inCachedDataPointer);
+    categoryDAO = new CategoryDAO(inCachedDataPointer);
+
+    table->setEditTriggers(QAbstractItemView::AllEditTriggers);//CurrentChanged);//::AllEditTriggers
 }
 
 RawViewPresenter::~RawViewPresenter()
 {
+    delete transactionDAO;
+    delete categoryDAO;
 }
 
 
 void RawViewPresenter::Load()
 {
-    QList<TransactionDTO> transactionDtoList = transactionDAO->GetTransactionList();
-    QList<CategoryDTO> categoryList = categoryDAO->GetCategories(transactionDtoList);
-    int count = transactionDtoList.count();
+    QList<TransactionDTO> transactionList = transactionDAO->GetTransactionList();
+    QList<CategoryDTO> categoryList = categoryDAO->GetCategories();
+    int count = transactionList.count();
 
     table->clear();
     table->setColumnCount(6);
@@ -41,12 +45,12 @@ void RawViewPresenter::Load()
     CommentLineEditDelegate *commentLineEdit = new CommentLineEditDelegate(this);
 
 
-    QObject::connect(dateEdit, SIGNAL(ValueChanged(QDate,QModelIndex)), this, SLOT(ChangeDate(QDate,QModelIndex)));
-    QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(double,QModelIndex)), this, SLOT(ChangeAmount(double,QModelIndex)));
-    QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(TransactionType,QModelIndex)), this, SLOT(ChangeTransactionType(TransactionType, QModelIndex)));
-    QObject::connect(categoryComboBox, SIGNAL(ValueChanged(CategoryDTO,QModelIndex)), this, SLOT(ChangeCategory(CategoryDTO,QModelIndex)));
-    QObject::connect(categoryComboBox, SIGNAL(AddCategoryRequested(QModelIndex)), this, SLOT(AddCategory(QModelIndex)));
-    QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QString,QModelIndex)), this, SLOT(ChangeComment(QString, QModelIndex)));
+    QObject::connect(dateEdit, SIGNAL(ValueChanged(QModelIndex,QDate)), this, SLOT(ChangeDate(QModelIndex,QDate)));
+    QObject::connect(doubleSpinBox, SIGNAL(ValueChanged(QModelIndex,double)), this, SLOT(ChangeAmount(QModelIndex,double)));
+    QObject::connect(transactionTypeComboBox, SIGNAL(ValueChanged(QModelIndex,TransactionType)), this, SLOT(ChangeTransactionType(QModelIndex,TransactionType)));
+    //QObject::connect(categoryComboBox, SIGNAL(ValueChanged(CategoryDTO,QModelIndex)), this, SLOT(ChangeCategory(CategoryDTO,QModelIndex)));
+    //QObject::connect(categoryComboBox, SIGNAL(AddCategoryRequested(QModelIndex)), this, SLOT(AddCategory(QModelIndex)));
+    QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QModelIndex,QString)), this, SLOT(ChangeComment(QModelIndex,QString)));
 
     table->setItemDelegateForColumn(1, dateEdit);
     table->setItemDelegateForColumn(2, doubleSpinBox);
@@ -55,11 +59,10 @@ void RawViewPresenter::Load()
     table->setItemDelegateForColumn(5, commentLineEdit);
 
 
-
     ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));
     for(int i = 0; i < count; i++)
     {
-        TransactionDTO dto = transactionDtoList.at(i);
+        TransactionDTO dto = transactionList.at(i);
         QModelIndex index;
         /// Column 0 - ID
         table->setItem(i,0,new QTableWidgetItem(QString::number(dto.id)));
@@ -93,41 +96,22 @@ int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const
    return table->model()->data(table->model()->index(index.row(),0)).toInt();
 }
 
-void RawViewPresenter::ChangeAmount(double value, QModelIndex index)
+void RawViewPresenter::ChangeAmount(QModelIndex index, double amount)
 { 
-    transactionDAO->UpdateAmount(GetIdFromModelIndex(index), value);
+    transactionDAO->UpdateAmount(GetIdFromModelIndex(index), amount);
 }
 
-void RawViewPresenter::ChangeDate(QDate date, QModelIndex index)
+void RawViewPresenter::ChangeDate(QModelIndex index, QDate date)
 {
     transactionDAO->UpdateDate(GetIdFromModelIndex(index), date);
 }
 
-void RawViewPresenter::ChangeTransactionType(TransactionType type, QModelIndex index)
+void RawViewPresenter::ChangeTransactionType(QModelIndex index, TransactionType type)
 {
-    transactionDAO->UpdateTransactionType(GetIdFromModelIndex(index), type);
+    transactionDAO->UpdateType(GetIdFromModelIndex(index), type);
 }
 
-void RawViewPresenter::ChangeCategory(CategoryDTO category, QModelIndex index)
-{
-    transactionDAO->UpdateCategory(GetIdFromModelIndex(index), category);
-}
-
-void RawViewPresenter::ChangeComment(QString comment, QModelIndex index)
+void RawViewPresenter::ChangeComment(QModelIndex index, QString comment)
 {
     transactionDAO->UpdateComment(GetIdFromModelIndex(index), comment);
 }
-
-void RawViewPresenter::AddCategory(QModelIndex index)
-{
-    bool ok;
-    QString text = QInputDialog::getText(table, tr("Add Category"), tr("New Category:"), QLineEdit::Normal, "", &ok);
-    if (ok && !text.isEmpty())
-    {
-        transactionDAO->UpdateCategory(GetIdFromModelIndex(index), CategoryDTO(text));
-    }
-}
-
-
-
-

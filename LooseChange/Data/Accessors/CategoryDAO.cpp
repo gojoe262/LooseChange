@@ -3,21 +3,22 @@
 CategoryDAO::CategoryDAO()
 {
 }
-\
-CategoryDAO::CategoryDAO(QList<TransactionDTO> inTransactionList)
+
+CategoryDAO::CategoryDAO(CachedData *inCachedDataPointer)
 {
-    transactionList = inTransactionList;
+    cachedDataPointer = inCachedDataPointer;
+}
+
+CategoryDAO::~CategoryDAO()
+{
+    //cachedDataPointer to be deleted elsewhere because it is passed in.
 }
 
 QList<CategoryDTO> CategoryDAO::GetCategories()
 {
-    return GetCategories(transactionList);
-}
-
-QList<CategoryDTO> CategoryDAO::GetCategories(QList<TransactionDTO> inTransactionList)
-{
+    QList<TransactionDTO> transactionList = cachedDataPointer->GetTransactionList();
     QList<CategoryDTO> categoryList;
-    foreach (TransactionDTO transaction, inTransactionList)
+    foreach (TransactionDTO transaction, transactionList)
     {
         bool found = false;
         foreach (CategoryDTO category, categoryList)
@@ -34,6 +35,7 @@ QList<CategoryDTO> CategoryDAO::GetCategories(QList<TransactionDTO> inTransactio
     }
     return categoryList;
 }
+
 
 
 

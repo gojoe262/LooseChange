@@ -5,7 +5,7 @@
 #include <QModelIndex>
 #include <QObject>
 #include <QComboBox>
-#include <DataAccess/DTO/CategoryDTO.h>
+#include <Data/Objects/CategoryDTO.h>
 class CategoryComboBoxDelegate : public QItemDelegate
 {
      Q_OBJECT

@@ -25,7 +25,7 @@ public:
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 signals:
-    void ValueChanged(TransactionType type, QModelIndex index) const;
+    void ValueChanged(QModelIndex index, TransactionType type) const;
 
 private:
     int prevSelected;

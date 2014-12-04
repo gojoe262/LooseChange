@@ -3,10 +3,10 @@
         {
             "AMOUNT": 122.48999999999999,
             "CATEGORY": "Gas/Travel",
-            "COMMENT": "Another Test Comment",
-            "DATE": "20140916",
+            "COMMENT": "Just a test test",
+            "DATE": "20140603",
             "ID": "1",
-            "TRANSACTION_TYPE": "OUT"
+            "TRANSACTION_TYPE": "IN"
         },
         {
             "AMOUNT": 17651.09,
@@ -14,7 +14,7 @@
             "COMMENT": "This is just a test",
             "DATE": "20140912",
             "ID": "2",
-            "TRANSACTION_TYPE": "OUT"
+            "TRANSACTION_TYPE": "IN"
         }
     ]
 }

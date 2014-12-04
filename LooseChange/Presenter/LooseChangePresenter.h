@@ -2,7 +2,7 @@
 #define LOOSECHANGEPRESENTER_H
 
 #include <QMainWindow>
-#include <DataAccess/TransactionDAO.h>
+#include <Data/Cache/CachedData.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
 #include <Presenter/RawViewPresenter.h>
@@ -34,18 +34,21 @@ private slots:
     void on_toolButtonSave_clicked();
 
     /**
-     * @brief SaveButtonEnabled - Enables/Disables the Save button.
-     * @param enabled
+     * @brief EnableSaveButton
      */
-    void SaveButtonEnabled(bool enabled);
+    void EnableSaveButton();
+
+    /**
+     * @brief DisableSaveButton
+     */
+    void DisableSaveButton();
 
 
 private:
     Ui::LooseChangePresenter *ui;
-
-    TransactionDAO transactionDAO;
-    CategoryDAO categoryDAO;
     RawViewPresenter *rawView;
+    CachedData *cachedData;
+
 
     QString fileLocationTemp;
 

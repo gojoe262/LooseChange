@@ -26,7 +26,7 @@ public:
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 signals:
-    void ValueChanged(QDate value, QModelIndex index) const;
+    void ValueChanged(QModelIndex index, QDate value) const;
 
 
 };

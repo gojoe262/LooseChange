@@ -13,41 +13,41 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    DataAccess/TransactionDAO.cpp \
-    DataAccess/DTO/TransactionDTO.cpp \
+    Data/Accessors/TransactionDAO.cpp \
+    Data/Objects/TransactionDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
     Utility/Categories.cpp \
     Utility/TransactionType.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
-    DataAccess/CachedDTOList.cpp \
+    Data/Cache/CachedData.cpp \
     Presenter/RawViewPresenter.cpp \
     Delegates/TransactionTypeComboBoxDelegate.cpp \
     Delegates/CategoryComboBoxDelegate.cpp \
     Delegates/CommentLineEditDelegate.cpp \
-    DataAccess/FileAccess/FileReader.cpp \
-    DataAccess/FileAccess/FileWriter.cpp \
-    DataAccess/DTO/CategoryDTO.cpp \
-    DataAccess/CategoryDAO.cpp
+    Data/FileAccess/FileReader.cpp \
+    Data/FileAccess/FileWriter.cpp \
+    Data/Objects/CategoryDTO.cpp \
+    Data/Accessors/CategoryDAO.cpp
 
 HEADERS  += \
-    DataAccess/TransactionDAO.h \
-    DataAccess/DTO/TransactionDTO.h \
+    Data/Accessors/TransactionDAO.h \
+    Data/Objects/TransactionDTO.h \
     Presenter/LooseChangePresenter.h \
     Utility/Categories.h \
     Utility/TransactionType.h \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \
-    DataAccess/CachedDTOList.h \
+    Data/Cache/CachedData.h \
     Presenter/RawViewPresenter.h \
     Delegates/TransactionTypeComboBoxDelegate.h \
     Delegates/CategoryComboBoxDelegate.h \
     Delegates/CommentLineEditDelegate.h \
-    DataAccess/FileAccess/FileReader.h \
-    DataAccess/FileAccess/FileWriter.h \
-    DataAccess/DTO/CategoryDTO.h \
-    DataAccess/CategoryDAO.h
+    Data/FileAccess/FileReader.h \
+    Data/FileAccess/FileWriter.h \
+    Data/Objects/CategoryDTO.h \
+    Data/Accessors/CategoryDAO.h
 
 FORMS    += loosechangepresenter.ui
 
