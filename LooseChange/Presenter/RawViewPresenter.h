@@ -1,8 +1,8 @@
 #ifndef RAWVIEWPRESENTER_H
 #define RAWVIEWPRESENTER_H
 
-#include <Data/Accessors/TransactionDAO.h>
-#include <Data/Accessors/CategoryDAO.h>
+#include <Data/DAO/TransactionDAO.h>
+#include <Data/DAO/CategoryDAO.h>
 #include <QTableWidget>
 
 class RawViewPresenter : public QObject

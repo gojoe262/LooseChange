@@ -2,7 +2,7 @@
 #define TRANSACTIONDAO_H
 
 
-#include <Data/Objects/TransactionDTO.h>
+#include <Data/DTO/TransactionDTO.h>
 #include <Data/Cache/CachedData.h>
 
 

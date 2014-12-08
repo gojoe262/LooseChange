@@ -3,7 +3,7 @@
 
 #include <QDate>
 #include <Utility/TransactionType.h>
-#include <Data/Objects/CategoryDTO.h>
+#include <Data/DTO/CategoryDTO.h>
 
 class TransactionDTO
 {

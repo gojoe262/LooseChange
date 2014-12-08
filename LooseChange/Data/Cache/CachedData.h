@@ -1,7 +1,7 @@
 #ifndef CACHEDDTOLIST_H
 #define CACHEDDTOLIST_H
 
-#include <Data/Objects/TransactionDTO.h>
+#include <Data/DTO/TransactionDTO.h>
 
 class CachedData : public QObject
 {

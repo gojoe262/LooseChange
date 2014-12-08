@@ -2,7 +2,7 @@
 #define FILEWRITER_H
 
 #include <QString>
-#include <Data/Objects/TransactionDTO.h>
+#include <Data/DTO/TransactionDTO.h>
 
 class FileWriter
 {

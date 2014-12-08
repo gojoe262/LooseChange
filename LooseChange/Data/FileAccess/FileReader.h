@@ -1,7 +1,7 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include <Data/Objects/TransactionDTO.h>
+#include <Data/DTO/TransactionDTO.h>
 
 class FileReader
 {
