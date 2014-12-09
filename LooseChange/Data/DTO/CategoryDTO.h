@@ -8,11 +8,18 @@ class CategoryDTO
 public:
     CategoryDTO();
 
-    CategoryDTO(QString inCategory);
+    CategoryDTO(int inId, QString inDescription);
 
-    QString ToString();
+    /**
+     * @brief id - Unique id for a category
+     */
+    int     id;
 
-    QString category;
+    /**
+     * @brief description - The category description string
+     */
+    QString description;
+
 };
 
 #endif // CATEGORYDTO_H

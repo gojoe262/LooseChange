@@ -17,7 +17,9 @@ void CachedData::ReadFile(QString fileLocation)
 {
     FileReader reader;
     transactionList.clear();
+    categoryList.clear();
     transactionList = reader.ReadFile(fileLocation);
+
     emit MarkClean();
 }
 
@@ -28,10 +30,14 @@ void CachedData::WriteFile(QString fileLocation)
     emit MarkClean();
 }
 
-
 QList<TransactionDTO> CachedData::GetTransactionList()
 {
     return transactionList;
+}
+
+QList<CategoryDTO> CachedData::GetCategoryList()
+{
+    return categoryList;
 }
 
 void CachedData::AddTransaction(TransactionDTO inTransactionDTO)

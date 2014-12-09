@@ -4,13 +4,8 @@ CategoryDTO::CategoryDTO()
 {
 }
 
-CategoryDTO::CategoryDTO(QString inCategory)
+CategoryDTO::CategoryDTO(int inId, QString inDescription)
 {
-    category = inCategory;
+    id = inId;
+    description = inDescription;
 }
-
-QString CategoryDTO::ToString()
-{
-    return category;
-}
-

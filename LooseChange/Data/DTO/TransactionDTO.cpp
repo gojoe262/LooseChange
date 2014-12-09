@@ -4,12 +4,12 @@ TransactionDTO::TransactionDTO()
 {
 }
 
-TransactionDTO::TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionType, CategoryDTO inCategory, QString inComment)
+TransactionDTO::TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionType, int inCategoryId, QString inComment)
 {
     id = inId;
     date = inDate;
     amount = inAmount;
     transactionType = inTransactionType;
-    category = inCategory;
+    categoryId = inCategoryId;
     comment = inComment;
 }

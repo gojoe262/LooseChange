@@ -31,6 +31,12 @@ public:
     QList<TransactionDTO> GetTransactionList();
 
     /**
+     * @brief GetCategoryList
+     * @return
+     */
+    QList<CategoryDTO> GetCategoryList();
+
+    /**
      * @brief AddTransaction
      * @param transactionDTO
      */
@@ -71,6 +77,7 @@ signals:
 
 private:
     QList<TransactionDTO>   transactionList;
+    QList<CategoryDTO>      categoryList;
 
 
 };

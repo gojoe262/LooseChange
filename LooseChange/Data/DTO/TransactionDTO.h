@@ -19,7 +19,7 @@ public:
      * @param inCategory
      * @param inComment
      */
-    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, CategoryDTO inCategory, QString inComment);
+    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, int inCategoryId, QString inComment);
 
     /**
      * @brief id - Unique Id of the Transaction
@@ -42,9 +42,9 @@ public:
     TransactionType transactionType;
 
     /**
-     * @brief category - Category
+     * @brief categoryId
      */
-    CategoryDTO category;
+    int categoryId;
 
     /**
      * @brief comment - Transation Comment

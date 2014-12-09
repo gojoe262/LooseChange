@@ -13,7 +13,10 @@ public:
      * @param fileLocation
      * @return
      */
-    QList<TransactionDTO> ReadFile(QString fileLocation);
+    QList<TransactionDTO> ReadFile(QString fileLocation,
+                                   QList<TransactionDTO> &transactionList,
+                                   QList<CategoryDTO> &categoryList);
+
 };
 
 #endif // FILEREADER_H
