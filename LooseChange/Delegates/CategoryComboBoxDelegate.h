@@ -5,13 +5,13 @@
 #include <QModelIndex>
 #include <QObject>
 #include <QComboBox>
-#include <Data/DTO/CategoryDTO.h>
+#include <Data/DAO/CategoryDAO.h>
 class CategoryComboBoxDelegate : public QItemDelegate
 {
      Q_OBJECT
 
 public:
-    CategoryComboBoxDelegate(QList<CategoryDTO> inCategoryList, QObject *parent = 0);
+    CategoryComboBoxDelegate(CategoryDAO *inCategoryDAOPointer, QObject *parent = 0);
     ~CategoryComboBoxDelegate();
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
@@ -26,10 +26,10 @@ public:
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 signals:
-    void ValueChanged(CategoryDTO category, QModelIndex index) const;
+    void ValueChanged(QModelIndex index, int value) const;
     void AddCategoryRequested(QModelIndex index) const;
 
 private:
-    QList<CategoryDTO> categoryList;
+    CategoryDAO *categoryDAOPointer;
 };
 #endif // CATEGORYCOMBOBOXDELEGATE_H

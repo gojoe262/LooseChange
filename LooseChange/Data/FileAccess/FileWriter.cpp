@@ -13,30 +13,45 @@ FileWriter::FileWriter()
 }
 
 
-bool FileWriter::WriteFile(QList<TransactionDTO> dtoList, QString fileLocation)
+bool FileWriter::WriteFile(QList<TransactionDTO> transactionList, QList<CategoryDTO> categoryList, QString fileLocation)
 {
     QFile file(fileLocation);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QJsonArray transactionArray;
-
-        foreach (TransactionDTO dto, dtoList)
+        //Add Transactions
+        QJsonArray transactionJSONArray;
+        foreach (TransactionDTO transaction, transactionList)
         {
             //Write to individual Transaction
-            QJsonObject transaction;
-            transaction["ID"] = QString::number(dto.id);
-            transaction["DATE"] = dto.date.toString("yyyyMMdd");
-            transaction["AMOUNT"] = dto.amount;
-            transaction["TRANSACTION_TYPE"] = TransactionTypeHelper::ToString(dto.transactionType);
-            transaction["CATEGORY"] = dto.category.category;
-            transaction["COMMENT"] = QString(dto.comment);
+            QJsonObject transactionJSON;
+            transactionJSON["ID"] = QString::number(transaction.id);
+            transactionJSON["DATE"] = transaction.date.toString("yyyyMMdd");
+            transactionJSON["AMOUNT"] = transaction.amount;
+            transactionJSON["TRANSACTION_TYPE"] = TransactionTypeHelper::ToString(transaction.transactionType);
+            transactionJSON["CATEGORY_ID"] = QString::number(transaction.categoryId);
+            transactionJSON["COMMENT"] = QString(transaction.comment);
 
-            transactionArray.append(transaction);
+            transactionJSONArray.append(transactionJSON);
         }
+
+        //Add Categories
+        QJsonArray categoryJSONArray;
+        foreach(CategoryDTO category, categoryList)
+        {
+            QJsonObject categoryJSON;
+            categoryJSON["ID"] = QString::number(category.id);
+            categoryJSON["DESCRIPTION"] = category.description;
+
+            categoryJSONArray.append(categoryJSON);
+        }
+
+
+
 
         //Write Section for all transactions
         QJsonObject mainJsonObj;
-        mainJsonObj["TRANSACTIONS"] = transactionArray;
+        mainJsonObj["TRANSACTIONS"] = transactionJSONArray;
+        mainJsonObj["CATEGORIES"] = categoryJSONArray;
 
         //Write to the file
         QJsonDocument doc(mainJsonObj);

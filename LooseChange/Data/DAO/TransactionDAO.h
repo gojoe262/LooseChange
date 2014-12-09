@@ -56,6 +56,13 @@ public:
      */
     void UpdateComment(int id, QString comment);
 
+    /**
+     * @brief UpdateCategory
+     * @param id
+     * @param category
+     */
+    void UpdateCategory(int id, int categoryId);
+
 private:
 
     /**

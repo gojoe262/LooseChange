@@ -32,7 +32,8 @@ QList<TransactionDTO> TransactionDAO::GetTransactionList()
 
 void TransactionDAO::AddTransaction(TransactionDTO inTransaction)
 {
-    cachedDataPointer->AddTransaction(inTransaction);
+    //GetNextId needs to be made first
+    //cachedDataPointer->AddTransaction(inTransaction);
 }
 
 void TransactionDAO::UpdateAmount(int id, double amount)
@@ -53,4 +54,9 @@ void TransactionDAO::UpdateType(int id, TransactionType type)
 void TransactionDAO::UpdateComment(int id, QString comment)
 {
     cachedDataPointer->UpdateTransactionComment(id, comment);
+}
+
+void TransactionDAO::UpdateCategory(int id, int categoryId)
+{
+    cachedDataPointer->UpdateTransactionCategory(id, categoryId);
 }

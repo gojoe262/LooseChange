@@ -12,7 +12,30 @@ public:
     CategoryDAO(CachedData *inCachedDataPointer);
     ~CategoryDAO();
 
+    /**
+     * @brief GetCategories
+     * @return
+     */
     QList<CategoryDTO> GetCategories();
+
+    /**
+     * @brief GetDescription
+     * @param categoryId
+     * @return
+     */
+    QString GetDescription(int categoryId);
+
+    /**
+     * @brief AddCategory
+     * @param categoryDescription
+     */
+    void AddCategory(QString categoryDescription);
+
+    /**
+     * @brief GetNextId
+     * @return
+     */
+    int GetNextId();
 
 private:
     CachedData *cachedDataPointer;

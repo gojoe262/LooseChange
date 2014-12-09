@@ -16,28 +16,36 @@ CategoryDAO::~CategoryDAO()
 
 QList<CategoryDTO> CategoryDAO::GetCategories()
 {
-//    QList<TransactionDTO> transactionList = cachedDataPointer->GetTransactionList();
-//    QList<CategoryDTO> categoryList;
-//    foreach (TransactionDTO transaction, transactionList)
-//    {
-//        bool found = false;
-//        foreach (CategoryDTO category, categoryList)
-//        {
-//            if(category.ToString() == transaction.category.ToString())
-//            {
-//                found = true;
-//            }
-//        }
-//        if(!found)
-//        {
-//            categoryList.append(transaction.category);
-//        }
-//    }
     return cachedDataPointer->GetCategoryList();
 }
 
+QString CategoryDAO::GetDescription(int categoryId)
+{
+    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
+    foreach(CategoryDTO category, categoryList)
+    {
+        if(category.id == categoryId)
+        {
+            return category.description;
+        }
+    }
+}
 
+void CategoryDAO::AddCategory(QString categoryDescription)
+{
+    cachedDataPointer->AddCategory(CategoryDTO(GetNextId(), categoryDescription));
+}
 
-
-
-
+int CategoryDAO::GetNextId()
+{
+    int maxId = -1;
+    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
+    foreach(CategoryDTO category, categoryList)
+    {
+        if(maxId < category.id)
+        {
+            maxId = category.id;
+        }
+    }
+    return (maxId + 1);
+}

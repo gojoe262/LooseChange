@@ -3,10 +3,10 @@
 #include <QtGui>
 #include <QInputDialog>
 
-CategoryComboBoxDelegate::CategoryComboBoxDelegate(QList<CategoryDTO> inCategoryList, QObject *parent)
+CategoryComboBoxDelegate::CategoryComboBoxDelegate(CategoryDAO *inCategoryDAOPointer, QObject *parent)
     :QItemDelegate(parent)
 {
-    categoryList = inCategoryList;
+   categoryDAOPointer = inCategoryDAOPointer;
 }
 
 CategoryComboBoxDelegate::~CategoryComboBoxDelegate()
@@ -18,12 +18,12 @@ QWidget *CategoryComboBoxDelegate::createEditor(QWidget *parent,
     const QModelIndex &/* index */) const
 {
     QComboBox *editor = new QComboBox(parent);
-
+    QList<CategoryDTO> categoryList = categoryDAOPointer->GetCategories();
     foreach(CategoryDTO category, categoryList)
     {
-        editor->addItem(category.category, QVariant(category.category));
+        editor->addItem(category.description, QVariant(category.id));
     }
-    editor->addItem("*ADD CATEGORY*", QVariant("*ADD CATEGORY*"));
+    editor->addItem("*ADD CATEGORY*", QVariant(-1));
 
     return editor;
 }
@@ -33,9 +33,9 @@ void CategoryComboBoxDelegate::setEditorData(QWidget *editor,
                                      const QModelIndex &index) //const
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
-    QString value = index.model()->data(index, Qt::EditRole).toString();
+    int value = index.model()->data(index, Qt::EditRole).toInt();
 
-    comboBox->setCurrentIndex(comboBox->findText(value));
+    comboBox->setCurrentIndex(comboBox->findData(value));
 }
 
 void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
@@ -43,8 +43,8 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
 
-    QString value = comboBox->currentData().toString();
-    if(value == "*ADD CATEGORY*")
+    int value = comboBox->currentData().toInt();
+    if(value == -1)
     {
         emit AddCategoryRequested(index);
         return;
@@ -59,10 +59,10 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 //        }
     }
 
-    model->setData(index, value, Qt::EditRole);
+    model->setData(index, categoryDAOPointer->GetDescription(value), Qt::EditRole);
 
     //PUT SIGNAL HERE
-    emit ValueChanged(CategoryDTO(value), index);
+    emit ValueChanged(index, value);
 }
 
 void CategoryComboBoxDelegate::updateEditorGeometry(QWidget *editor,

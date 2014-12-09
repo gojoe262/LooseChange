@@ -71,6 +71,19 @@ public:
      */
     void UpdateTransactionComment(int id, QString comment);
 
+    /**
+     * @brief UpdateTransactionCategory
+     * @param id
+     * @param categoryID
+     */
+    void UpdateTransactionCategory(int id, int categoryId);
+
+    /**
+     * @brief AddCategory
+     * @param inCategory
+     */
+    void AddCategory(CategoryDTO inCategory);
+
 signals:
     void MarkDirty() const;
     void MarkClean() const;

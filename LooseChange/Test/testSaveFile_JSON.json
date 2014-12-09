@@ -1,8 +1,22 @@
 {
+    "CATEGORIES": [
+        {
+            "DESCRIPTION": "Gas/Travel",
+            "ID": "1"
+        },
+        {
+            "DESCRIPTION": "Restaurants",
+            "ID": "2"
+        },
+        {
+            "DESCRIPTION": "Laundry",
+            "ID": "3"
+        }
+    ],
     "TRANSACTIONS": [
         {
             "AMOUNT": 122.48999999999999,
-            "CATEGORY": "Gas/Travel",
+            "CATEGORY_ID": "1",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
             "ID": "1",
@@ -10,7 +24,7 @@
         },
         {
             "AMOUNT": 123.22,
-            "CATEGORY": "Resturaunts",
+            "CATEGORY_ID": "3",
             "COMMENT": "This is just a test",
             "DATE": "20140912",
             "ID": "2",

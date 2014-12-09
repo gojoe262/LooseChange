@@ -11,6 +11,7 @@ CachedData::CachedData(QObject *parent) :
 CachedData::~CachedData()
 {
     transactionList.clear();
+    categoryList.clear();
 }
 
 void CachedData::ReadFile(QString fileLocation)
@@ -18,7 +19,7 @@ void CachedData::ReadFile(QString fileLocation)
     FileReader reader;
     transactionList.clear();
     categoryList.clear();
-    transactionList = reader.ReadFile(fileLocation);
+    reader.ReadFile(fileLocation, transactionList, categoryList);
 
     emit MarkClean();
 }
@@ -26,7 +27,7 @@ void CachedData::ReadFile(QString fileLocation)
 void CachedData::WriteFile(QString fileLocation)
 {
     FileWriter writer;
-    writer.WriteFile(transactionList, fileLocation);
+    writer.WriteFile(transactionList, categoryList,fileLocation);
     emit MarkClean();
 }
 
@@ -124,4 +125,30 @@ void CachedData::UpdateTransactionComment(int id, QString comment)
     {
         emit MarkDirty();
     }
+}
+
+void CachedData::UpdateTransactionCategory(int id, int categoryId)
+{
+    bool changesMade = false;
+    for(int i = 0; i < transactionList.count(); i++)
+    {
+        if(transactionList.at(i).id == id)
+        {
+            if(transactionList[i].categoryId != categoryId)
+            {
+                transactionList[i].categoryId = categoryId;
+                changesMade = true;
+            }
+        }
+    }
+    if(changesMade)
+    {
+        emit MarkDirty();
+    }
+}
+
+void CachedData::AddCategory(CategoryDTO inCategory)
+{
+    categoryList.append(inCategory);
+    emit MarkDirty();
 }

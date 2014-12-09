@@ -15,7 +15,7 @@ public:
      * @param fileLocation
      * @return True if successfully written, otherwise false.
      */
-    bool WriteFile(QList<TransactionDTO> dtoList, QString fileLocation);
+    bool WriteFile(QList<TransactionDTO> transactionList, QList<CategoryDTO> categoryList, QString fileLocation);
     
 };
 

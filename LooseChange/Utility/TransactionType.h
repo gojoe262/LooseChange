@@ -27,7 +27,6 @@ public:
             return OUT;
         else if(strType == "IN")
             return IN;
-
     }
 };
 

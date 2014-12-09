@@ -52,7 +52,7 @@ void FileReader::ReadFile(QString fileLocation,
             int categoryId = transaction["CATEGORY_ID"].toString().toInt();
             QString comment = transaction["COMMENT"].toString();
 
-            transactionList.append(TransactionDTO(id, date, amount, type, category, comment));
+            transactionList.append(TransactionDTO(id, date, amount, type, categoryId, comment));
         }
     }
 }

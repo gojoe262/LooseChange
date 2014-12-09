@@ -29,7 +29,6 @@ void TransactionTypeComboBoxDelegate::setEditorData(QWidget *editor,
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
     TransactionType value = (TransactionType)index.model()->data(index, Qt::EditRole).toInt();
 
-    prevSelected = (int)value;
     comboBox->setCurrentIndex(comboBox->findData(value));
 }
 
