@@ -88,6 +88,7 @@ void RawViewPresenter::Load()
     }
     //table->hideColumn(0);
     //table->sortItems(1);
+    //table->resizeColumnsToContents();
 }
 
 int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const

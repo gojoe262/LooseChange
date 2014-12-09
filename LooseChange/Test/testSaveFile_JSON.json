@@ -16,17 +16,17 @@
     "TRANSACTIONS": [
         {
             "AMOUNT": 122.48999999999999,
-            "CATEGORY_ID": "1",
+            "CATEGORY_ID": "3",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
             "ID": "1",
             "TRANSACTION_TYPE": "IN"
         },
         {
-            "AMOUNT": 123.22,
+            "AMOUNT": 122.48999999999999,
             "CATEGORY_ID": "3",
             "COMMENT": "This is just a test",
-            "DATE": "20140912",
+            "DATE": "20140604",
             "ID": "2",
             "TRANSACTION_TYPE": "IN"
         }

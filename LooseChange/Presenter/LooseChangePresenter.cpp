@@ -32,9 +32,10 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 
     cachedData = new CachedData();
     rawView = new RawViewPresenter(ui->tableWidgetRawView, cachedData, this);
-    connect(cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSaveButton()));
-    connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSaveButton()));
+    connect(cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
+    connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));
 
+    DisableSave(); //Disables saves when first loading.
     rawView->Load();
 
 
@@ -48,9 +49,8 @@ LooseChangePresenter::~LooseChangePresenter()
 
 }
 
-void LooseChangePresenter::on_toolButtonOpen_clicked()
+void LooseChangePresenter::Open()
 {
-
     QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./",
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
     if(fileLocation != "")
@@ -61,7 +61,7 @@ void LooseChangePresenter::on_toolButtonOpen_clicked()
     }
 }
 
-void LooseChangePresenter::on_toolButtonSave_clicked()
+void LooseChangePresenter::Save()
 {
     QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         fileLocationTemp,
@@ -71,16 +71,40 @@ void LooseChangePresenter::on_toolButtonSave_clicked()
     rawView->Load();
 }
 
-void LooseChangePresenter::EnableSaveButton()
+void LooseChangePresenter::on_toolButtonOpen_clicked()
 {
+    Open();
+}
 
+void LooseChangePresenter::on_toolButtonSave_clicked()
+{
+    Save();
+}
+
+void LooseChangePresenter::on_actionOpen_triggered()
+{
+    Open();
+}
+
+void LooseChangePresenter::on_actionSave_triggered()
+{
+    Save();
+}
+
+
+void LooseChangePresenter::EnableSave()
+{
+    ui->actionSave->setEnabled(true);
     ui->toolButtonSave->setEnabled(true);
 }
 
-void LooseChangePresenter::DisableSaveButton()
+void LooseChangePresenter::DisableSave()
 {
+    ui->actionSave->setEnabled(false);
     ui->toolButtonSave->setEnabled(false);
 }
+
+
 
 
 

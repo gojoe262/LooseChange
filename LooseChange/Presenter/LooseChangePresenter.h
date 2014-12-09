@@ -19,6 +19,9 @@ public:
     explicit LooseChangePresenter(QWidget *parent = 0);
     ~LooseChangePresenter();
 
+private:
+    void Open();
+    void Save();
 
 private slots:
     /**
@@ -36,13 +39,17 @@ private slots:
     /**
      * @brief EnableSaveButton
      */
-    void EnableSaveButton();
+    void EnableSave();
 
     /**
      * @brief DisableSaveButton
      */
-    void DisableSaveButton();
+    void DisableSave();
 
+
+    void on_actionOpen_triggered();
+
+    void on_actionSave_triggered();
 
 private:
     Ui::LooseChangePresenter *ui;
