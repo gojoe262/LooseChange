@@ -2,6 +2,7 @@
 #define CACHEDDTOLIST_H
 
 #include <Data/DTO/TransactionDTO.h>
+#include <QObject>
 
 class CachedData : public QObject
 {
