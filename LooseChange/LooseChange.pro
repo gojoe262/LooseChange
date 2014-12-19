@@ -52,5 +52,4 @@ HEADERS  += \
 FORMS    += loosechangepresenter.ui
 
 OTHER_FILES += \
-    Test/test.lc \
-    Icons/OpenIcon.png
+    Test/test.lc
