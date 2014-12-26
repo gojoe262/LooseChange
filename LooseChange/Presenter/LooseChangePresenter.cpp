@@ -31,7 +31,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     //Used to set edit triggers. Ex: signal or double click
 
     cachedData = new CachedData();
-    rawView = new RawViewPresenter(ui->tableWidgetRawView, cachedData, this);
+    rawView = new RawViewPresenter(ui->tableWidgetRawView, ui->tableViewRawView, cachedData, this);
     connect(cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
     connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));
 

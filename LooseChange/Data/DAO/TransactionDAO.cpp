@@ -30,33 +30,38 @@ QList<TransactionDTO> TransactionDAO::GetTransactionList()
     return cachedDataPointer->GetTransactionList();
 }
 
+TransactionDTO TransactionDAO::GetTransactionAt(int index)
+{
+    return cachedDataPointer->GetTransactionList()[index];
+}
+
 void TransactionDAO::AddTransaction(TransactionDTO inTransaction)
 {
     //GetNextId needs to be made first
     //cachedDataPointer->AddTransaction(inTransaction);
 }
 
-void TransactionDAO::UpdateAmount(int id, double amount)
+bool TransactionDAO::UpdateAmount(int id, double amount)
 {
-    cachedDataPointer->UpdateTransactionAmount(id, amount);
+    return cachedDataPointer->UpdateTransactionAmount(id, amount);
 }
 
-void TransactionDAO::UpdateDate(int id, QDate date)
+bool TransactionDAO::UpdateDate(int id, QDate date)
 {
-    cachedDataPointer->UpdateTransactionDate(id, date);
+    return cachedDataPointer->UpdateTransactionDate(id, date);
 }
 
-void TransactionDAO::UpdateType(int id, TransactionType type)
+bool TransactionDAO::UpdateType(int id, TransactionType type)
 {
-    cachedDataPointer->UpdateTransactionType(id, type);
+    return cachedDataPointer->UpdateTransactionType(id, type);
 }
 
-void TransactionDAO::UpdateComment(int id, QString comment)
+bool TransactionDAO::UpdateComment(int id, QString comment)
 {
-    cachedDataPointer->UpdateTransactionComment(id, comment);
+    return cachedDataPointer->UpdateTransactionComment(id, comment);
 }
 
-void TransactionDAO::UpdateCategory(int id, int categoryId)
+bool TransactionDAO::UpdateCategory(int id, int categoryId)
 {
-    cachedDataPointer->UpdateTransactionCategory(id, categoryId);
+    return cachedDataPointer->UpdateTransactionCategory(id, categoryId);
 }

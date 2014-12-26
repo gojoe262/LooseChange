@@ -3,6 +3,7 @@
 
 #include <Data/DAO/TransactionDAO.h>
 #include <Data/DAO/CategoryDAO.h>
+#include <Models/RawViewTableModel.h>
 #include <QTableWidget>
 
 class RawViewPresenter : public QObject
@@ -10,7 +11,7 @@ class RawViewPresenter : public QObject
     Q_OBJECT
 public:
     RawViewPresenter();
-    RawViewPresenter(QTableWidget *tableWidget, CachedData *inCachedDataPointer, QWidget *parent = 0);
+    RawViewPresenter(QTableWidget *tableWidget, QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent = 0);
 
     ~RawViewPresenter();
 
@@ -22,10 +23,13 @@ public:
 
 private:
     QTableWidget *table;
+    QTableView *tableView;
+    RawViewTableModel *model;
     CachedData *cachedDataPointer;
 
     TransactionDAO *transactionDAO;
     CategoryDAO *categoryDAO;
+
 
     /**
      * @brief GetIdFromModelIndex - Get the id from the table given the index

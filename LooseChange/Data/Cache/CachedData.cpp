@@ -47,7 +47,7 @@ void CachedData::AddTransaction(TransactionDTO inTransactionDTO)
     emit MarkDirty();
 }
 
-void CachedData::UpdateTransactionAmount(int id, double amount)
+bool CachedData::UpdateTransactionAmount(int id, double amount)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -65,9 +65,10 @@ void CachedData::UpdateTransactionAmount(int id, double amount)
     {
         emit MarkDirty();
     }
+    return changesMade;
 }
 
-void CachedData::UpdateTransactionDate(int id, QDate date)
+bool CachedData::UpdateTransactionDate(int id, QDate date)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -81,13 +82,16 @@ void CachedData::UpdateTransactionDate(int id, QDate date)
             }
         }
     }
+
     if(changesMade)
     {
         emit MarkDirty();
     }
+
+    return changesMade;
 }
 
-void CachedData::UpdateTransactionType(int id, TransactionType type)
+bool CachedData::UpdateTransactionType(int id, TransactionType type)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -105,9 +109,10 @@ void CachedData::UpdateTransactionType(int id, TransactionType type)
     {
         emit MarkDirty();
     }
+    return changesMade;
 }
 
-void CachedData::UpdateTransactionComment(int id, QString comment)
+bool CachedData::UpdateTransactionComment(int id, QString comment)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -125,9 +130,10 @@ void CachedData::UpdateTransactionComment(int id, QString comment)
     {
         emit MarkDirty();
     }
+    return changesMade;
 }
 
-void CachedData::UpdateTransactionCategory(int id, int categoryId)
+bool CachedData::UpdateTransactionCategory(int id, int categoryId)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -145,6 +151,7 @@ void CachedData::UpdateTransactionCategory(int id, int categoryId)
     {
         emit MarkDirty();
     }
+    return changesMade;
 }
 
 void CachedData::AddCategory(CategoryDTO inCategory)

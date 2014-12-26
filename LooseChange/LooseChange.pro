@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     Data/FileAccess/FileReader.cpp \
     Data/FileAccess/FileWriter.cpp \
     Data/DTO/CategoryDTO.cpp \
-    Data/DAO/CategoryDAO.cpp
+    Data/DAO/CategoryDAO.cpp \
+    Models/RawViewTableModel.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -47,7 +48,8 @@ HEADERS  += \
     Data/FileAccess/FileReader.h \
     Data/FileAccess/FileWriter.h \
     Data/DTO/CategoryDTO.h \
-    Data/DAO/CategoryDAO.h
+    Data/DAO/CategoryDAO.h \
+    Models/RawViewTableModel.h
 
 FORMS    += loosechangepresenter.ui
 

@@ -1,10 +1,40 @@
 #ifndef RAWVIEWTABLEMODEL_H
 #define RAWVIEWTABLEMODEL_H
 
-class RawViewTableModel
+#include <QAbstractTableModel>
+#include <Data/DAO/TransactionDAO.h>
+#include <Data/DAO/CategoryDAO.h>
+
+class RawViewTableModel : public QAbstractTableModel
 {
+    Q_OBJECT
 public:
-    RawViewTableModel();
+     RawViewTableModel(TransactionDAO *inTransactionDAOPointer,
+                       CategoryDAO *inCategoryDAOPointer, QObject * parent = 0);
+    ~RawViewTableModel();
+
+    int rowCount(const QModelIndex &index) const;
+
+    int columnCount(const QModelIndex &index) const;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
+
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+
+    void Refresh()
+    {
+        this->layoutChanged();
+//        this->resetInternalData();
+//        QModelIndex topLeft = QModelIndex()  //index.child(0 ,0);
+//        QModelIndex bottomRight = index.child(transactionDAO->GetTransactionList().count() - 1, 5);
+//        emit(dataChanged(topLeft,bottomRight));
+    }
+
+private:
+    CategoryDAO *categoryDAO;
+    TransactionDAO *transactionDAO;
 };
 
 #endif // RAWVIEWTABLEMODEL_H

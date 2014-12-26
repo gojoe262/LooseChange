@@ -47,8 +47,9 @@ public:
      * @brief UpdateTransactionAmount
      * @param id
      * @param amount
+     * @return
      */
-    void UpdateTransactionAmount(int id, double amount);
+    bool UpdateTransactionAmount(int id, double amount);
 
     /**
      * @brief UpdateTransactionDate
@@ -56,28 +57,30 @@ public:
      * @param date
      * @return
      */
-    void UpdateTransactionDate(int id, QDate date);
+    bool UpdateTransactionDate(int id, QDate date);
 
     /**
      * @brief UpdateTransactionType
      * @param id
      * @param type
      */
-    void UpdateTransactionType(int id, TransactionType type);
+    bool UpdateTransactionType(int id, TransactionType type);
 
     /**
      * @brief UpdateTransactionComment
      * @param id
      * @param comment
+     * @return
      */
-    void UpdateTransactionComment(int id, QString comment);
+    bool UpdateTransactionComment(int id, QString comment);
 
     /**
      * @brief UpdateTransactionCategory
      * @param id
-     * @param categoryID
+     * @param categoryId
+     * @return
      */
-    void UpdateTransactionCategory(int id, int categoryId);
+    bool UpdateTransactionCategory(int id, int categoryId);
 
     /**
      * @brief AddCategory

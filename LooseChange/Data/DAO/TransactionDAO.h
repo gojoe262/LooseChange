@@ -21,6 +21,8 @@ public:
      */
     QList<TransactionDTO> GetTransactionList();
 
+    TransactionDTO GetTransactionAt(int index);
+
     /**
      * @brief Add - Adds the dto to the cached List
      * @param inDto
@@ -33,35 +35,35 @@ public:
      * @param id
      * @param amount
      */
-    void UpdateAmount(int id, double amount);
+    bool UpdateAmount(int id, double amount);
 
     /**
      * @brief UpdateDate - Updates the date on the dto with the matching Id
      * @param id
      * @param date
      */
-    void UpdateDate(int id, QDate date);
+    bool UpdateDate(int id, QDate date);
 
     /**
      * @brief UpdateType
      * @param id
      * @param type
      */
-    void UpdateType(int id, TransactionType type);
+    bool UpdateType(int id, TransactionType type);
 
     /**
      * @brief UpdateComment
      * @param id
      * @param comment
      */
-    void UpdateComment(int id, QString comment);
+    bool UpdateComment(int id, QString comment);
 
     /**
      * @brief UpdateCategory
      * @param id
      * @param category
      */
-    void UpdateCategory(int id, int categoryId);
+    bool UpdateCategory(int id, int categoryId);
 
 private:
 
