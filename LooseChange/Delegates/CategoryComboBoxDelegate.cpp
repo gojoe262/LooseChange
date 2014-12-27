@@ -60,9 +60,6 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
     }
 
     model->setData(index, categoryDAOPointer->GetDescription(value), Qt::EditRole);
-
-    //PUT SIGNAL HERE
-    emit ValueChanged(index, value);
 }
 
 void CategoryComboBoxDelegate::updateEditorGeometry(QWidget *editor,

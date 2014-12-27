@@ -24,11 +24,6 @@ public:
 
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
-signals:
-    void ValueChanged(QModelIndex index, QDate value) const;
-
-
 };
 
 #endif // DATEEDITDELEGATE_H

@@ -99,6 +99,10 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     }
 }
 
+void RawViewTableModel::Refresh()
+{
+    this->layoutChanged();
+}
 
 
 

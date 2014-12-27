@@ -23,14 +23,10 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
-    void Refresh()
-    {
-        this->layoutChanged();
-//        this->resetInternalData();
-//        QModelIndex topLeft = QModelIndex()  //index.child(0 ,0);
-//        QModelIndex bottomRight = index.child(transactionDAO->GetTransactionList().count() - 1, 5);
-//        emit(dataChanged(topLeft,bottomRight));
-    }
+    /**
+     * @brief Refresh - Forces a re-retreive from the cached data
+     */
+    void Refresh();
 
 private:
     CategoryDAO *categoryDAO;

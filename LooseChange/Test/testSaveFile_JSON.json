@@ -2,32 +2,32 @@
     "CATEGORIES": [
         {
             "DESCRIPTION": "Gas/Travel",
-            "ID": "1"
+            "ID": "0"
         },
         {
             "DESCRIPTION": "Restaurants",
-            "ID": "2"
+            "ID": "1"
         },
         {
             "DESCRIPTION": "Laundry",
-            "ID": "3"
+            "ID": "2"
         }
     ],
     "TRANSACTIONS": [
         {
             "AMOUNT": 122.48999999999999,
-            "CATEGORY_ID": "3",
+            "CATEGORY_ID": "2",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
-            "ID": "1",
+            "ID": "0",
             "TRANSACTION_TYPE": "IN"
         },
         {
-            "AMOUNT": 122.48999999999999,
-            "CATEGORY_ID": "3",
+            "AMOUNT": 144.49000000000001,
+            "CATEGORY_ID": "0",
             "COMMENT": "This is just a tee",
-            "DATE": "20140604",
-            "ID": "2",
+            "DATE": "20140603",
+            "ID": "1",
             "TRANSACTION_TYPE": "IN"
         }
     ]

@@ -1,9 +1,5 @@
 #include "RawViewPresenter.h"
-#include <Delegates/DateEditDelegate.h>
-#include <Delegates/DoubleSpinBoxDelegate.h>
-#include <Delegates/TransactionTypeComboBoxDelegate.h>
-#include <Delegates/CategoryComboBoxDelegate.h>
-#include <Delegates/CommentLineEditDelegate.h>
+
 #include <QInputDialog>
 
 RawViewPresenter::RawViewPresenter()
@@ -13,14 +9,31 @@ RawViewPresenter::RawViewPresenter()
 RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent) :
     QObject(parent)
 {
-    //table = tableWidget;
-
     transactionDAO = new TransactionDAO(inCachedDataPointer);
     categoryDAO = new CategoryDAO(inCachedDataPointer);
+
     model = new RawViewTableModel(transactionDAO, categoryDAO, this);
 
     tableView = inTableView;
     tableView->setModel(model);
+
+    dateEdit = new DateEditDelegate(this);
+    doubleSpinBox = new DoubleSpinBoxDelegate(this);
+    transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
+    categoryComboBox = new CategoryComboBoxDelegate(categoryDAO, this);
+    commentLineEdit = new CommentLineEditDelegate(this);
+
+    tableView->setItemDelegateForColumn(1, dateEdit);
+    tableView->setItemDelegateForColumn(2, doubleSpinBox);
+    tableView->setItemDelegateForColumn(3, transactionTypeComboBox);
+    tableView->setItemDelegateForColumn(4, categoryComboBox);
+    tableView->setItemDelegateForColumn(5, commentLineEdit);
+
+    Load();
+
+
+
+
 }
 
 RawViewPresenter::~RawViewPresenter()
@@ -32,10 +45,20 @@ RawViewPresenter::~RawViewPresenter()
 
 void RawViewPresenter::Load()
 {
-    //tableView->setModel(model);
-    //model->layoutAboutToBeChanged();
-    //model->layoutChanged();
     model->Refresh();
+//    DateEditDelegate *dateEdit = new DateEditDelegate(this);
+//    DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
+//    TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
+//    CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(categoryDAO, this);
+//    CommentLineEditDelegate *commentLineEdit = new CommentLineEditDelegate(this);
+
+//    table->setItemDelegateForColumn(1, dateEdit);
+//    table->setItemDelegateForColumn(2, doubleSpinBox);
+//    table->setItemDelegateForColumn(3, transactionTypeComboBox);
+//    table->setItemDelegateForColumn(4, categoryComboBox);
+//    table->setItemDelegateForColumn(5, commentLineEdit);
+
+
 
 //    QList<TransactionDTO> transactionList = transactionDAO->GetTransactionList();
 //    int count = transactionList.count();
@@ -44,11 +67,7 @@ void RawViewPresenter::Load()
 //    table->setColumnCount(6);
 //    table->setRowCount(count);
 
-//    DateEditDelegate *dateEdit = new DateEditDelegate(this);
-//    DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-//    TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
-//    CategoryComboBoxDelegate *categoryComboBox = new CategoryComboBoxDelegate(categoryDAO, this);
-//    CommentLineEditDelegate *commentLineEdit = new CommentLineEditDelegate(this);
+
 
 
 //    QObject::connect(dateEdit, SIGNAL(ValueChanged(QModelIndex,QDate)), this, SLOT(ChangeDate(QModelIndex,QDate)));
@@ -58,11 +77,6 @@ void RawViewPresenter::Load()
 //    QObject::connect(categoryComboBox, SIGNAL(AddCategoryRequested(QModelIndex)), this, SLOT(AddCategory(QModelIndex)));
 //    QObject::connect(commentLineEdit, SIGNAL(ValueChanged(QModelIndex,QString)), this, SLOT(ChangeComment(QModelIndex,QString)));
 
-//    table->setItemDelegateForColumn(1, dateEdit);
-//    table->setItemDelegateForColumn(2, doubleSpinBox);
-//    table->setItemDelegateForColumn(3, transactionTypeComboBox);
-//    table->setItemDelegateForColumn(4, categoryComboBox);
-//    table->setItemDelegateForColumn(5, commentLineEdit);
 
 
 //    ///ui->tableWidgetRawView->verticalHeaderItem(i)->setText(QString::number(dto.id));

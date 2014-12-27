@@ -23,10 +23,6 @@ public:
 
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
-signals:
-    void ValueChanged(QModelIndex index, QString comment) const;
-
 };
 
 #endif // COMMENTLINEEDITDELEGATE_H

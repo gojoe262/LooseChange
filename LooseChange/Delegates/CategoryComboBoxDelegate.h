@@ -26,7 +26,6 @@ public:
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 signals:
-    void ValueChanged(QModelIndex index, int value) const;
     void AddCategoryRequested(QModelIndex index) const;
 
 private:

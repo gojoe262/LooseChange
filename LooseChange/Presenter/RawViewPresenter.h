@@ -4,6 +4,11 @@
 #include <Data/DAO/TransactionDAO.h>
 #include <Data/DAO/CategoryDAO.h>
 #include <Models/RawViewTableModel.h>
+#include <Delegates/DateEditDelegate.h>
+#include <Delegates/DoubleSpinBoxDelegate.h>
+#include <Delegates/TransactionTypeComboBoxDelegate.h>
+#include <Delegates/CategoryComboBoxDelegate.h>
+#include <Delegates/CommentLineEditDelegate.h>
 #include <QTableWidget>
 
 class RawViewPresenter : public QObject
@@ -29,6 +34,12 @@ private:
 
     TransactionDAO *transactionDAO;
     CategoryDAO *categoryDAO;
+
+    DateEditDelegate *dateEdit;// = new DateEditDelegate(this);
+    DoubleSpinBoxDelegate *doubleSpinBox;// = new DoubleSpinBoxDelegate(this);
+    TransactionTypeComboBoxDelegate *transactionTypeComboBox;// = new TransactionTypeComboBoxDelegate(this);
+    CategoryComboBoxDelegate *categoryComboBox;// = new CategoryComboBoxDelegate(categoryDAO, this);
+    CommentLineEditDelegate *commentLineEdit;// = new CommentLineEditDelegate(this);
 
 
     /**

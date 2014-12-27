@@ -24,18 +24,21 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     ui->mainToolBar->addWidget(ui->toolButtonOpen);
     ui->mainToolBar->addWidget(ui->toolButtonSave);
 
-
-
-
     /// http://iconsetc.com/icon/bfa_folder-open/?style=simple-black
-    //Used to set edit triggers. Ex: signal or double click
+    /// Used to set edit triggers. Ex: signal or double click
 
+    /// Initialize Cached Data
     cachedData = new CachedData();
+
+    /// Initialize Presenters
     rawView = new RawViewPresenter(ui->tableWidgetRawView, ui->tableViewRawView, cachedData, this);
+
+    /// SLOTS / SIGNALS
     connect(cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
-    connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));
+    connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));\
 
     DisableSave(); //Disables saves when first loading.
+
     rawView->Load();
 
 

@@ -29,8 +29,6 @@ void CommentLineEditDelegate::setModelData(QWidget *editor, QAbstractItemModel *
     QString value = lineEdit->text();
 
     model->setData(index, value, Qt::EditRole);
-
-    emit ValueChanged(index, value);
 }
 
 void CommentLineEditDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const

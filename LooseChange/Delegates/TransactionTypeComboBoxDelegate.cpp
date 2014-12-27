@@ -40,9 +40,6 @@ void TransactionTypeComboBoxDelegate::setModelData(QWidget *editor, QAbstractIte
     TransactionType value = (TransactionType)comboBox->currentData().toInt();//TransactionType)index.model()->data(index, Qt::EditRole).toInt();
 
     model->setData(index, TransactionTypeHelper::ToString(value), Qt::EditRole);
-
-    //PUT SIGNAL HERE
-    emit ValueChanged(index, value);
 }
 
 void TransactionTypeComboBoxDelegate::updateEditorGeometry(QWidget *editor,
