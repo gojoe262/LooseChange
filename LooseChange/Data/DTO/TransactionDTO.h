@@ -5,6 +5,8 @@
 #include <Utility/TransactionType.h>
 #include <Data/DTO/CategoryDTO.h>
 
+//https://github.com/vpiotr/decimal_for_cpp -- For Decimals???
+
 class TransactionDTO
 {
 public:
