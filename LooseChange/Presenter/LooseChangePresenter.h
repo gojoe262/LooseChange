@@ -25,40 +25,57 @@ private:
 
 private slots:
     /**
-     * @brief on_toolButtonOpen_clicked - Opens the open file dialog.
-     * Used to open a LooseChange file
+     * @brief on_toolButtonOpen_clicked - Calls Open()
+     * This is used by the toolbar
      */
     void on_toolButtonOpen_clicked();
 
     /**
-     * @brief on_toolButtonSave_clicked - Opens the save file dialog.
-     * Used to save to a LooseChange File.
+     * @brief on_toolButtonSave_clicked - Calls Save()
+     * This is used by the toolbar
      */
     void on_toolButtonSave_clicked();
 
     /**
-     * @brief EnableSaveButton
+     * @brief on_actionOpen_triggered - Calls Open()
+     */
+    void on_actionOpen_triggered();
+
+    /**
+     * @brief on_actionSave_triggered - Calls Save()
+     */
+    void on_actionSave_triggered();
+
+    /**
+     * @brief EnableSave
      */
     void EnableSave();
 
     /**
-     * @brief DisableSaveButton
+     * @brief DisableSave
      */
     void DisableSave();
 
 
-    void on_actionOpen_triggered();
 
-    void on_actionSave_triggered();
 
 private:
     Ui::LooseChangePresenter *ui;
+
+    /**
+     * @brief rawView - Handles the raw view stuff
+     */
     RawViewPresenter *rawView;
+
+    /**
+     * @brief cachedData - Holds the data
+     */
     CachedData *cachedData;
 
-
+    /**
+     * @brief fileLocationTemp - Stores the file location.
+     */
     QString fileLocationTemp;
-
 
 };
 

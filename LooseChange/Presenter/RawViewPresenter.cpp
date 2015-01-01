@@ -6,12 +6,14 @@ RawViewPresenter::RawViewPresenter()
 {
 }
 
-RawViewPresenter::RawViewPresenter(QTableWidget *tableWidget, QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent) :
+RawViewPresenter::RawViewPresenter(QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent) :
     QObject(parent)
 {
+    //Initialize DAOs
     transactionDAO = new TransactionDAO(inCachedDataPointer);
     categoryDAO = new CategoryDAO(inCachedDataPointer);
 
+    //Initialize Model
     model = new RawViewTableModel(transactionDAO, categoryDAO, this);
 
     tableView = inTableView;
@@ -46,6 +48,9 @@ RawViewPresenter::~RawViewPresenter()
 void RawViewPresenter::Load()
 {
     model->Refresh();
+
+
+    {
 //    DateEditDelegate *dateEdit = new DateEditDelegate(this);
 //    DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
 //    TransactionTypeComboBoxDelegate *transactionTypeComboBox = new TransactionTypeComboBoxDelegate(this);
@@ -110,6 +115,7 @@ void RawViewPresenter::Load()
     //table->hideColumn(0);
     //table->sortItems(1);
     //table->resizeColumnsToContents();
+    }
 }
 
 int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const

@@ -25,6 +25,7 @@ int RawViewTableModel::columnCount(const QModelIndex &index) const
 
 QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
 {
+    ///This sets the data that is seen in the table view
     if(transactionDAO->GetTransactionList().isEmpty())
     {
         return QVariant();
@@ -44,7 +45,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         if(index.column() == 2)
             return transactionDAO->GetTransactionAt(index.row()).amount;
         if(index.column() == 3)
-            return transactionDAO->GetTransactionAt(index.row()).transactionType;
+            return TransactionTypeHelper::ToString(transactionDAO->GetTransactionAt(index.row()).transactionType);
         if(index.column() == 4)
             return transactionDAO->GetTransactionAt(index.row()).categoryId;
         if(index.column() == 5)
@@ -99,9 +100,10 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     }
 }
 
+
 void RawViewTableModel::Refresh()
 {
-    this->layoutChanged();
+    layoutChanged();
 }
 
 

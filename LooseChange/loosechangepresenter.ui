@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>853</width>
-    <height>607</height>
+    <width>762</width>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,17 @@
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Add</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>Icons/AddIcon.png</normaloff>Icons/AddIcon.png</iconset>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QToolButton" name="toolButtonOpen">
         <property name="text">
@@ -67,52 +78,18 @@
       <property name="movable">
        <bool>false</bool>
       </property>
-      <property name="tabBarAutoHide" stdset="0">
+      <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
       <widget class="QWidget" name="tabRawView">
        <attribute name="title">
         <string>Raw View</string>
        </attribute>
-       <widget class="QTableView" name="tableViewRawView">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>20</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="tableWidgetRawView">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>208</y>
-          <width>85</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Add</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>Icons/AddIcon.png</normaloff>Icons/AddIcon.png</iconset>
-        </property>
-       </widget>
-       <zorder></zorder>
-       <zorder>tableViewRawView</zorder>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QTableView" name="tableViewRawView"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -140,8 +117,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>853</width>
-     <height>25</height>
+     <width>762</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

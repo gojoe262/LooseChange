@@ -20,15 +20,15 @@
             "COMMENT": "Just a test test",
             "DATE": "20140603",
             "ID": "0",
-            "TRANSACTION_TYPE": "IN"
+            "TRANSACTION_TYPE": "OUT"
         },
         {
             "AMOUNT": 144.49000000000001,
             "CATEGORY_ID": "0",
             "COMMENT": "This is just a tee",
-            "DATE": "20140603",
+            "DATE": "20140604",
             "ID": "1",
-            "TRANSACTION_TYPE": "IN"
+            "TRANSACTION_TYPE": "OUT"
         }
     ]
 }

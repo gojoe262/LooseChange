@@ -16,7 +16,7 @@ class RawViewPresenter : public QObject
     Q_OBJECT
 public:
     RawViewPresenter();
-    RawViewPresenter(QTableWidget *tableWidget, QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent = 0);
+    RawViewPresenter(QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent = 0);
 
     ~RawViewPresenter();
 

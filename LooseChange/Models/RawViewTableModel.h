@@ -17,6 +17,12 @@ public:
 
     int columnCount(const QModelIndex &index) const;
 
+    /**
+     * @brief data
+     * @param index
+     * @param role
+     * @return This shows the data to be seen in the table view
+     */
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
