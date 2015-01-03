@@ -123,39 +123,15 @@ int RawViewPresenter::GetIdFromModelIndex(QModelIndex index) const
    return table->model()->data(table->model()->index(index.row(),0)).toInt();
 }
 
-void RawViewPresenter::ChangeAmount(QModelIndex index, double amount)
-{ 
-    transactionDAO->UpdateAmount(GetIdFromModelIndex(index), amount);
-}
 
-void RawViewPresenter::ChangeDate(QModelIndex index, QDate date)
-{
-    transactionDAO->UpdateDate(GetIdFromModelIndex(index), date);
-}
-
-void RawViewPresenter::ChangeTransactionType(QModelIndex index, TransactionType type)
-{
-    transactionDAO->UpdateType(GetIdFromModelIndex(index), type);
-}
-
-void RawViewPresenter::ChangeComment(QModelIndex index, QString comment)
-{
-    transactionDAO->UpdateComment(GetIdFromModelIndex(index), comment);
-}
-
-void RawViewPresenter::ChangeCategory(QModelIndex index, int categoryId)
-{
-    transactionDAO->UpdateCategory(GetIdFromModelIndex(index), categoryId);
-}
-
-void RawViewPresenter::AddCategory(QModelIndex index)
-{
-    bool ok;
-    QString categoryDescription = QInputDialog::getText(table, tr("Add New Category"),
-                                              tr("Category:"), QLineEdit::Normal,
-                                              QString(), &ok);
-    if(ok && !categoryDescription.trimmed().isEmpty())
-    {
-        categoryDAO->AddCategory(categoryDescription);
-    }
-}
+void RawViewPresenter::AddCategory(QModelIndex index) {}
+//{
+//    bool ok;
+//    QString categoryDescription = QInputDialog::getText(table, tr("Add New Category"),
+//                                              tr("Category:"), QLineEdit::Normal,
+//                                              QString(), &ok);
+//    if(ok && !categoryDescription.trimmed().isEmpty())
+//    {
+//        categoryDAO->AddCategory(categoryDescription);
+//    }
+//}

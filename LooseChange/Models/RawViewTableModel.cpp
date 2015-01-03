@@ -47,7 +47,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         if(index.column() == 3)
             return TransactionTypeHelper::ToString(transactionDAO->GetTransactionAt(index.row()).transactionType);
         if(index.column() == 4)
-            return transactionDAO->GetTransactionAt(index.row()).categoryId;
+            return categoryDAO->GetDescription(transactionDAO->GetTransactionAt(index.row()).categoryId);
         if(index.column() == 5)
             return transactionDAO->GetTransactionAt(index.row()).comment;
     }
@@ -61,8 +61,6 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     {
         int id = data(this->index(index.row(), 0)).toInt();
         bool changesMade = false;
-
-
 
 
         /// Column 1 - DATE

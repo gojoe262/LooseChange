@@ -58,7 +58,6 @@ private slots:
 
 
 
-
 private:
     Ui::LooseChangePresenter *ui;
 

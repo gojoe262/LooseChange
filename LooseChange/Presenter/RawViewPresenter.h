@@ -35,11 +35,11 @@ private:
     TransactionDAO *transactionDAO;
     CategoryDAO *categoryDAO;
 
-    DateEditDelegate *dateEdit;// = new DateEditDelegate(this);
-    DoubleSpinBoxDelegate *doubleSpinBox;// = new DoubleSpinBoxDelegate(this);
-    TransactionTypeComboBoxDelegate *transactionTypeComboBox;// = new TransactionTypeComboBoxDelegate(this);
-    CategoryComboBoxDelegate *categoryComboBox;// = new CategoryComboBoxDelegate(categoryDAO, this);
-    CommentLineEditDelegate *commentLineEdit;// = new CommentLineEditDelegate(this);
+    DateEditDelegate *dateEdit;
+    DoubleSpinBoxDelegate *doubleSpinBox;
+    TransactionTypeComboBoxDelegate *transactionTypeComboBox;
+    CategoryComboBoxDelegate *categoryComboBox;
+    CommentLineEditDelegate *commentLineEdit;
 
 
     /**
@@ -51,40 +51,6 @@ private:
 
 
 public slots:
-    /**
-     * @brief ChangeAmount - Changes the amount
-     * @param value
-     * @param index
-     */
-    void ChangeAmount(QModelIndex index, double amount);
-
-    /**
-     * @brief ChangeDate
-     * @param date
-     * @param index
-     */
-    void ChangeDate(QModelIndex index, QDate date);
-
-    /**
-     * @brief ChangeTransactionType
-     * @param type
-     * @param index
-     */
-    void ChangeTransactionType(QModelIndex index, TransactionType type);
-
-    /**
-     * @brief ChangeComment
-     * @param comment
-     * @param index
-     */
-    void ChangeComment(QModelIndex index, QString comment);
-
-    /**
-     * @brief ChangeCategory
-     * @param index
-     * @param categoryId
-     */
-    void ChangeCategory(QModelIndex index, int categoryId);
 
     /**
      * @brief AddCategory

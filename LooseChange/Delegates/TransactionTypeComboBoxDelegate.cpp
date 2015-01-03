@@ -37,7 +37,7 @@ void TransactionTypeComboBoxDelegate::setModelData(QWidget *editor, QAbstractIte
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
 
-    TransactionType value = (TransactionType)comboBox->currentData().toInt();//TransactionType)index.model()->data(index, Qt::EditRole).toInt();
+    TransactionType value = (TransactionType)comboBox->currentData().toInt();
 
     model->setData(index, value, Qt::EditRole);
 }

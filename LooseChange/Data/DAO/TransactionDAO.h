@@ -23,6 +23,8 @@ public:
 
     TransactionDTO GetTransactionAt(int index);
 
+
+
     /**
      * @brief Add - Adds the dto to the cached List
      * @param inDto

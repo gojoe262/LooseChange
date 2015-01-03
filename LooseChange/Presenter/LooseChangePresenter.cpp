@@ -7,7 +7,6 @@
 #include <QDateEdit>
 #include <QDoubleSpinBox>
 #include <Utility/TransactionType.h>
-#include <Utility/Categories.h>
 #include <Delegates/DoubleSpinBoxDelegate.h>
 #include <Delegates/DateEditDelegate.h>
 
@@ -106,14 +105,4 @@ void LooseChangePresenter::DisableSave()
     ui->actionSave->setEnabled(false);
     ui->toolButtonSave->setEnabled(false);
 }
-
-
-
-
-
-
-
-
-
-
 

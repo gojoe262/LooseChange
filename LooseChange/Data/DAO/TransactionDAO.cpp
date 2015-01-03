@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QFile>
 #include <Utility/TransactionType.h>
-#include <Utility/Categories.h>
 #include <Data/FileAccess/FileReader.h>
 #include <Data/FileAccess/FileWriter.h>
 #include <QMessageBox>

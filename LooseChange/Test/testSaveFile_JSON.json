@@ -16,7 +16,7 @@
     "TRANSACTIONS": [
         {
             "AMOUNT": 122.48999999999999,
-            "CATEGORY_ID": "2",
+            "CATEGORY_ID": "1",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
             "ID": "0",
@@ -24,7 +24,7 @@
         },
         {
             "AMOUNT": 144.49000000000001,
-            "CATEGORY_ID": "0",
+            "CATEGORY_ID": "2",
             "COMMENT": "This is just a tee",
             "DATE": "20140604",
             "ID": "1",

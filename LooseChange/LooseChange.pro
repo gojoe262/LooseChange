@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     Data/DTO/TransactionDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
     Test/LooseChangeDAOTest.cpp \
-    Utility/Categories.cpp \
     Utility/TransactionType.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
@@ -36,7 +35,6 @@ HEADERS  += \
     Data/DAO/TransactionDAO.h \
     Data/DTO/TransactionDTO.h \
     Presenter/LooseChangePresenter.h \
-    Utility/Categories.h \
     Utility/TransactionType.h \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \

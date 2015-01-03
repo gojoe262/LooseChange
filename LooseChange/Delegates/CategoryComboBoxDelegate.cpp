@@ -23,7 +23,7 @@ QWidget *CategoryComboBoxDelegate::createEditor(QWidget *parent,
     {
         editor->addItem(category.description, QVariant(category.id));
     }
-    editor->addItem("*ADD CATEGORY*", QVariant(-1));
+    //editor->addItem("*ADD CATEGORY*", QVariant(-1));
 
     return editor;
 }
@@ -59,7 +59,7 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 //        }
     }
 
-    model->setData(index, categoryDAOPointer->GetDescription(value), Qt::EditRole);
+    model->setData(index, value, Qt::EditRole);
 }
 
 void CategoryComboBoxDelegate::updateEditorGeometry(QWidget *editor,
