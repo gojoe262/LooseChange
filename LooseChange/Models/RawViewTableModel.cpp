@@ -47,7 +47,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         if(index.column() == 3)
             return TransactionTypeHelper::ToString(transactionDAO->GetTransactionAt(index.row()).transactionType);
         if(index.column() == 4)
-            return categoryDAO->GetDescription(transactionDAO->GetTransactionAt(index.row()).categoryId);
+            return categoryDAO->GetCategory(transactionDAO->GetTransactionAt(index.row()).categoryId).description;
         if(index.column() == 5)
             return transactionDAO->GetTransactionAt(index.row()).comment;
     }

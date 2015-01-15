@@ -13,6 +13,11 @@ public:
                        CategoryDAO *inCategoryDAOPointer, QObject * parent = 0);
     ~RawViewTableModel();
 
+     /**
+     * @brief rowCount
+     * @param index
+     * @return
+     */
     int rowCount(const QModelIndex &index) const;
 
     int columnCount(const QModelIndex &index) const;

@@ -19,11 +19,11 @@ public:
     QList<CategoryDTO> GetCategories();
 
     /**
-     * @brief GetDescription
-     * @param categoryId
+     * @brief GetCategory
+     * @param inCategoryId
      * @return
      */
-    QString GetDescription(int categoryId);
+    CategoryDTO GetCategory(int inCategoryId);
 
     /**
      * @brief AddCategory

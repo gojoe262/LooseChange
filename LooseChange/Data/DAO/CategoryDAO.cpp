@@ -19,6 +19,18 @@ QList<CategoryDTO> CategoryDAO::GetCategories()
     return cachedDataPointer->GetCategoryList();
 }
 
+CategoryDTO CategoryDAO::GetCategory(int inCategoryId)
+{
+    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
+    foreach(CategoryDTO category, categoryList)
+    {
+        if(category.id == inCategoryId)
+        {
+            return category;
+        }
+    }
+}
+
 QString CategoryDAO::GetDescription(int categoryId)
 {
     QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();

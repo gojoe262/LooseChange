@@ -15,22 +15,26 @@ class RawViewPresenter : public QObject
 {
     Q_OBJECT
 public:
-    RawViewPresenter();
+//    RawViewPresenter();
     RawViewPresenter(QTableView *inTableView, CachedData *inCachedDataPointer, QWidget *parent = 0);
 
     ~RawViewPresenter();
 
     /**
-     * @brief Load - Loads the data (from dao) to the table
+     * @brief Load - Loads the data (from DAOs) to the table
      */
     void Load();
 
+public slots:
+    /**
+     * @brief AddCategory
+     * @param index
+     */
+    void AddCategory(QModelIndex index);
 
 private:
-    QTableWidget *table;
     QTableView *tableView;
     RawViewTableModel *model;
-    CachedData *cachedDataPointer;
 
     TransactionDAO *transactionDAO;
     CategoryDAO *categoryDAO;
@@ -40,23 +44,6 @@ private:
     TransactionTypeComboBoxDelegate *transactionTypeComboBox;
     CategoryComboBoxDelegate *categoryComboBox;
     CommentLineEditDelegate *commentLineEdit;
-
-
-    /**
-     * @brief GetIdFromModelIndex - Get the id from the table given the index
-     * @param index
-     * @return id
-     */
-    int GetIdFromModelIndex(QModelIndex index) const;
-
-
-public slots:
-
-    /**
-     * @brief AddCategory
-     * @param index
-     */
-    void AddCategory(QModelIndex index);
 
 };
 
