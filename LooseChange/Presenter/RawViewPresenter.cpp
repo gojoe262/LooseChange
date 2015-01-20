@@ -58,4 +58,7 @@ void RawViewPresenter::Load()
 }
 
 
-void RawViewPresenter::AddCategory(QModelIndex index) {}
+void RawViewPresenter::AddCategory()
+{
+
+}

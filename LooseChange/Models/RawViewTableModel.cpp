@@ -39,17 +39,31 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
     if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         if(index.column() == 0)
+        {
             return transactionDAO->GetTransactionAt(index.row()).id;
+        }
+
         if(index.column() == 1)
+        {
             return transactionDAO->GetTransactionAt(index.row()).date;
+        }
         if(index.column() == 2)
+        {
             return transactionDAO->GetTransactionAt(index.row()).amount;
+        }
         if(index.column() == 3)
+        {
             return TransactionTypeHelper::ToString(transactionDAO->GetTransactionAt(index.row()).transactionType);
+        }
         if(index.column() == 4)
-            return categoryDAO->GetCategory(transactionDAO->GetTransactionAt(index.row()).categoryId).description;
+        {
+            int categoryId = transactionDAO->GetTransactionAt(index.row()).categoryId;
+            return categoryDAO->GetCategory(categoryId).description;
+        }
         if(index.column() == 5)
+        {
             return transactionDAO->GetTransactionAt(index.row()).comment;
+        }
     }
 
     return QVariant();
@@ -61,7 +75,6 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     {
         int id = data(this->index(index.row(), 0)).toInt();
         bool changesMade = false;
-
 
         /// Column 1 - DATE
         if(index.column() == 1)

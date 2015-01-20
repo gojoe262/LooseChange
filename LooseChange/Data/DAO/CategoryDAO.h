@@ -32,6 +32,20 @@ public:
     void AddCategory(QString categoryDescription);
 
     /**
+     * @brief IsUniqueCategory
+     * @param categoryDescription
+     * @return
+     */
+    bool IsUniqueCategory(QString categoryDescription);
+
+    /**
+     * @brief GetCategoryId
+     * @param categoryDescription
+     * @return
+     */
+    int GetCategoryId(QString categoryDescription);
+
+    /**
      * @brief GetNextId
      * @return
      */

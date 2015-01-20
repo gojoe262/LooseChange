@@ -30,7 +30,7 @@ public slots:
      * @brief AddCategory
      * @param index
      */
-    void AddCategory(QModelIndex index);
+    void AddCategory();
 
 private:
     QTableView *tableView;
