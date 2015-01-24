@@ -51,6 +51,13 @@ public:
      */
     int GetNextId();
 
+    /**
+     * @brief GetDescription
+     * @param categoryId
+     * @return
+     */
+    QString GetDescription(int categoryId);
+
 private:
     CachedData *cachedDataPointer;
 };

@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     Data/FileAccess/FileWriter.cpp \
     Data/DTO/CategoryDTO.cpp \
     Data/DAO/CategoryDAO.cpp \
-    Models/RawViewTableModel.cpp
+    Models/RawViewTableModel.cpp \
+    Presenter/EditCategoriesPresenter.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -47,9 +48,12 @@ HEADERS  += \
     Data/FileAccess/FileWriter.h \
     Data/DTO/CategoryDTO.h \
     Data/DAO/CategoryDAO.h \
-    Models/RawViewTableModel.h
+    Models/RawViewTableModel.h \
+    Presenter/EditCategoriesPresenter.h
 
-FORMS    += loosechangepresenter.ui
+FORMS    += \
+    Presenter/EditCategoriesPresenter.ui \
+    Presenter/LooseChangePresenter.ui
 
 OTHER_FILES += \
     Test/test.lc

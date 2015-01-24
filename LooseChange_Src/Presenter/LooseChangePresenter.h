@@ -6,6 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
 #include <Presenter/RawViewPresenter.h>
+#include <Presenter/EditCategoriesPresenter.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -58,6 +59,8 @@ private slots:
 
 
 
+    void on_actionEdit_Categories_triggered();
+
 private:
     Ui::LooseChangePresenter *ui;
 
@@ -75,6 +78,8 @@ private:
      * @brief fileLocationTemp - Stores the file location.
      */
     QString fileLocationTemp;
+
+
 
 };
 

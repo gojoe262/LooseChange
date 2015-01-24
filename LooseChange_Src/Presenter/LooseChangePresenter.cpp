@@ -106,3 +106,9 @@ void LooseChangePresenter::DisableSave()
     ui->toolButtonSave->setEnabled(false);
 }
 
+
+void LooseChangePresenter::on_actionEdit_Categories_triggered()
+{
+    EditCategoriesPresenter *e = new EditCategoriesPresenter(this);
+    e->exec();
+}
