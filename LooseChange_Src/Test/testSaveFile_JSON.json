@@ -9,13 +9,13 @@
             "ID": "1"
         },
         {
-            "DESCRIPTION": "Laundry",
+            "DESCRIPTION": "Laundrymaybe",
             "ID": "2"
         }
     ],
     "TRANSACTIONS": [
         {
-            "AMOUNT": 114.48999999999999,
+            "AMOUNT": 113.48999999999999,
             "CATEGORY_ID": "2",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
@@ -24,11 +24,11 @@
         },
         {
             "AMOUNT": 144.49000000000001,
-            "CATEGORY_ID": "0",
+            "CATEGORY_ID": "1",
             "COMMENT": "THIS IS A TEST",
             "DATE": "20140604",
             "ID": "1",
-            "TRANSACTION_TYPE": "OUT"
+            "TRANSACTION_TYPE": "IN"
         }
     ]
 }

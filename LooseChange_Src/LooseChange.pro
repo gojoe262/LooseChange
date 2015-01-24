@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     Data/DTO/CategoryDTO.cpp \
     Data/DAO/CategoryDAO.cpp \
     Models/RawViewTableModel.cpp \
-    Presenter/EditCategoriesPresenter.cpp
+    Presenter/EditCategoriesPresenter.cpp \
+    Models/EditCategoriesTableModel.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -49,7 +50,8 @@ HEADERS  += \
     Data/DTO/CategoryDTO.h \
     Data/DAO/CategoryDAO.h \
     Models/RawViewTableModel.h \
-    Presenter/EditCategoriesPresenter.h
+    Presenter/EditCategoriesPresenter.h \
+    Models/EditCategoriesTableModel.h
 
 FORMS    += \
     Presenter/EditCategoriesPresenter.ui \

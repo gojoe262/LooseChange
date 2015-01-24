@@ -58,7 +58,3 @@ void RawViewPresenter::Load()
 }
 
 
-void RawViewPresenter::AddCategory()
-{
-
-}

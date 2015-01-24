@@ -48,6 +48,11 @@ private slots:
     void on_actionSave_triggered();
 
     /**
+     * @brief on_actionEdit_Categories_triggered
+     */
+    void on_actionEdit_Categories_triggered();
+
+    /**
      * @brief EnableSave
      */
     void EnableSave();
@@ -59,7 +64,7 @@ private slots:
 
 
 
-    void on_actionEdit_Categories_triggered();
+
 
 private:
     Ui::LooseChangePresenter *ui;
@@ -72,7 +77,7 @@ private:
     /**
      * @brief cachedData - Holds the data
      */
-    CachedData *cachedData;
+    CachedData cachedData;
 
     /**
      * @brief fileLocationTemp - Stores the file location.

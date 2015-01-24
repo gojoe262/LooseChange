@@ -8,6 +8,11 @@ CachedData::CachedData(QObject *parent) :
 {
 }
 
+CachedData::CachedData(const CachedData &other)
+{
+    this->operator =(other);
+}
+
 CachedData::~CachedData()
 {
     transactionList.clear();
@@ -154,8 +159,36 @@ bool CachedData::UpdateTransactionCategory(int id, int categoryId)
     return changesMade;
 }
 
+bool CachedData::UpdateCategoryDescription(int categoryId, QString categoryDescription)
+{
+    bool changesMade = false;
+    for(int i = 0; i < categoryList.count(); i++)
+    {
+        if(categoryList.at(i).id == categoryId)
+        {
+            if(categoryList[i].description != categoryDescription)
+            {
+                categoryList[i].description = categoryDescription;
+                changesMade = true;
+            }
+        }
+    }
+    if(changesMade)
+    {
+        emit MarkDirty();
+    }
+    return changesMade;
+}
+
 void CachedData::AddCategory(CategoryDTO inCategory)
 {
     categoryList.append(inCategory);
     emit MarkDirty();
+}
+
+CachedData & CachedData::operator =(const CachedData & other)
+{
+    categoryList = other.categoryList;
+    transactionList = other.transactionList;
+    return *this;
 }

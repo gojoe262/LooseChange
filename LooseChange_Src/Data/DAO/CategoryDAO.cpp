@@ -48,6 +48,11 @@ void CategoryDAO::AddCategory(QString categoryDescription)
     cachedDataPointer->AddCategory(CategoryDTO(GetNextId(), categoryDescription));
 }
 
+bool CategoryDAO::UpdateDescription(int categoryId, QString categoryDescription)
+{
+    return cachedDataPointer->UpdateCategoryDescription(categoryId, categoryDescription);
+}
+
 bool CategoryDAO::IsUniqueCategory(QString categoryDescription)
 {
     QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
@@ -86,4 +91,9 @@ int CategoryDAO::GetNextId()
         }
     }
     return (maxId + 1);
+}
+
+int CategoryDAO::Count()
+{
+    return cachedDataPointer->GetCategoryList().count();
 }

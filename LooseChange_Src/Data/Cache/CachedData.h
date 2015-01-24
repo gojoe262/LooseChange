@@ -9,8 +9,11 @@ class CachedData : public QObject
     Q_OBJECT
 public:
     CachedData(QObject *parent = 0);
+    CachedData(const CachedData & other);
 
     ~CachedData();
+
+    CachedData & operator =(const CachedData & other);
 
     /**
      * @brief ReadFile
@@ -81,6 +84,14 @@ public:
      * @return
      */
     bool UpdateTransactionCategory(int id, int categoryId);
+
+    /**
+     * @brief UpdateCategoryDescription
+     * @param categoryId
+     * @param categoryDescription
+     * @return
+     */
+    bool UpdateCategoryDescription(int categoryId, QString categoryDescription);
 
     /**
      * @brief AddCategory

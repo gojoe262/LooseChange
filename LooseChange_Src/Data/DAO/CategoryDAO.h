@@ -32,6 +32,13 @@ public:
     void AddCategory(QString categoryDescription);
 
     /**
+     * @brief UpdateDescription
+     * @param categorDescription
+     * @return
+     */
+    bool UpdateDescription(int categoryId, QString categoryDescription);
+
+    /**
      * @brief IsUniqueCategory
      * @param categoryDescription
      * @return
@@ -57,6 +64,12 @@ public:
      * @return
      */
     QString GetDescription(int categoryId);
+
+    /**
+     * @brief Count
+     * @return
+     */
+    int Count();
 
 private:
     CachedData *cachedDataPointer;

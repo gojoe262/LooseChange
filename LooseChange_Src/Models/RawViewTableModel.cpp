@@ -71,10 +71,11 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
 
 bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    bool changesMade = false;
     if(index.isValid() && Qt::EditRole == role)
     {
         int id = data(this->index(index.row(), 0)).toInt();
-        bool changesMade = false;
+
 
         /// Column 1 - DATE
         if(index.column() == 1)
@@ -107,8 +108,8 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
         {
             emit(dataChanged(index, index));
         }
-        return changesMade;
     }
+    return changesMade;
 }
 
 

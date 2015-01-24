@@ -25,13 +25,6 @@ public:
      */
     void Load();
 
-public slots:
-    /**
-     * @brief AddCategory
-     * @param index
-     */
-    void AddCategory();
-
 private:
     QTableView *tableView;
     RawViewTableModel *model;

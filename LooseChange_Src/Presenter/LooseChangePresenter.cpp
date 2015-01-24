@@ -1,7 +1,7 @@
 #include "LooseChangePresenter.h"
-#include "ui_loosechangepresenter.h"
+#include "ui_LooseChangePresenter.h"
 
-#include<QDebug>
+#include <QDebug>
 
 #include <QFileDialog>
 #include <QDateEdit>
@@ -23,18 +23,12 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     ui->mainToolBar->addWidget(ui->toolButtonOpen);
     ui->mainToolBar->addWidget(ui->toolButtonSave);
 
-    /// http://iconsetc.com/icon/bfa_folder-open/?style=simple-black
-    /// Used to set edit triggers. Ex: signal or double click
-
-    /// Initialize Cached Data
-    cachedData = new CachedData(this);
-
     /// Initialize Presenters
-    rawView = new RawViewPresenter(ui->tableViewRawView, cachedData, this);
+    rawView = new RawViewPresenter(ui->tableViewRawView, &cachedData, this);
 
     /// SLOTS / SIGNALS
-    connect(cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
-    connect(cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));\
+    connect(&cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
+    connect(&cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));\
 
     DisableSave(); //Disables saves when first loading.
 
@@ -46,7 +40,6 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 LooseChangePresenter::~LooseChangePresenter()
 {
     delete rawView;
-    delete cachedData;
     delete ui;
 
 }
@@ -57,7 +50,7 @@ void LooseChangePresenter::Open()
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
     if(fileLocation != "")
     {
-        cachedData->ReadFile(fileLocation);
+        cachedData.ReadFile(fileLocation);
         rawView->Load();
         fileLocationTemp = fileLocation;
     }
@@ -68,8 +61,8 @@ void LooseChangePresenter::Save()
     QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         fileLocationTemp,
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
-    cachedData->WriteFile(fileLocation);
-    cachedData->ReadFile(fileLocation);
+    cachedData.WriteFile(fileLocation);
+    cachedData.ReadFile(fileLocation);
     rawView->Load();
 }
 
@@ -109,6 +102,17 @@ void LooseChangePresenter::DisableSave()
 
 void LooseChangePresenter::on_actionEdit_Categories_triggered()
 {
-    EditCategoriesPresenter *e = new EditCategoriesPresenter(this);
-    e->exec();
+    CachedData tempCachedData = cachedData;
+
+
+
+    EditCategoriesPresenter *e = new EditCategoriesPresenter(&tempCachedData, this);
+
+    int result = e->exec();
+
+    if(result == QDialog::Accepted)
+    {
+        cachedData = tempCachedData;
+        this->EnableSave();
+    }
 }
