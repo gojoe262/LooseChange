@@ -16,7 +16,6 @@ SOURCES += main.cpp \
     Data/DAO/TransactionDAO.cpp \
     Data/DTO/TransactionDTO.cpp \
     Presenter/LooseChangePresenter.cpp \
-    Test/LooseChangeDAOTest.cpp \
     Utility/TransactionType.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
@@ -31,7 +30,8 @@ SOURCES += main.cpp \
     Data/DAO/CategoryDAO.cpp \
     Models/RawViewTableModel.cpp \
     Presenter/EditCategoriesPresenter.cpp \
-    Models/EditCategoriesTableModel.cpp
+    Models/EditCategoriesTableModel.cpp \
+    Utility/UniqueKeyGenerator.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -51,7 +51,8 @@ HEADERS  += \
     Data/DAO/CategoryDAO.h \
     Models/RawViewTableModel.h \
     Presenter/EditCategoriesPresenter.h \
-    Models/EditCategoriesTableModel.h
+    Models/EditCategoriesTableModel.h \
+    Utility/UniqueKeyGenerator.h
 
 FORMS    += \
     Presenter/EditCategoriesPresenter.ui \

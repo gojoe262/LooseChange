@@ -1,7 +1,7 @@
 #include "Presenter/LooseChangePresenter.h"
 #include <QApplication>
 
-//#define TESTING //Toggle to switch between testing and running program
+#define TESTING //Toggle to switch between testing and running program
 
 
 #ifndef TESTING
@@ -23,21 +23,16 @@ int main(int argc, char *argv[])
 
 #ifdef TESTING
  //Run Unit Tests
-#include <Test/LooseChangeDAOTest.cpp>
+#include <Utility/UniqueKeyGenerator.h>
+#include <QDebug>
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QWidget * parent = new QWidget();
-    qDebug("Starting Tests...");
-
-    // LooseChangeDAOTests
-    LooseChangeDAOTest testDao;
-    testDao.OpenFile_ShouldReadFileAndReturnData(parent);
-    testDao.SaveFile_ShouldWriteFileAndReturnTrue(parent);
-
-
-
-    delete parent;
+    UniqueKeyGenerator g;
+    for(int i = 0; i < 20; i++)
+    {
+        QList<QString> list;
+        qDebug() << g.GenerateUniqueKey(list);
+    }
     return 0;
 }
 
