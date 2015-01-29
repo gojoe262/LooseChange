@@ -34,7 +34,7 @@ void FileReader::ReadFile(QString fileLocation,
         for (int i = 0; i < categorySize; i++)
         {
             QJsonObject category = categoryArray.at(i).toObject();
-            int id = category["ID"].toString().toInt();
+            QString id = category["ID"].toString();
             QString description = category["DESCRIPTION"].toString();
             categoryList.append(CategoryDTO(id, description));
         }
@@ -45,11 +45,11 @@ void FileReader::ReadFile(QString fileLocation,
         for (int i = 0; i < transactionSize; i++)
         {
             QJsonObject transaction = transacitonsArray.at(i).toObject();
-            int id = transaction["ID"].toString().toInt();
+            QString id = transaction["ID"].toString();
             QDate date = QDate::fromString(transaction["DATE"].toString(), "yyyyMMdd");
             double amount = transaction["AMOUNT"].toDouble();
             TransactionType type = TransactionTypeHelper::FromString(transaction["TRANSACTION_TYPE"].toString());
-            int categoryId = transaction["CATEGORY_ID"].toString().toInt();
+            QString categoryId = transaction["CATEGORY_ID"].toString();
             QString comment = transaction["COMMENT"].toString();
 
             transactionList.append(TransactionDTO(id, date, amount, type, categoryId, comment));

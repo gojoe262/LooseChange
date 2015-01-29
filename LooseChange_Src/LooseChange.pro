@@ -60,3 +60,6 @@ FORMS    += \
 
 OTHER_FILES += \
     Test/test.lc
+
+DISTFILES += \
+    Test/testSaveFile_JSON.json

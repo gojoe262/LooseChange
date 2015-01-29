@@ -23,20 +23,14 @@ public:
      * @param inCategoryId
      * @return
      */
-    CategoryDTO GetCategory(int inCategoryId);
-
-    /**
-     * @brief AddCategory
-     * @param categoryDescription
-     */
-    void AddCategory(QString categoryDescription);
+    CategoryDTO GetCategory(QString inCategoryId);
 
     /**
      * @brief UpdateDescription
      * @param categorDescription
      * @return
      */
-    bool UpdateDescription(int categoryId, QString categoryDescription);
+    bool UpdateDescription(QString categoryId, QString categoryDescription);
 
     /**
      * @brief IsUniqueCategory
@@ -46,33 +40,41 @@ public:
     bool IsUniqueCategory(QString categoryDescription);
 
     /**
-     * @brief GetCategoryId
-     * @param categoryDescription
-     * @return
-     */
-    int GetCategoryId(QString categoryDescription);
-
-    /**
      * @brief GetNextId
      * @return
      */
-    int GetNextId();
-
-    /**
-     * @brief GetDescription
-     * @param categoryId
-     * @return
-     */
-    QString GetDescription(int categoryId);
-
-    /**
-     * @brief Count
-     * @return
-     */
-    int Count();
+    QString GetUniqueId();
 
 private:
     CachedData *cachedDataPointer;
+};
+
+
+
+
+class CategoryNotFoundException
+{
+public :
+    CategoryNotFoundException()
+    {
+        categoryId = "";
+    }
+    CategoryNotFoundException(QString inCategoryId)
+    {
+        categoryId = inCategoryId;
+    }
+
+
+    QString Message()
+    {
+        if(categoryId != "")
+        {
+            return "Category Not Found! Category: " + categoryId + ".";
+        }
+        return "Category Not Found!";
+    }
+private:
+    QString categoryId;
 };
 
 #endif // CATEGORYDAO_H

@@ -2,6 +2,7 @@
 #define FILEREADER_H
 
 #include <Data/DTO/TransactionDTO.h>
+#include <Data/DTO/CategoryDTO.h>
 
 class FileReader
 {

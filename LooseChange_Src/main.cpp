@@ -1,7 +1,7 @@
 #include "Presenter/LooseChangePresenter.h"
 #include <QApplication>
 
-#define TESTING //Toggle to switch between testing and running program
+//#define TESTING //Toggle to switch between testing and running program
 
 
 #ifndef TESTING

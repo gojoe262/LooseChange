@@ -1,4 +1,5 @@
 #include "RawViewTableModel.h"
+#include <QMessageBox>
 
 RawViewTableModel::RawViewTableModel(TransactionDAO *inTransactionDAOPointer, CategoryDAO *inCategoryDAOPointer, QObject *parent)
     : QAbstractTableModel(parent)
@@ -38,31 +39,39 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
+        QList<TransactionDTO> dtoList = transactionDAO->GetTransactionList();
         if(index.column() == 0)
         {
-            return transactionDAO->GetTransactionAt(index.row()).id;
+            return dtoList[index.row()].id;
         }
 
         if(index.column() == 1)
         {
-            return transactionDAO->GetTransactionAt(index.row()).date;
+            return dtoList[index.row()].date;
         }
         if(index.column() == 2)
         {
-            return transactionDAO->GetTransactionAt(index.row()).amount;
+            return dtoList[index.row()].amount;
         }
         if(index.column() == 3)
         {
-            return TransactionTypeHelper::ToString(transactionDAO->GetTransactionAt(index.row()).transactionType);
+            return TransactionTypeHelper::ToString(dtoList[index.row()].transactionType);
         }
         if(index.column() == 4)
         {
-            int categoryId = transactionDAO->GetTransactionAt(index.row()).categoryId;
-            return categoryDAO->GetCategory(categoryId).description;
+            try
+            {
+                QString categoryId = dtoList[index.row()].categoryId;
+                return categoryDAO->GetCategory(categoryId).description;
+            }
+            catch(CategoryNotFoundException e)
+            {
+                QMessageBox::information(0, "Category Not Found Exception", e.Message() + "\nIn RawViewTableModel Line 65");
+            }
         }
         if(index.column() == 5)
         {
-            return transactionDAO->GetTransactionAt(index.row()).comment;
+            return dtoList[index.row()].comment;
         }
     }
 
@@ -74,7 +83,7 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     bool changesMade = false;
     if(index.isValid() && Qt::EditRole == role)
     {
-        int id = data(this->index(index.row(), 0)).toInt();
+        QString id = data(this->index(index.row(), 0)).toString();
 
 
         /// Column 1 - DATE
@@ -95,7 +104,7 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
         /// Column 4 - CATEGORY
         else if(index.column() == 4)
         {
-            changesMade = transactionDAO->UpdateCategory(id, value.toInt());
+            changesMade = transactionDAO->UpdateCategory(id, value.toString());
         }
         /// Column 5 - COMMENT
         else if(index.column() == 5)

@@ -8,12 +8,12 @@ class CategoryDTO
 public:
     CategoryDTO();
 
-    CategoryDTO(int inId, QString inDescription);
+    CategoryDTO(QString inId, QString inDescription);
 
     /**
      * @brief id - Unique id for a category
      */
-    int     id;
+    QString id;
 
     /**
      * @brief description - The category description string

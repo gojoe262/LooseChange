@@ -2,32 +2,32 @@
     "CATEGORIES": [
         {
             "DESCRIPTION": "Gas/Travel",
-            "ID": "0"
+            "ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq"
         },
         {
-            "DESCRIPTION": "Restaurants",
-            "ID": "1"
+            "DESCRIPTION": "RestaurantsASDF",
+            "ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL"
         },
         {
-            "DESCRIPTION": "Laundrymaybe",
-            "ID": "2"
+            "DESCRIPTION": "Laundry",
+            "ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8"
         }
     ],
     "TRANSACTIONS": [
         {
             "AMOUNT": 113.48999999999999,
-            "CATEGORY_ID": "2",
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
             "COMMENT": "Just a test test",
             "DATE": "20140603",
-            "ID": "0",
+            "ID": "JiLnKXmpB3dPn3emQXpZDBDM7jzL9i",
             "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 144.49000000000001,
-            "CATEGORY_ID": "1",
+            "AMOUNT": 14444.209999999999,
+            "CATEGORY_ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8",
             "COMMENT": "THIS IS A TEST",
             "DATE": "20140604",
-            "ID": "1",
+            "ID": "EGLT0G5riAuhTlOLRySswodvPoyTii",
             "TRANSACTION_TYPE": "IN"
         }
     ]

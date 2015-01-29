@@ -13,7 +13,7 @@ EditCategoriesTableModel::~EditCategoriesTableModel()
 
 int EditCategoriesTableModel::rowCount(const QModelIndex &index) const
 {
-    return categoryDAO->Count();
+    return categoryDAO->GetCategories().count();
 }
 
 int EditCategoriesTableModel::columnCount(const QModelIndex &index) const
@@ -23,7 +23,7 @@ int EditCategoriesTableModel::columnCount(const QModelIndex &index) const
 
 QVariant EditCategoriesTableModel::data(const QModelIndex &index, int role) const
 {
-    if(categoryDAO->Count() == 0)
+    if(categoryDAO->GetCategories().count() == 0)
     {
         return QVariant();
     }
@@ -54,7 +54,7 @@ bool EditCategoriesTableModel::setData(const QModelIndex &index, const QVariant 
     bool changesMade = false;
     if(index.isValid() && Qt::EditRole == role)
     {
-        int id = data(this->index(index.row(), 0)).toInt();
+        QString id = data(this->index(index.row(), 0)).toString();
 
 
         if(index.column() == 1)

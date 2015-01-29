@@ -23,7 +23,6 @@ QWidget *CategoryComboBoxDelegate::createEditor(QWidget *parent,
     {
         editor->addItem(category.description, QVariant(category.id));
     }
-   //editor->addItem("-ADD CATEGORY-", QVariant(-1));
 
     return editor;
 }
@@ -33,9 +32,9 @@ void CategoryComboBoxDelegate::setEditorData(QWidget *editor,
                                      const QModelIndex &index) //const
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
-    int value = index.model()->data(index, Qt::EditRole).toInt();
+    QString categoryId = index.model()->data(index, Qt::EditRole).toString();
 
-    comboBox->setCurrentIndex(comboBox->findData(value));
+    comboBox->setCurrentIndex(comboBox->findData(categoryId));
 }
 
 void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
@@ -43,23 +42,9 @@ void CategoryComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
 
-    int value = comboBox->currentData().toInt();
-//    if(value == -1)
-//    {
-//        bool ok;
-//        QString text = QInputDialog::getText(this, tr("Add Category"), tr("New Category:"), QLineEdit::Normal,
-//                                             &ok);
-//        if (ok && !text.isEmpty())
-//        {
-//            if(categoryDAOPointer->IsUniqueCategory(text))
-//            {
-//                categoryDAOPointer->AddCategory(text);
-//                value = categoryDAOPointer->GetCategoryId(text);
-//            }
-//        }
-//    }
+    QString categoryId = comboBox->currentData().toString();
 
-    model->setData(index, value, Qt::EditRole);
+    model->setData(index, categoryId, Qt::EditRole);
 }
 
 void CategoryComboBoxDelegate::updateEditorGeometry(QWidget *editor,

@@ -2,6 +2,7 @@
 #define CACHEDDTOLIST_H
 
 #include <Data/DTO/TransactionDTO.h>
+#include <Data/DTO/CategoryDTO.h>
 #include <QObject>
 
 class CachedData : public QObject
@@ -41,18 +42,12 @@ public:
     QList<CategoryDTO> GetCategoryList();
 
     /**
-     * @brief AddTransaction
-     * @param transactionDTO
-     */
-    void AddTransaction(TransactionDTO inTransactionDTO);
-
-    /**
      * @brief UpdateTransactionAmount
      * @param id
      * @param amount
      * @return
      */
-    bool UpdateTransactionAmount(int id, double amount);
+    bool UpdateTransactionAmount(QString id, double amount);
 
     /**
      * @brief UpdateTransactionDate
@@ -60,14 +55,14 @@ public:
      * @param date
      * @return
      */
-    bool UpdateTransactionDate(int id, QDate date);
+    bool UpdateTransactionDate(QString id, QDate date);
 
     /**
      * @brief UpdateTransactionType
      * @param id
      * @param type
      */
-    bool UpdateTransactionType(int id, TransactionType type);
+    bool UpdateTransactionType(QString id, TransactionType type);
 
     /**
      * @brief UpdateTransactionComment
@@ -75,7 +70,7 @@ public:
      * @param comment
      * @return
      */
-    bool UpdateTransactionComment(int id, QString comment);
+    bool UpdateTransactionComment(QString id, QString comment);
 
     /**
      * @brief UpdateTransactionCategory
@@ -83,7 +78,7 @@ public:
      * @param categoryId
      * @return
      */
-    bool UpdateTransactionCategory(int id, int categoryId);
+    bool UpdateTransactionCategory(QString id, QString categoryId);
 
     /**
      * @brief UpdateCategoryDescription
@@ -91,13 +86,7 @@ public:
      * @param categoryDescription
      * @return
      */
-    bool UpdateCategoryDescription(int categoryId, QString categoryDescription);
-
-    /**
-     * @brief AddCategory
-     * @param inCategory
-     */
-    void AddCategory(CategoryDTO inCategory);
+    bool UpdateCategoryDescription(QString categoryId, QString categoryDescription);
 
 signals:
     void MarkDirty() const;

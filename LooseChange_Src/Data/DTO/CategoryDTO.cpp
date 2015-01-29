@@ -4,7 +4,7 @@ CategoryDTO::CategoryDTO()
 {
 }
 
-CategoryDTO::CategoryDTO(int inId, QString inDescription)
+CategoryDTO::CategoryDTO(QString inId, QString inDescription)
 {
     id = inId;
     description = inDescription;

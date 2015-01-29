@@ -3,6 +3,7 @@
 #include <Data/FileAccess/FileReader.h>
 #include <Data/FileAccess/FileWriter.h>
 
+
 CachedData::CachedData(QObject *parent) :
     QObject(parent)
 {
@@ -46,13 +47,7 @@ QList<CategoryDTO> CachedData::GetCategoryList()
     return categoryList;
 }
 
-void CachedData::AddTransaction(TransactionDTO inTransactionDTO)
-{
-    transactionList.append(inTransactionDTO);
-    emit MarkDirty();
-}
-
-bool CachedData::UpdateTransactionAmount(int id, double amount)
+bool CachedData::UpdateTransactionAmount(QString id, double amount)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -73,7 +68,7 @@ bool CachedData::UpdateTransactionAmount(int id, double amount)
     return changesMade;
 }
 
-bool CachedData::UpdateTransactionDate(int id, QDate date)
+bool CachedData::UpdateTransactionDate(QString id, QDate date)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -96,7 +91,7 @@ bool CachedData::UpdateTransactionDate(int id, QDate date)
     return changesMade;
 }
 
-bool CachedData::UpdateTransactionType(int id, TransactionType type)
+bool CachedData::UpdateTransactionType(QString id, TransactionType type)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -117,7 +112,7 @@ bool CachedData::UpdateTransactionType(int id, TransactionType type)
     return changesMade;
 }
 
-bool CachedData::UpdateTransactionComment(int id, QString comment)
+bool CachedData::UpdateTransactionComment(QString id, QString comment)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -138,7 +133,7 @@ bool CachedData::UpdateTransactionComment(int id, QString comment)
     return changesMade;
 }
 
-bool CachedData::UpdateTransactionCategory(int id, int categoryId)
+bool CachedData::UpdateTransactionCategory(QString id, QString categoryId)
 {
     bool changesMade = false;
     for(int i = 0; i < transactionList.count(); i++)
@@ -159,7 +154,7 @@ bool CachedData::UpdateTransactionCategory(int id, int categoryId)
     return changesMade;
 }
 
-bool CachedData::UpdateCategoryDescription(int categoryId, QString categoryDescription)
+bool CachedData::UpdateCategoryDescription(QString categoryId, QString categoryDescription)
 {
     bool changesMade = false;
     for(int i = 0; i < categoryList.count(); i++)
@@ -178,12 +173,6 @@ bool CachedData::UpdateCategoryDescription(int categoryId, QString categoryDescr
         emit MarkDirty();
     }
     return changesMade;
-}
-
-void CachedData::AddCategory(CategoryDTO inCategory)
-{
-    categoryList.append(inCategory);
-    emit MarkDirty();
 }
 
 CachedData & CachedData::operator =(const CachedData & other)

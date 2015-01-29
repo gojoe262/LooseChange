@@ -24,11 +24,11 @@ bool FileWriter::WriteFile(QList<TransactionDTO> transactionList, QList<Category
         {
             //Write to individual Transaction
             QJsonObject transactionJSON;
-            transactionJSON["ID"] = QString::number(transaction.id);
+            transactionJSON["ID"] = QString(transaction.id);
             transactionJSON["DATE"] = transaction.date.toString("yyyyMMdd");
             transactionJSON["AMOUNT"] = transaction.amount;
             transactionJSON["TRANSACTION_TYPE"] = TransactionTypeHelper::ToString(transaction.transactionType);
-            transactionJSON["CATEGORY_ID"] = QString::number(transaction.categoryId);
+            transactionJSON["CATEGORY_ID"] = QString(transaction.categoryId);
             transactionJSON["COMMENT"] = QString(transaction.comment);
 
             transactionJSONArray.append(transactionJSON);
@@ -39,8 +39,8 @@ bool FileWriter::WriteFile(QList<TransactionDTO> transactionList, QList<Category
         foreach(CategoryDTO category, categoryList)
         {
             QJsonObject categoryJSON;
-            categoryJSON["ID"] = QString::number(category.id);
-            categoryJSON["DESCRIPTION"] = category.description;
+            categoryJSON["ID"] = QString(category.id);
+            categoryJSON["DESCRIPTION"] = QString(category.description);
 
             categoryJSONArray.append(categoryJSON);
         }

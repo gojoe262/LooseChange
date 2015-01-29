@@ -3,7 +3,6 @@
 
 #include <QDate>
 #include <Utility/TransactionType.h>
-#include <Data/DTO/CategoryDTO.h>
 
 //https://github.com/vpiotr/decimal_for_cpp -- For Decimals???
 
@@ -21,12 +20,12 @@ public:
      * @param inCategory
      * @param inComment
      */
-    TransactionDTO(int inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, int inCategoryId, QString inComment);
+    TransactionDTO(QString inId, QDate inDate, double inAmount, TransactionType inTransactionTypeCode, QString inCategoryId, QString inComment);
 
     /**
      * @brief id - Unique Id of the Transaction
      */
-    int id;
+    QString id;
 
     /**
      * @brief date - Transaction Date
@@ -46,7 +45,7 @@ public:
     /**
      * @brief categoryId
      */
-    int categoryId;
+    QString categoryId;
 
     /**
      * @brief comment - Transation Comment

@@ -1,4 +1,5 @@
 #include "CategoryDAO.h"
+#include <Utility/UniqueKeyGenerator.h>
 
 CategoryDAO::CategoryDAO()
 {
@@ -19,7 +20,7 @@ QList<CategoryDTO> CategoryDAO::GetCategories()
     return cachedDataPointer->GetCategoryList();
 }
 
-CategoryDTO CategoryDAO::GetCategory(int inCategoryId)
+CategoryDTO CategoryDAO::GetCategory(QString inCategoryId)
 {
     QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
     foreach(CategoryDTO category, categoryList)
@@ -29,26 +30,10 @@ CategoryDTO CategoryDAO::GetCategory(int inCategoryId)
             return category;
         }
     }
+    throw CategoryNotFoundException(inCategoryId);
 }
 
-QString CategoryDAO::GetDescription(int categoryId)
-{
-    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
-    foreach(CategoryDTO category, categoryList)
-    {
-        if(category.id == categoryId)
-        {
-            return category.description;
-        }
-    }
-}
-
-void CategoryDAO::AddCategory(QString categoryDescription)
-{
-    cachedDataPointer->AddCategory(CategoryDTO(GetNextId(), categoryDescription));
-}
-
-bool CategoryDAO::UpdateDescription(int categoryId, QString categoryDescription)
+bool CategoryDAO::UpdateDescription(QString categoryId, QString categoryDescription)
 {
     return cachedDataPointer->UpdateCategoryDescription(categoryId, categoryDescription);
 }
@@ -64,36 +49,4 @@ bool CategoryDAO::IsUniqueCategory(QString categoryDescription)
         }
     }
     return true;
-}
-
-int CategoryDAO::GetCategoryId(QString categoryDescription)
-{
-    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
-    foreach(CategoryDTO category, categoryList)
-    {
-        if(category.description == categoryDescription)
-        {
-            return category.id;
-        }
-    }
-    return -1;
-}
-
-int CategoryDAO::GetNextId()
-{
-    int maxId = -1;
-    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
-    foreach(CategoryDTO category, categoryList)
-    {
-        if(maxId < category.id)
-        {
-            maxId = category.id;
-        }
-    }
-    return (maxId + 1);
-}
-
-int CategoryDAO::Count()
-{
-    return cachedDataPointer->GetCategoryList().count();
 }

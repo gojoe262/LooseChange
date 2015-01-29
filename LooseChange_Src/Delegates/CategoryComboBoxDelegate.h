@@ -6,6 +6,12 @@
 #include <QObject>
 #include <QComboBox>
 #include <Data/DAO/CategoryDAO.h>
+
+/**
+ * @brief The CategoryComboBoxDelegate class
+ * Please note: The combo box has two main properties: the text shown and the data.
+ *              The data in this case is the categoryId.
+ */
 class CategoryComboBoxDelegate : public QItemDelegate
 {
      Q_OBJECT
