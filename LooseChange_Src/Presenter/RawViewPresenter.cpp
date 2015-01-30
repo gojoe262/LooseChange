@@ -12,6 +12,8 @@ RawViewPresenter::RawViewPresenter(QTableView *inTableView, CachedData *inCached
     //Initialize Model
     model = new RawViewTableModel(transactionDAO, categoryDAO, this);
 
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(MarkDirty()));
+
     //Set Model for tableView
     tableView = inTableView;
     tableView->setModel(model);
@@ -57,4 +59,8 @@ void RawViewPresenter::Load()
     model->Refresh();
 }
 
+void RawViewPresenter::MarkDirty()
+{
+    emit DataChanged();
+}
 

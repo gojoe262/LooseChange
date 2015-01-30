@@ -27,8 +27,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     rawView = new RawViewPresenter(ui->tableViewRawView, &cachedData, this);
 
     /// SLOTS / SIGNALS
-    connect(&cachedData, SIGNAL(MarkClean()), this, SLOT(DisableSave()));
-    connect(&cachedData, SIGNAL(MarkDirty()), this, SLOT(EnableSave()));\
+    connect(rawView, SIGNAL(DataChanged()), this, SLOT(EnableSave()));
 
     DisableSave(); //Disables saves when first loading.
 
@@ -53,6 +52,7 @@ void LooseChangePresenter::Open()
         cachedData.ReadFile(fileLocation);
         rawView->Load();
         fileLocationTemp = fileLocation;
+        DisableSave();
     }
 }
 
@@ -64,6 +64,7 @@ void LooseChangePresenter::Save()
     cachedData.WriteFile(fileLocation);
     cachedData.ReadFile(fileLocation);
     rawView->Load();
+    DisableSave();
 }
 
 void LooseChangePresenter::on_toolButtonOpen_clicked()

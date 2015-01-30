@@ -22,13 +22,6 @@ public:
     QList<TransactionDTO> GetTransactionList();
 
     /**
-     * @brief GetTransactionAt
-     * @param index
-     * @return
-     */
-    TransactionDTO GetTransactionAt(int index);
-
-    /**
      * @brief UpdateAmount - Updates the amount on the dto with the matching Id
      * @param id
      * @param amount

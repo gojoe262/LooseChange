@@ -25,6 +25,12 @@ public:
      */
     void Load();
 
+private slots:
+    void MarkDirty();
+
+signals:
+    void DataChanged();
+
 private:
     QTableView *tableView;
     RawViewTableModel *model;

@@ -23,7 +23,7 @@ public:
      * @param inCategoryId
      * @return
      */
-    CategoryDTO GetCategory(QString inCategoryId);
+    CategoryDTO GetCategoryById(QString inCategoryId);
 
     /**
      * @brief UpdateDescription
@@ -32,21 +32,8 @@ public:
      */
     bool UpdateDescription(QString categoryId, QString categoryDescription);
 
-    /**
-     * @brief IsUniqueCategory
-     * @param categoryDescription
-     * @return
-     */
-    bool IsUniqueCategory(QString categoryDescription);
-
-    /**
-     * @brief GetNextId
-     * @return
-     */
-    QString GetUniqueId();
-
 private:
-    CachedData *cachedDataPointer;
+    CachedData *cachedDataPointer;  
 };
 
 

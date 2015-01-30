@@ -8,9 +8,10 @@ EditCategoriesPresenter::EditCategoriesPresenter(CachedData *cachedDataPointer, 
     ui->setupUi(this);
     dirty = false;
 
-    connect(cachedDataPointer, SIGNAL(MarkDirty()), this, SLOT(MarkDirty()));
+
     categoryDAO = new CategoryDAO(cachedDataPointer);
     model = new EditCategoriesTableModel(categoryDAO, this);
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(MarkDirty()));
 
     ui->tableView->setModel(model);
     Load();
@@ -32,20 +33,22 @@ void EditCategoriesPresenter::on_pushButtonSave_clicked()
 {
     if(dirty)
     {
-        done(Accepted); //Changes Made and accepted
+        accept();
     }
     else
     {
-        done(Rejected); //No Changes Made but still accepted
+        reject();//;done(QDialog::Rejected); //No Changes Made but still accepted
     }
 }
 
 void EditCategoriesPresenter::on_pushButtonCancel_clicked()
 {
-    done(Rejected);
+    reject();
 }
 
 void EditCategoriesPresenter::MarkDirty()
 {
+    emit DataChanged();
     dirty = true;
 }
+

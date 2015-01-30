@@ -5,17 +5,17 @@
             "ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq"
         },
         {
-            "DESCRIPTION": "RestaurantsASDF",
+            "DESCRIPTION": "Restaurants",
             "ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL"
         },
         {
-            "DESCRIPTION": "Laundry",
+            "DESCRIPTION": "Laundry123",
             "ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8"
         }
     ],
     "TRANSACTIONS": [
         {
-            "AMOUNT": 113.48999999999999,
+            "AMOUNT": 124.48999999999999,
             "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
             "COMMENT": "Just a test test",
             "DATE": "20140603",

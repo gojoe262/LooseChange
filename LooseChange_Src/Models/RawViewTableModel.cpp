@@ -62,7 +62,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
             try
             {
                 QString categoryId = dtoList[index.row()].categoryId;
-                return categoryDAO->GetCategory(categoryId).description;
+                return categoryDAO->GetCategoryById(categoryId).description;
             }
             catch(CategoryNotFoundException e)
             {

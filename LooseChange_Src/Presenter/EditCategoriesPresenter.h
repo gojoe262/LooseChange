@@ -30,11 +30,16 @@ private slots:
 
     void MarkDirty();
 
+signals:
+    void DataChanged() const;
+
 private:
     Ui::EditCategoriesPresenter *ui;
     CategoryDAO *categoryDAO;
     EditCategoriesTableModel *model;
     bool dirty;
+
+
 
 };
 

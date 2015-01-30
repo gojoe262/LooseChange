@@ -17,12 +17,12 @@ CategoryDAO::~CategoryDAO()
 
 QList<CategoryDTO> CategoryDAO::GetCategories()
 {
-    return cachedDataPointer->GetCategoryList();
+    return cachedDataPointer->categoryList;
 }
 
-CategoryDTO CategoryDAO::GetCategory(QString inCategoryId)
+CategoryDTO CategoryDAO::GetCategoryById(QString inCategoryId)
 {
-    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
+    QList<CategoryDTO> categoryList = cachedDataPointer->categoryList;
     foreach(CategoryDTO category, categoryList)
     {
         if(category.id == inCategoryId)
@@ -35,18 +35,18 @@ CategoryDTO CategoryDAO::GetCategory(QString inCategoryId)
 
 bool CategoryDAO::UpdateDescription(QString categoryId, QString categoryDescription)
 {
-    return cachedDataPointer->UpdateCategoryDescription(categoryId, categoryDescription);
-}
-
-bool CategoryDAO::IsUniqueCategory(QString categoryDescription)
-{
-    QList<CategoryDTO> categoryList = cachedDataPointer->GetCategoryList();
-    foreach(CategoryDTO category, categoryList)
+    QList<CategoryDTO> *categoryList = &(cachedDataPointer->categoryList);
+    bool changesMade = false;
+    for(int i = 0; i < categoryList->count(); i++)
     {
-        if(category.description == categoryDescription)
+        if(categoryList->at(i).id == categoryId)
         {
-            return false;
+            if(categoryList->at(i).description != categoryDescription)
+            {
+                (*categoryList)[i].description = categoryDescription;
+                changesMade = true;
+            }
         }
     }
-    return true;
+    return changesMade;
 }
