@@ -20,7 +20,6 @@ SOURCES += main.cpp \
     Delegates/DoubleSpinBoxDelegate.cpp \
     Delegates/DateEditDelegate.cpp \
     Data/Cache/CachedData.cpp \
-    Presenter/RawViewPresenter.cpp \
     Delegates/TransactionTypeComboBoxDelegate.cpp \
     Delegates/CategoryComboBoxDelegate.cpp \
     Delegates/CommentLineEditDelegate.cpp \
@@ -42,7 +41,6 @@ HEADERS  += \
     Delegates/DoubleSpinBoxDelegate.h \
     Delegates/DateEditDelegate.h \
     Data/Cache/CachedData.h \
-    Presenter/RawViewPresenter.h \
     Delegates/TransactionTypeComboBoxDelegate.h \
     Delegates/CategoryComboBoxDelegate.h \
     Delegates/CommentLineEditDelegate.h \
