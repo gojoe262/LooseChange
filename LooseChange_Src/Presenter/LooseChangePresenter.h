@@ -66,6 +66,8 @@ private slots:
 
 
 
+    void on_toolButtonShowRawViewPresenter_clicked();
+
 private:
     Ui::LooseChangePresenter *ui;
 

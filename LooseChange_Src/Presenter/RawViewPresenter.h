@@ -1,5 +1,5 @@
-#ifndef RAWVIEWWIDGET_H
-#define RAWVIEWWIDGET_H
+#ifndef RAWVIEWPRESENTER_H
+#define RAWVIEWPRESENTER_H
 
 #include <QWidget>
 #include <Data/Cache/CachedData.h>
@@ -13,16 +13,16 @@
 #include <Delegates/CommentLineEditDelegate.h>
 
 namespace Ui {
-class RawViewWidget;
+class RawViewPresenter;
 }
 
-class RawViewWidget : public QWidget
+class RawViewPresenter: public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit RawViewWidget(CachedData *inCachedDataPtr, QWidget *parent = 0);
-    ~RawViewWidget();
+    explicit RawViewPresenter(CachedData *inCachedDataPointer, QWidget *parent = 0);
+    ~RawViewPresenter();
 
     void Load();
 
@@ -33,7 +33,7 @@ signals:
     void DataChanged();
 
 private:
-    Ui::RawViewWidget *ui;
+    Ui::RawViewPresenter *ui;
 
     RawViewTableModel *model;
 
@@ -47,4 +47,4 @@ private:
     CommentLineEditDelegate *commentLineEdit;
 };
 
-#endif // RAWVIEWWIDGET_H
+#endif // RAWVIEWPRESENTER_H

@@ -17,21 +17,28 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
 {
     ///Sets up the UI
     ui->setupUi(this);
-    this->setCentralWidget(ui->tabWidget);
 
     ///Add Buttons to the toolbar
     ui->mainToolBar->addWidget(ui->toolButtonOpen);
     ui->mainToolBar->addWidget(ui->toolButtonSave);
+    ui->mainToolBar->addWidget(ui->toolButtonShowRawViewPresenter);
+    ui->toolButtonShowRawViewPresenter->setCheckable(true);
 
     /// Initialize Presenters
-    rawView = new RawViewPresenter(ui->tableViewRawView, &cachedData, this);
+    rawView = new RawViewPresenter(&cachedData, this);
 
     /// SLOTS / SIGNALS
     connect(rawView, SIGNAL(DataChanged()), this, SLOT(EnableSave()));
 
+    /// Hide Presenters
+    rawView->hide();
+
+    ///Load Data to Presenters
+    rawView->Load();
+
     DisableSave(); //Disables saves when first loading.
 
-    rawView->Load();
+
 
 
 }
@@ -115,5 +122,17 @@ void LooseChangePresenter::on_actionEdit_Categories_triggered()
     {
         cachedData = tempCachedData;
         this->EnableSave();
+    }
+}
+void LooseChangePresenter::on_toolButtonShowRawViewPresenter_clicked()
+{
+    if(ui->toolButtonShowRawViewPresenter->isChecked())
+    {
+        this->setCentralWidget(rawView);
+        rawView->show();
+    }
+    else
+    {
+        rawView->hide();
     }
 }

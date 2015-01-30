@@ -1,9 +1,9 @@
-#include "RawViewWidget.h"
-#include "ui_RawViewWidget.h"
+#include "RawViewPresenter.h"
+#include "ui_RawViewPresenter.h"
 
-RawViewWidget::RawViewWidget(QWidget *parent) :
+RawViewPresenter::RawViewPresenter(CachedData *inCachedDataPointer, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RawViewWidget)
+    ui(new Ui::RawViewPresenter)
 {
     //Sets up UI
     ui->setupUi(this);
@@ -41,7 +41,7 @@ RawViewWidget::RawViewWidget(QWidget *parent) :
     Load();
 }
 
-RawViewWidget::~RawViewWidget()
+RawViewPresenter::~RawViewPresenter()
 {
     delete transactionDAO;
     delete categoryDAO;
@@ -55,12 +55,12 @@ RawViewWidget::~RawViewWidget()
     delete ui;
 }
 
-void RawViewWidget::Load()
+void RawViewPresenter::Load()
 {
     model->Refresh();
 }
 
-void RawViewWidget::MarkDirty()
+void RawViewPresenter::MarkDirty()
 {
     emit DataChanged();
 }

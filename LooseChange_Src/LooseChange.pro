@@ -31,7 +31,7 @@ SOURCES += main.cpp \
     Presenter/EditCategoriesPresenter.cpp \
     Models/EditCategoriesTableModel.cpp \
     Utility/UniqueKeyGenerator.cpp \
-    Presenter/RawViewWidget.cpp
+    Presenter/RawViewPresenter.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -52,12 +52,12 @@ HEADERS  += \
     Presenter/EditCategoriesPresenter.h \
     Models/EditCategoriesTableModel.h \
     Utility/UniqueKeyGenerator.h \
-    Presenter/RawViewWidget.h
+    Presenter/RawViewPresenter.h
 
 FORMS    += \
     Presenter/EditCategoriesPresenter.ui \
     Presenter/LooseChangePresenter.ui \
-    Presenter/RawViewWidget.ui
+    Presenter/RawViewPresenter.ui
 
 OTHER_FILES += \
     Test/test.lc
