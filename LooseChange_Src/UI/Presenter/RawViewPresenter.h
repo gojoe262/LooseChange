@@ -16,6 +16,12 @@ namespace Ui {
 class RawViewPresenter;
 }
 
+/**
+ * @brief The RawViewPresenter class.
+ * Shows cachedData in a simple table view. DAOs are used to
+ * access/modify the data. Delegates are used to enhance
+ * the tableView.
+ */
 class RawViewPresenter: public QWidget
 {
     Q_OBJECT
@@ -24,7 +30,10 @@ public:
     explicit RawViewPresenter(CachedData *inCachedDataPointer, QWidget *parent = 0);
     ~RawViewPresenter();
 
-    void Load();
+    /**
+     * @brief RetriveAndLoadCachedData - Retrives and Load the cached
+     */
+    void RetriveAndLoadCachedData();
 
 private slots:
     void MarkDirty();

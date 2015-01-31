@@ -35,7 +35,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     rawView->hide();
 
     ///Load Data to Presenters
-    rawView->Load();
+    rawView->RetriveAndLoadCachedData();
 
     DisableSave(); //Disables saves when first loading.
 
@@ -55,7 +55,7 @@ void LooseChangePresenter::Open()
     if(fileLocation != "")
     {
         cachedData.ReadFile(fileLocation);
-        rawView->Load();
+        rawView->RetriveAndLoadCachedData();
         fileLocationTemp = fileLocation;
         DisableSave();
     }
@@ -68,7 +68,7 @@ void LooseChangePresenter::Save()
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
     cachedData.WriteFile(fileLocation);
     cachedData.ReadFile(fileLocation);
-    rawView->Load();
+    rawView->RetriveAndLoadCachedData();
     DisableSave();
 }
 
@@ -122,6 +122,7 @@ void LooseChangePresenter::on_actionEdit_Categories_triggered()
         this->EnableSave();
     }
 }
+
 void LooseChangePresenter::on_toolButtonShowRawViewPresenter_clicked()
 {
     if(ui->toolButtonShowRawViewPresenter->isChecked())

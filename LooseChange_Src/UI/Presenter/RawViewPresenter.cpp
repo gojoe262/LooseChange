@@ -38,7 +38,7 @@ RawViewPresenter::RawViewPresenter(CachedData *inCachedDataPointer, QWidget *par
     ui->tableView->hideColumn(0);
 
     //Load cached data from the model to the table view
-    Load();
+    RetriveAndLoadCachedData();
 }
 
 RawViewPresenter::~RawViewPresenter()
@@ -55,7 +55,7 @@ RawViewPresenter::~RawViewPresenter()
     delete ui;
 }
 
-void RawViewPresenter::Load()
+void RawViewPresenter::RetriveAndLoadCachedData()
 {
     model->Refresh();
 }

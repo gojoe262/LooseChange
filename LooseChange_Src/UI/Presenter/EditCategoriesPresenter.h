@@ -10,6 +10,7 @@ namespace Ui {
 class EditCategoriesPresenter;
 }
 
+
 class EditCategoriesPresenter : public QDialog
 {
     Q_OBJECT

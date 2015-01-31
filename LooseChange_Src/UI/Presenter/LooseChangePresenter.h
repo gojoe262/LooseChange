@@ -20,10 +20,6 @@ public:
     explicit LooseChangePresenter(QWidget *parent = 0);
     ~LooseChangePresenter();
 
-private:
-    void Open();
-    void Save();
-
 private slots:
     /**
      * @brief on_toolButtonOpen_clicked - Calls Open()
@@ -62,17 +58,29 @@ private slots:
      */
     void DisableSave();
 
-
-
-
-
+    /**
+     * @brief on_toolButtonShowRawViewPresenter_clicked
+     */
     void on_toolButtonShowRawViewPresenter_clicked();
 
 private:
+    /**
+     * @brief Open - Open a file and load it to cachedData
+     */
+    void Open();
+
+    /**
+     * @brief Save - Save the data in cachedData to a JSON file
+     */
+    void Save();
+
+    /**
+     * @brief ui
+     */
     Ui::LooseChangePresenter *ui;
 
     /**
-     * @brief rawView - Handles the raw view stuff
+     * @brief rawView - Raw View Presenter: Shows cached data in a simple format.
      */
     RawViewPresenter *rawView;
 
