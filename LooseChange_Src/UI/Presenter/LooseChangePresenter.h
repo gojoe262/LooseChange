@@ -5,8 +5,8 @@
 #include <Data/Cache/CachedData.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
-#include <Presenter/RawViewPresenter.h>
-#include <Presenter/EditCategoriesPresenter.h>
+#include <UI/Presenter/RawViewPresenter.h>
+#include <UI/Presenter/EditCategoriesPresenter.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -62,6 +62,8 @@ private slots:
      * @brief on_toolButtonShowRawViewPresenter_clicked
      */
     void on_toolButtonShowRawViewPresenter_clicked();
+
+    void on_actionE_xit_triggered();
 
 private:
     /**

@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <Data/Cache/CachedData.h>
 #include <Data/DAO/CategoryDAO.h>
-#include <Models/EditCategoriesTableModel.h>
+#include <UI/Models/EditCategoriesTableModel.h>
 
 namespace Ui {
 class EditCategoriesPresenter;

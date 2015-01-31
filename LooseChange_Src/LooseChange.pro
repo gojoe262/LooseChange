@@ -15,49 +15,49 @@ TEMPLATE = app
 SOURCES += main.cpp \
     Data/DAO/TransactionDAO.cpp \
     Data/DTO/TransactionDTO.cpp \
-    Presenter/LooseChangePresenter.cpp \
+    UI/Presenter/LooseChangePresenter.cpp \
     Utility/TransactionType.cpp \
-    Delegates/DoubleSpinBoxDelegate.cpp \
-    Delegates/DateEditDelegate.cpp \
+    UI/Delegates/DoubleSpinBoxDelegate.cpp \
+    UI/Delegates/DateEditDelegate.cpp \
     Data/Cache/CachedData.cpp \
-    Delegates/TransactionTypeComboBoxDelegate.cpp \
-    Delegates/CategoryComboBoxDelegate.cpp \
-    Delegates/CommentLineEditDelegate.cpp \
+    UI/Delegates/TransactionTypeComboBoxDelegate.cpp \
+    UI/Delegates/CategoryComboBoxDelegate.cpp \
+    UI/Delegates/CommentLineEditDelegate.cpp \
     Data/FileAccess/FileReader.cpp \
     Data/FileAccess/FileWriter.cpp \
     Data/DTO/CategoryDTO.cpp \
     Data/DAO/CategoryDAO.cpp \
-    Models/RawViewTableModel.cpp \
-    Presenter/EditCategoriesPresenter.cpp \
-    Models/EditCategoriesTableModel.cpp \
+    UI/Models/RawViewTableModel.cpp \
+    UI/Presenter/EditCategoriesPresenter.cpp \
+    UI/Models/EditCategoriesTableModel.cpp \
     Utility/UniqueKeyGenerator.cpp \
-    Presenter/RawViewPresenter.cpp
+    UI/Presenter/RawViewPresenter.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
     Data/DTO/TransactionDTO.h \
-    Presenter/LooseChangePresenter.h \
+    UI/Presenter/LooseChangePresenter.h \
     Utility/TransactionType.h \
-    Delegates/DoubleSpinBoxDelegate.h \
-    Delegates/DateEditDelegate.h \
+    UI/Delegates/DoubleSpinBoxDelegate.h \
+    UI/Delegates/DateEditDelegate.h \
     Data/Cache/CachedData.h \
-    Delegates/TransactionTypeComboBoxDelegate.h \
-    Delegates/CategoryComboBoxDelegate.h \
-    Delegates/CommentLineEditDelegate.h \
+    UI/Delegates/TransactionTypeComboBoxDelegate.h \
+    UI/Delegates/CategoryComboBoxDelegate.h \
+    UI/Delegates/CommentLineEditDelegate.h \
     Data/FileAccess/FileReader.h \
     Data/FileAccess/FileWriter.h \
     Data/DTO/CategoryDTO.h \
     Data/DAO/CategoryDAO.h \
-    Models/RawViewTableModel.h \
-    Presenter/EditCategoriesPresenter.h \
-    Models/EditCategoriesTableModel.h \
+    UI/Models/RawViewTableModel.h \
+    UI/Presenter/EditCategoriesPresenter.h \
+    UI/Models/EditCategoriesTableModel.h \
     Utility/UniqueKeyGenerator.h \
-    Presenter/RawViewPresenter.h
+    UI/Presenter/RawViewPresenter.h
 
 FORMS    += \
-    Presenter/EditCategoriesPresenter.ui \
-    Presenter/LooseChangePresenter.ui \
-    Presenter/RawViewPresenter.ui
+    UI/Presenter/EditCategoriesPresenter.ui \
+    UI/Presenter/LooseChangePresenter.ui \
+    UI/Presenter/RawViewPresenter.ui
 
 OTHER_FILES += \
     Test/test.lc

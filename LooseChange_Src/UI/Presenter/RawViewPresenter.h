@@ -5,12 +5,12 @@
 #include <Data/Cache/CachedData.h>
 #include <Data/DAO/TransactionDAO.h>
 #include <Data/DAO/CategoryDAO.h>
-#include <Models/RawViewTableModel.h>
-#include <Delegates/DateEditDelegate.h>
-#include <Delegates/DoubleSpinBoxDelegate.h>
-#include <Delegates/TransactionTypeComboBoxDelegate.h>
-#include <Delegates/CategoryComboBoxDelegate.h>
-#include <Delegates/CommentLineEditDelegate.h>
+#include <UI/Models/RawViewTableModel.h>
+#include <UI/Delegates/DateEditDelegate.h>
+#include <UI/Delegates/DoubleSpinBoxDelegate.h>
+#include <UI/Delegates/TransactionTypeComboBoxDelegate.h>
+#include <UI/Delegates/CategoryComboBoxDelegate.h>
+#include <UI/Delegates/CommentLineEditDelegate.h>
 
 namespace Ui {
 class RawViewPresenter;

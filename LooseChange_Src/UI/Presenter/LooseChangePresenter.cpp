@@ -2,13 +2,7 @@
 #include "ui_LooseChangePresenter.h"
 
 #include <QDebug>
-
 #include <QFileDialog>
-#include <QDateEdit>
-#include <QDoubleSpinBox>
-#include <Utility/TransactionType.h>
-#include <Delegates/DoubleSpinBoxDelegate.h>
-#include <Delegates/DateEditDelegate.h>
 
 
 LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
@@ -134,4 +128,9 @@ void LooseChangePresenter::on_toolButtonShowRawViewPresenter_clicked()
     {
         rawView->hide();
     }
+}
+
+void LooseChangePresenter::on_actionE_xit_triggered()
+{
+    this->close();
 }
