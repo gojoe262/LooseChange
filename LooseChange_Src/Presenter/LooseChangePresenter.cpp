@@ -21,6 +21,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     ///Add Buttons to the toolbar
     ui->mainToolBar->addWidget(ui->toolButtonOpen);
     ui->mainToolBar->addWidget(ui->toolButtonSave);
+    ui->mainToolBar->addSeparator();
     ui->mainToolBar->addWidget(ui->toolButtonShowRawViewPresenter);
     ui->toolButtonShowRawViewPresenter->setCheckable(true);
 
@@ -37,9 +38,6 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     rawView->Load();
 
     DisableSave(); //Disables saves when first loading.
-
-
-
 
 }
 
