@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <Data/Cache/CachedData.h>
 #include <Data/DAO/CategoryDAO.h>
+#include <Data/DAO/TransactionDAO.h>
 #include <UI/Models/EditCategoriesTableModel.h>
 
 namespace Ui {
@@ -31,12 +32,18 @@ private slots:
 
     void MarkDirty();
 
+    void on_pushButtonAdd_clicked();
+
+    void on_pushButtonRemove_clicked();
+
 signals:
     void DataChanged() const;
 
 private:
     Ui::EditCategoriesPresenter *ui;
+
     CategoryDAO *categoryDAO;
+    TransactionDAO *transactionDAO;
     EditCategoriesTableModel *model;
     bool dirty;
 

@@ -8,6 +8,7 @@ class UniqueKeyGenerator
 {
 public:
     UniqueKeyGenerator();
+
     ~UniqueKeyGenerator();
 
     QString GenerateUniqueKey(QList<QString> prevUsedKeys);

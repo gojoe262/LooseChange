@@ -66,7 +66,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
             }
             catch(CategoryNotFoundException e)
             {
-                QMessageBox::information(0, "Category Not Found Exception", e.Message() + "\nIn RawViewTableModel Line 65");
+                QMessageBox::information(0, "Category Not Found Exception", e.Message() + "\nIn RawViewTableModel Line 69");
             }
         }
         if(index.column() == 5)

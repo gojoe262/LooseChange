@@ -32,6 +32,15 @@ public:
      */
     bool UpdateDescription(QString categoryId, QString categoryDescription);
 
+    void AddCategory();
+
+    /**
+     * @brief RemoveCategory
+     * @param categoryId
+     * @return return true if removed, false otherwise
+     */
+    bool RemoveCategory(QString categoryId);
+
 private:
     CachedData *cachedDataPointer;  
 };

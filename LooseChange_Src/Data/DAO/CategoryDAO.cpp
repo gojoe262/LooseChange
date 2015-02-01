@@ -50,3 +50,31 @@ bool CategoryDAO::UpdateDescription(QString categoryId, QString categoryDescript
     }
     return changesMade;
 }
+
+void CategoryDAO::AddCategory()
+{
+    QList<CategoryDTO> *categoryList = &(cachedDataPointer->categoryList);
+    UniqueKeyGenerator generator;
+    QList<QString> prevUsedIds;
+    foreach(CategoryDTO category, cachedDataPointer->categoryList)
+    {
+        prevUsedIds.append(category.id);
+    }
+
+    categoryList->append(CategoryDTO(generator.GenerateUniqueKey(prevUsedIds), "New Category"));
+}
+
+bool CategoryDAO::RemoveCategory(QString categoryId)
+{
+    QList<CategoryDTO> *categoryList = &(cachedDataPointer->categoryList);
+    bool changesMade = false;
+    for(int i = 0; i < categoryList->count(); i++)
+    {
+        if(categoryList->at(i).id == categoryId)
+        {
+            categoryList->removeAt(i);
+            changesMade = true;
+        }
+    }
+    return changesMade;
+}
