@@ -2,6 +2,7 @@
 #define EDITCATEGORIESPRESENTER_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include <Data/Cache/CachedData.h>
 #include <Data/DAO/CategoryDAO.h>
 #include <Data/DAO/TransactionDAO.h>
@@ -40,6 +41,13 @@ signals:
     void DataChanged() const;
 
 private:
+    /**
+     * @brief GetSelectedCategoriesIds
+     * @return Gets the category Ids that is currently selected in ui->tableView
+     */
+    QList<QString> GetSelectedCategoriesIds();
+
+
     Ui::EditCategoriesPresenter *ui;
 
     CategoryDAO *categoryDAO;

@@ -32,6 +32,10 @@ public:
      */
     bool UpdateDescription(QString categoryId, QString categoryDescription);
 
+    /**
+     * @brief AddCategory
+     * Adds a category to the categoryList in cachedDataPointer
+     */
     void AddCategory();
 
     /**

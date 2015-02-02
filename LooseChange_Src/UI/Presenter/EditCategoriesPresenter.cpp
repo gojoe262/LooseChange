@@ -1,8 +1,6 @@
 #include "EditCategoriesPresenter.h"
 #include "ui_EditCategoriesPresenter.h"
 
-#include <QMessageBox>
-
 EditCategoriesPresenter::EditCategoriesPresenter(CachedData *cachedDataPointer, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EditCategoriesPresenter)
@@ -66,54 +64,42 @@ void EditCategoriesPresenter::on_pushButtonAdd_clicked()
     Load();
 }
 
-
-/**
- * @brief EditCategoriesPresenter::on_pushButtonRemove_clicked
- * TODO: BREAK THIS INTO SMALLER SUB-FUNCTIONS
- */
 void EditCategoriesPresenter::on_pushButtonRemove_clicked()
 {
-    QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();//selected rows
     bool changesMade = false;
 
-    /// First get all the ids and put them into a list.
-    QList<QString> categoryIdList;
-    foreach(QModelIndex index, indexList)
-    {
-        QString categoryId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toString();
-        categoryIdList.append(categoryId);
-    }
+    /// First get the selected categoryIds and put them into a list.
+    QList<QString> categoryIdList = GetSelectedCategoriesIds();
 
-    /// Next, iterate thru the categoryIdList and remove categories
-    /// with that id.
+    /// Next, iterate thru the categoryIdList and remove categories with that id.
     foreach(QString categoryId, categoryIdList)
     {
-        /// Check if its in transactions
-        bool foundInTransactions = false;
-        QList<TransactionDTO> transactionList = transactionDAO->GetTransactionList();
-        foreach(TransactionDTO transaction, transactionList)
-        {
-            if(!foundInTransactions && transaction.categoryId == categoryId) /// Id matches a transaction that uses that category. Bad things will happen if deleted!!!
-            {
-                 QMessageBox::information(0, "Category Is In Use", "Cannot remove category '" + categoryDAO->GetCategoryById(categoryId).description + "\'. \nCategory is being used in a transaction." +
-                                          "\n\n   " + "Transaction Details:" +
-                                          "\n      " + transaction.date.toString("MM/dd/yyyy") +
-                                          "\n      " + QString::number(transaction.amount, 'f', 2) +
-                                          "\n      " + TransactionTypeHelper::ToString(transaction.transactionType) +
-                                          "\n      " + categoryDAO->GetCategoryById(transaction.categoryId).description +
-                                          "\n      " + transaction.comment);
-                 foundInTransactions = true;
-            }
-        }
-
-        ///If not in transactions allow removal
-        if(!foundInTransactions)
+        /// If Category is used in a transaction, DO NOT REMOVE THE CATEGORY.
+        QList<TransactionDTO> matchedTransactionList = transactionDAO->GetTransactionsByCategoryId(categoryId);
+        if(matchedTransactionList.count() <= 0)
         {
             bool change = categoryDAO->RemoveCategory(categoryId);
             if(change)
             {
                 changesMade = true;
             }
+        }
+        else
+        {
+            QString transactionDetails = "";
+            foreach(TransactionDTO transaction, matchedTransactionList)
+            {
+                transactionDetails.append("    " + transaction.date.toString("MM/dd/yyyy") + " - " +
+                                          QString::number(transaction.amount, 'f', 2) + " - " +
+                                          TransactionTypeHelper::ToString(transaction.transactionType) + " - " +
+                                          categoryDAO->GetCategoryById(transaction.categoryId).description + " - " +
+                                          transaction.comment + "\n");
+            }
+
+            QMessageBox::information(0, "Category Is In Use",
+                                     "Cannot remove category '" + categoryDAO->GetCategoryById(categoryId).description + "\'." + "\n" +
+                                     "Category is being used in these transactions:" +
+                                     "\n" + transactionDetails);
         }
     }
 
@@ -122,4 +108,25 @@ void EditCategoriesPresenter::on_pushButtonRemove_clicked()
         MarkDirty();
     }
     Load();
+}
+
+QList<QString> EditCategoriesPresenter::GetSelectedCategoriesIds()
+{
+    /// Get the selected indexes
+    QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+
+    /// Get all the categoryIds (contained in column zero) and put them into a list.
+    QList<QString> categoryIdList;
+    foreach(QModelIndex index, indexList)
+    {
+        QString categoryId = ui->tableView->model()->
+                                data(ui->tableView->model()->index(index.row(), 0/*column zero*/))
+                                .toString();
+        /// Only append the categoryId if it's unique
+        if(!categoryIdList.contains(categoryId))
+        {
+            categoryIdList.append(categoryId);
+        }
+    }
+    return categoryIdList;
 }

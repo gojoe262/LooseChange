@@ -56,6 +56,13 @@ public:
      */
     bool UpdateCategory(QString id, QString categoryId);
 
+    /**
+     * @brief GetTransactionsThatUseCategory
+     * @param categoryId
+     * @return
+     */
+    QList<TransactionDTO> GetTransactionsByCategoryId(QString categoryId);
+
 private:
 
     /**

@@ -118,3 +118,17 @@ bool TransactionDAO::UpdateCategory(QString id, QString categoryId)
     }
     return changesMade;
 }
+
+QList<TransactionDTO> TransactionDAO::GetTransactionsByCategoryId(QString categoryId)
+{
+    QList<TransactionDTO> transactionList = cachedDataPointer->transactionList;
+    QList<TransactionDTO> retTransactionList;
+    foreach(TransactionDTO transaction, transactionList)
+    {
+        if(transaction.categoryId == categoryId)
+        {
+            retTransactionList.append(transaction);
+        }
+    }
+    return retTransactionList;
+}
