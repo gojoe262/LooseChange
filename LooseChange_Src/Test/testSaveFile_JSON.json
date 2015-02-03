@@ -15,14 +15,26 @@
         {
             "DESCRIPTION": "New Category",
             "ID": "EZ9TCH3YOVBcD5RxCJFrLyIZxuhJDH"
+        },
+        {
+            "DESCRIPTION": "Maddie",
+            "ID": "Z9TCH3YOVBcD5RxCJFrLyIZxuhJDHY"
+        },
+        {
+            "DESCRIPTION": "Sexy ",
+            "ID": "90RTwK7m2cYYarHWrZUtDWimFQHUZl"
+        },
+        {
+            "DESCRIPTION": "Sex Toys",
+            "ID": "hxO5TztTCFrkru4bxchC07SLeEDydT"
         }
     ],
     "TRANSACTIONS": [
         {
-            "AMOUNT": 124.48999999999999,
-            "CATEGORY_ID": "EZ9TCH3YOVBcD5RxCJFrLyIZxuhJDH",
+            "AMOUNT": 127.48999999999999,
+            "CATEGORY_ID": "hxO5TztTCFrkru4bxchC07SLeEDydT",
             "COMMENT": "Just a test test",
-            "DATE": "20140603",
+            "DATE": "20140604",
             "ID": "JiLnKXmpB3dPn3emQXpZDBDM7jzL9i",
             "TRANSACTION_TYPE": "OUT"
         },
