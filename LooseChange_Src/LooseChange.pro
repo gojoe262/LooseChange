@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     UI/Presenter/EditCategoriesPresenter.cpp \
     UI/Models/EditCategoriesTableModel.cpp \
     Utility/UniqueKeyGenerator.cpp \
-    UI/Presenter/RawViewPresenter.cpp
+    UI/Presenter/RawViewPresenter.cpp \
+    Data/DAO/TransactionDAOTest.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -52,7 +53,8 @@ HEADERS  += \
     UI/Presenter/EditCategoriesPresenter.h \
     UI/Models/EditCategoriesTableModel.h \
     Utility/UniqueKeyGenerator.h \
-    UI/Presenter/RawViewPresenter.h
+    UI/Presenter/RawViewPresenter.h \
+    Data/DAO/TransactionDAOTest.h
 
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \

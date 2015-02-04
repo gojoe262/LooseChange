@@ -10,9 +10,9 @@
 #include <Data/FileAccess/FileWriter.h>
 #include <QMessageBox>
 
-TransactionDAO::TransactionDAO()
-{
-}
+//TransactionDAO::TransactionDAO()
+//{
+//}
 
 TransactionDAO::TransactionDAO(CachedData *inCachedDataPointer, QWidget *parent) : QObject(parent)
 {

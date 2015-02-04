@@ -1,7 +1,7 @@
 #include "UI/Presenter/LooseChangePresenter.h"
 #include <QApplication>
 
-//#define TESTING //Toggle to switch between testing and running program
+#define TESTING //Toggle to switch between testing and running program
 
 
 #ifndef TESTING
@@ -24,9 +24,15 @@ int main(int argc, char *argv[])
 #ifdef TESTING
  //Run Unit Tests
 #include <Utility/UniqueKeyGenerator.h>
+#include <Data/DAO/TransactionDAOTest.h>
 #include <QDebug>
 int main(int argc, char *argv[])
 {
+    TransactionDAOTest t;
+    t.RunTests();
+
+
+    /*
     UniqueKeyGenerator g;
     for(int i = 0; i < 20; i++)
     {
@@ -34,6 +40,7 @@ int main(int argc, char *argv[])
         qDebug() << g.GenerateUniqueKey(list);
     }
     return 0;
+    */
 }
 
 #endif
