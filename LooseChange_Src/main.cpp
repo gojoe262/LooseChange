@@ -20,27 +20,17 @@ int main(int argc, char *argv[])
 #endif
 
 
-
+/// Run Unit Tests
 #ifdef TESTING
- //Run Unit Tests
-#include <Utility/UniqueKeyGenerator.h>
-#include <Data/DAO/TransactionDAOTest.h>
-#include <QDebug>
+#include <Test/Data/DAO/TransactionDAOTest.h>
+#include <Test/Data/DAO/CategoryDAOTest.h>
 int main(int argc, char *argv[])
 {
     TransactionDAOTest t;
     t.RunTests();
 
-
-    /*
-    UniqueKeyGenerator g;
-    for(int i = 0; i < 20; i++)
-    {
-        QList<QString> list;
-        qDebug() << g.GenerateUniqueKey(list);
-    }
-    return 0;
-    */
+    CategoryDAOTest c;
+    c.RunTests();
 }
 
 #endif

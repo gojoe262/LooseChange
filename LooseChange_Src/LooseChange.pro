@@ -32,7 +32,9 @@ SOURCES += main.cpp \
     UI/Models/EditCategoriesTableModel.cpp \
     Utility/UniqueKeyGenerator.cpp \
     UI/Presenter/RawViewPresenter.cpp \
-    Data/DAO/TransactionDAOTest.cpp
+    Test/TestBase.cpp \
+    Test/Data/DAO/TransactionDAOTest.cpp \
+    Test/Data/DAO/CategoryDAOTest.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -54,15 +56,14 @@ HEADERS  += \
     UI/Models/EditCategoriesTableModel.h \
     Utility/UniqueKeyGenerator.h \
     UI/Presenter/RawViewPresenter.h \
-    Data/DAO/TransactionDAOTest.h
+    Test/TestBase.h \
+    Test/Data/DAO/TransactionDAOTest.h \
+    Test/Data/DAO/CategoryDAOTest.h
 
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \
     UI/Presenter/LooseChangePresenter.ui \
     UI/Presenter/RawViewPresenter.ui
-
-OTHER_FILES += \
-    Test/test.lc
 
 DISTFILES += \
     Test/testSaveFile_JSON.json
