@@ -27,8 +27,8 @@
      <string notr="true"/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>Icons/OpenIcon.png</normaloff>Icons/OpenIcon.png</iconset>
+     <iconset resource="../Icons/Icons.qrc">
+      <normaloff>:/OpenIcon.png</normaloff>:/OpenIcon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -66,8 +66,8 @@
      <string notr="true"/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>Icons/SaveIcon.png</normaloff>Icons/SaveIcon.png</iconset>
+     <iconset resource="../Icons/Icons.qrc">
+      <normaloff>:/SaveIcon.png</normaloff>:/SaveIcon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -123,8 +123,8 @@
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/OpenIcon.png</normaloff>../Icons/OpenIcon.png</iconset>
+    <iconset resource="../Icons/Icons.qrc">
+     <normaloff>:/OpenIcon.png</normaloff>:/OpenIcon.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open</string>
@@ -135,8 +135,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/SaveIcon.png</normaloff>../Icons/SaveIcon.png</iconset>
+    <iconset resource="../Icons/Icons.qrc">
+     <normaloff>:/SaveIcon.png</normaloff>:/SaveIcon.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -160,6 +160,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../Icons/Icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

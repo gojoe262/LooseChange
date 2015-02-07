@@ -66,3 +66,15 @@ FORMS    += \
 
 DISTFILES += \
     Test/testSaveFile_JSON.json
+
+# Copies testSaveFile_JSON.json to the build directory
+copydata.commands = $(COPY_DIR) $$PWD/Test/testSaveFile_JSON.json $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
+RESOURCES += \
+    UI/Icons/Icons.qrc
+
+
