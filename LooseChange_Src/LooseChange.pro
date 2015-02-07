@@ -4,13 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui testlib
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = LooseChange
 TEMPLATE = app
-
 
 SOURCES += main.cpp \
     Data/DAO/TransactionDAO.cpp \
@@ -34,7 +33,7 @@ SOURCES += main.cpp \
     UI/Presenter/RawViewPresenter.cpp \
     Test/TestBase.cpp \
     Test/Data/DAO/TransactionDAOTest.cpp \
-    Test/Data/DAO/CategoryDAOTest.cpp
+    Test/Data/DAO/CategoryDAOTest.cpp 
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -58,8 +57,8 @@ HEADERS  += \
     UI/Presenter/RawViewPresenter.h \
     Test/TestBase.h \
     Test/Data/DAO/TransactionDAOTest.h \
-    Test/Data/DAO/CategoryDAOTest.h
-
+    Test/Data/DAO/CategoryDAOTest.h 
+    
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \
     UI/Presenter/LooseChangePresenter.ui \

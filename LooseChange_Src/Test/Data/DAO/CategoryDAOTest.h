@@ -8,30 +8,29 @@ class CategoryDAOTest : TestBase
 {
 public:
     CategoryDAOTest();
-    ~CategoryDAOTest();
 
     void RunTests();
 private:
     /// Test GetCategories
-    bool TestGetCategoriesNonEmptyList();
-    bool TestGetCategoriesEmptyList();
+    void TestGetCategories_NonEmptyList();
+    void TestGetCategories_EmptyList();
 
     /// Test GetCategoryById
-    bool TestGetCategoryByIdHasMatch();
-    bool TestGetCategoryByIdNoMatch();
-    bool TestGetCategoryByIdEmptyList();
+    void TestGetCategoryById_HasMatch();
+    void TestGetCategoryById_NoMatch();
+    void TestGetCategoryById_EmptyList();
 
     /// Test UpdateDescription
-    bool TestUpdateDescriptionChangeMade();
-    bool TestUpdateDescriptionNoChangeMade();
+    void TestUpdateDescription_ChangeMade();
+    void TestUpdateDescription_NoChangeMade();
 
     /// Test AddCategory
-    bool TestAddCategory();
+    void TestAddCategory();
 
     /// Test RemoveCategory
-    bool TestRemoveCategoryChangeMade();
-    bool TestRemoveCategoryNoChangeMadeNotFound();
-    bool TestRemoveCategoryEmptyList();
+    void TestRemoveCategory_ChangeMade();
+    void TestRemoveCategory_NoChangeMadeNotFound();
+    void TestRemoveCategory_EmptyList();
 
 
 };

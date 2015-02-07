@@ -8,10 +8,12 @@ class TestBase
 {
 public:
     TestBase();
-    ~TestBase();
 
-    void RunTests();
+    virtual void RunTests() = 0;
 
+    void Assert(bool b, QString methodName);
+
+private:
     void PrintFailedMessage(QString methodName);
     void PrintPassedMessage(QString methodName);
 };

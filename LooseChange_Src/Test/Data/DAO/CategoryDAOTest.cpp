@@ -5,90 +5,33 @@ CategoryDAOTest::CategoryDAOTest()
 
 }
 
-CategoryDAOTest::~CategoryDAOTest()
-{
-
-}
-
 void CategoryDAOTest::RunTests()
 {
-    bool testsPassed = true;
-
+    qDebug() << "========CategoryDAOTest========";
     /// Test GetCategories
-    if(!TestGetCategoriesNonEmptyList())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestGetCategoriesNonEmptyList()");
-        testsPassed = false;
-    }
-    if(!TestGetCategoriesEmptyList())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestGetCategoriesEmptyList()");
-        testsPassed = false;
-    }
+    TestGetCategories_NonEmptyList();
+    TestGetCategories_EmptyList();
 
     /// Test GetCategoryById
-    if(!TestGetCategoryByIdHasMatch())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestGetCategoryByIdHasMatch()");
-        testsPassed = false;
-    }
-    if(!TestGetCategoryByIdNoMatch())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestGetCategoryByIdNoMatch()");
-        testsPassed = false;
-    }
-    if(!TestGetCategoryByIdEmptyList())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestGetCategoryByIdEmptyList()");
-        testsPassed = false;
-    }
+    TestGetCategoryById_HasMatch();
+    TestGetCategoryById_NoMatch();
+    TestGetCategoryById_EmptyList();
 
     /// Test UpdateDescription
-    if(!TestUpdateDescriptionChangeMade())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestUpdateDescriptionChangeMade()");
-        testsPassed = false;
-    }
-    if(!TestUpdateDescriptionNoChangeMade())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestUpdateDescriptionNoChangeMade()");
-        testsPassed = false;
-    }
+    TestUpdateDescription_ChangeMade();
+    TestUpdateDescription_NoChangeMade();
 
     /// Test AddCategory
-    if(!TestAddCategory())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestAddCategory()");
-        testsPassed = false;
-    }
+    TestAddCategory();
 
     /// Test RemoveCategory
-    if (!TestRemoveCategoryChangeMade())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestRemoveCategoryChangeMade()");
-        testsPassed = false;
-    }
-    if (!TestRemoveCategoryNoChangeMadeNotFound())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestRemoveCategoryNoChangeMadeNotFound()");
-        testsPassed = false;
-    }
-    if (!TestRemoveCategoryEmptyList())
-    {
-        PrintFailedMessage("CategoryDAOTest::TestRemoveCategoryEmptyList()");
-        testsPassed = false;
-    }
-
-
-    /// If all passed, display that they all passed.
-    if(testsPassed)
-    {
-        PrintPassedMessage("CategoryDAOTest");
-    }
+    TestRemoveCategory_ChangeMade();
+    TestRemoveCategory_NoChangeMadeNotFound();
+    TestRemoveCategory_EmptyList();
 }
 
 
-bool CategoryDAOTest::TestGetCategoriesNonEmptyList()
+void CategoryDAOTest::TestGetCategories_NonEmptyList()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -97,30 +40,18 @@ bool CategoryDAOTest::TestGetCategoriesNonEmptyList()
 
     CategoryDAO *dao = new CategoryDAO(c);
 
-    return (dao->GetCategories().count() == 3);
+    Assert(dao->GetCategories().count() == 3, "TestGetCategories_NonEmptyList()");
 }
 
-bool CategoryDAOTest::TestGetCategoriesEmptyList()
+void CategoryDAOTest::TestGetCategories_EmptyList()
 {
     CachedData *c = new CachedData();
     CategoryDAO *dao = new CategoryDAO(c);
 
-    return (dao->GetCategories().count() == 0);
+    Assert(dao->GetCategories().count() == 0, "TestGetCategories_EmptyList()");
 }
 
-bool CategoryDAOTest::TestGetCategoryByIdHasMatch()
-{
-    CachedData *c = new CachedData();
-    c->categoryList.append(CategoryDTO("id", "Description"));
-    c->categoryList.append(CategoryDTO("id2", "TEST Description"));
-    c->categoryList.append(CategoryDTO("id3", "Description"));
-
-    CategoryDAO *dao = new CategoryDAO(c);
-
-    return (dao->GetCategoryById("id2").description == "TEST Description");
-}
-
-bool CategoryDAOTest::TestGetCategoryByIdNoMatch()
+void CategoryDAOTest::TestGetCategoryById_HasMatch()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -129,6 +60,19 @@ bool CategoryDAOTest::TestGetCategoryByIdNoMatch()
 
     CategoryDAO *dao = new CategoryDAO(c);
 
+    Assert(dao->GetCategoryById("id2").description == "TEST Description", "TestGetCategoryById_HasMatch()");
+}
+
+void CategoryDAOTest::TestGetCategoryById_NoMatch()
+{
+    CachedData *c = new CachedData();
+    c->categoryList.append(CategoryDTO("id", "Description"));
+    c->categoryList.append(CategoryDTO("id2", "TEST Description"));
+    c->categoryList.append(CategoryDTO("id3", "Description"));
+
+    CategoryDAO *dao = new CategoryDAO(c);
+    bool exceptionHit = false;
+
     try
     {
         dao->GetCategoryById("id4");
@@ -136,16 +80,19 @@ bool CategoryDAOTest::TestGetCategoryByIdNoMatch()
     catch (CategoryNotFoundException e)
     {
         /// Should be expecting the exception
-        return true;
+        exceptionHit = true;
     }
-    return false;
+
+    Assert(exceptionHit, "TestGetCategoryById_NoMatch()");
 }
 
-bool CategoryDAOTest::TestGetCategoryByIdEmptyList()
+void CategoryDAOTest::TestGetCategoryById_EmptyList()
 {
     CachedData *c = new CachedData();
     CategoryDAO *dao = new CategoryDAO(c);
 
+    bool exceptionHit = false;
+
     try
     {
         dao->GetCategoryById("id4");
@@ -153,12 +100,13 @@ bool CategoryDAOTest::TestGetCategoryByIdEmptyList()
     catch (CategoryNotFoundException e)
     {
         /// Should be expecting the exception
-        return true;
+        exceptionHit = true;
     }
-    return false;
+
+    Assert(exceptionHit, "TestGetCategoryById_EmptyList()");
 }
 
-bool CategoryDAOTest::TestUpdateDescriptionChangeMade()
+void CategoryDAOTest::TestUpdateDescription_ChangeMade()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -168,14 +116,10 @@ bool CategoryDAOTest::TestUpdateDescriptionChangeMade()
     CategoryDAO *dao = new CategoryDAO(c);
 
     bool changeMade = dao->UpdateDescription("id", "New Decription 007");
-    if(changeMade && c->categoryList.at(0).description == "New Decription 007")
-    {
-        return true;
-    }
-    return false;
+    Assert(changeMade && c->categoryList.at(0).description == "New Decription 007", "TestUpdateDescription_ChangeMade()");
 }
 
-bool CategoryDAOTest::TestUpdateDescriptionNoChangeMade()
+void CategoryDAOTest::TestUpdateDescription_NoChangeMade()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -185,14 +129,10 @@ bool CategoryDAOTest::TestUpdateDescriptionNoChangeMade()
     CategoryDAO *dao = new CategoryDAO(c);
 
     bool changeMade = dao->UpdateDescription("id", "Description");
-    if(!changeMade)
-    {
-        return true;
-    }
-    return false;
+    Assert(!changeMade, "TestUpdateDescription_NoChangeMade()");
 }
 
-bool CategoryDAOTest::TestAddCategory()
+void CategoryDAOTest::TestAddCategory()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -201,15 +141,10 @@ bool CategoryDAOTest::TestAddCategory()
     CategoryDAO *dao = new CategoryDAO(c);
 
     dao->AddCategory();
-    if(c->categoryList.count() == 3)
-    {
-        return true;
-    }
-    return false;
-
+    Assert(c->categoryList.count() == 3, "TestAddCategory()");
 }
 
-bool CategoryDAOTest::TestRemoveCategoryChangeMade()
+void CategoryDAOTest::TestRemoveCategory_ChangeMade()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -219,14 +154,10 @@ bool CategoryDAOTest::TestRemoveCategoryChangeMade()
     CategoryDAO *dao = new CategoryDAO(c);
 
     bool changeMade = dao->RemoveCategory("id");
-    if(changeMade && c->categoryList.count() == 2)
-    {
-        return true;
-    }
-    return false;
+    Assert(changeMade && c->categoryList.count() == 2, "TestRemoveCategory_ChangeMade()");
 }
 
-bool CategoryDAOTest::TestRemoveCategoryNoChangeMadeNotFound()
+void CategoryDAOTest::TestRemoveCategory_NoChangeMadeNotFound()
 {
     CachedData *c = new CachedData();
     c->categoryList.append(CategoryDTO("id", "Description"));
@@ -236,25 +167,17 @@ bool CategoryDAOTest::TestRemoveCategoryNoChangeMadeNotFound()
     CategoryDAO *dao = new CategoryDAO(c);
 
     bool changeMade = dao->RemoveCategory("id4");
-    if(!changeMade && c->categoryList.count() == 3)
-    {
-        return true;
-    }
-    return false;
+    Assert(!changeMade && c->categoryList.count() == 3, "TestRemoveCategory_NoChangeMadeNotFound()");
 }
 
-bool CategoryDAOTest::TestRemoveCategoryEmptyList()
+void CategoryDAOTest::TestRemoveCategory_EmptyList()
 {
     CachedData *c = new CachedData();
 
     CategoryDAO *dao = new CategoryDAO(c);
 
     bool changeMade = dao->RemoveCategory("id");
-    if(!changeMade)
-    {
-        return true;
-    }
-    return false;
+    Assert(!changeMade, "TestRemoveCategory_EmptyList()");
 }
 
 

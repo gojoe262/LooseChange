@@ -25,7 +25,7 @@ public:
     {
         if(strType == "OUT")
             return OUT;
-        else if(strType == "IN")
+        else
             return IN;
     }
 };

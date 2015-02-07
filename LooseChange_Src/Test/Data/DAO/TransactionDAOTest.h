@@ -10,43 +10,42 @@ class TransactionDAOTest : TestBase
 {
 public:
     TransactionDAOTest();
-    ~TransactionDAOTest();
 
     void RunTests();
 
 private:
     /// Test GetTransactionList
-    bool TestGetTransactionListHasTransactions();
-    bool TestGetTransactionListHasNoTransactions();
+    void TestGetTransactionList_HasTransactions();
+    void TestGetTransactionList_HasNoTransactions();
 
     /// Test UpdateAmount
-    bool TestUpdateAmountChangeMade();
-    bool TestUpdateAmountNoChangeMade();
-    bool TestUpdateAmountNotFound();
+    void TestUpdateAmount_ChangeMade();
+    void TestUpdateAmount_NoChangeMade();
+    void TestUpdateAmount_NotFound();
 
     /// Test UpdateDate
-    bool TestUpdateDateChangeMade();
-    bool TestUpdateDateNoChangeMade();
-    bool TestUpdateDateNotFound();
+    void TestUpdateDate_ChangeMade();
+    void TestUpdateDate_NoChangeMade();
+    void TestUpdateDate_NotFound();
 
     /// Test UpdateType
-    bool TestUpdateTypeChangeMade();
-    bool TestUpdateTypeNoChangeMade();
-    bool TestUpdateTypeNotFound();
+    void TestUpdateType_ChangeMade();
+    void TestUpdateType_NoChangeMade();
+    void TestUpdateType_NotFound();
 
     /// Test UpdateComment
-    bool TestUpdateCommentChangeMade();
-    bool TestUpdateCommentNoChangeMade();
-    bool TestUpdateCommentNotFound();
+    void TestUpdateComment_ChangeMade();
+    void TestUpdateComment_NoChangeMade();
+    void TestUpdateComment_NotFound();
 
     /// Test UpdateCategory
-    bool TestUpdateCategoryChangeMade();
-    bool TestUpdateCategoryNoChangeMade();
-    bool TestUpdateCategoryNotFound();
+    void TestUpdateCategory_ChangeMade();
+    void TestUpdateCategory_NoChangeMade();
+    void TestUpdateCategory_NotFound();
 
     /// Test GetTransactionByCategoryId
-    bool TestGetTransactionsByCategoryId();
-
+    void TestGetTransactionsByCategoryId_Found();
+    void TestGetTransactionsByCategoryId_NotFound();
 };
 
 #endif // TRANSACTIONDAOTEST_H

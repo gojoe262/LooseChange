@@ -1,7 +1,7 @@
 #include "UI/Presenter/LooseChangePresenter.h"
 #include <QApplication>
 
-#define TESTING //Toggle to switch between testing and running program
+//#define TESTING //Toggle to switch between testing and running program
 
 
 #ifndef TESTING
@@ -22,8 +22,10 @@ int main(int argc, char *argv[])
 
 /// Run Unit Tests
 #ifdef TESTING
+
 #include <Test/Data/DAO/TransactionDAOTest.h>
 #include <Test/Data/DAO/CategoryDAOTest.h>
+
 int main(int argc, char *argv[])
 {
     TransactionDAOTest t;
@@ -31,6 +33,7 @@ int main(int argc, char *argv[])
 
     CategoryDAOTest c;
     c.RunTests();
+
 }
 
 #endif
