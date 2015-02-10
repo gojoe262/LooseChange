@@ -10,7 +10,6 @@ class TransactionDAO : public QObject
 {
     Q_OBJECT
 public:
-    //TransactionDAO();
     TransactionDAO(CachedData *inCachedDataPointer, QWidget *parent = 0);
 
     ~TransactionDAO();
