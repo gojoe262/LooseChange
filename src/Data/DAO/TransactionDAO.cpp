@@ -27,17 +27,14 @@ QList<TransactionDTO> TransactionDAO::GetTransactionList()
 
 bool TransactionDAO::UpdateAmount(QString id, double amount)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    TransactionDTO *transaction = FindTransactionById(id);
     bool changesMade = false;
-    for(int i = 0; i < transactionList->count(); i++)
+    if(transaction != NULL)
     {
-        if(transactionList->at(i).id == id)
+        if(transaction->amount != amount)
         {
-            if(transactionList->at(i).amount != amount)
-            {
-                (*transactionList)[i].amount = amount;
-                changesMade = true;
-            }
+            transaction->amount = amount;
+            changesMade = true;
         }
     }
     return changesMade;
@@ -45,17 +42,14 @@ bool TransactionDAO::UpdateAmount(QString id, double amount)
 
 bool TransactionDAO::UpdateDate(QString id, QDate date)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    TransactionDTO *transaction = FindTransactionById(id);
     bool changesMade = false;
-    for(int i = 0; i < transactionList->count(); i++)
+    if(transaction != NULL)
     {
-        if(transactionList->at(i).id == id)
+        if(transaction->date != date)
         {
-            if(transactionList->at(i).date != date)
-            {
-                (*transactionList)[i].date = date;
-                changesMade = true;
-            }
+            transaction->date = date;
+            changesMade = true;
         }
     }
     return changesMade;
@@ -63,17 +57,14 @@ bool TransactionDAO::UpdateDate(QString id, QDate date)
 
 bool TransactionDAO::UpdateType(QString id, TransactionType type)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    TransactionDTO *transaction = FindTransactionById(id);
     bool changesMade = false;
-    for(int i = 0; i < transactionList->count(); i++)
+    if(transaction != NULL)
     {
-        if(transactionList->at(i).id == id)
+        if(transaction->transactionType != type)
         {
-            if(transactionList->at(i).transactionType != type)
-            {
-                (*transactionList)[i].transactionType = type;
-                changesMade = true;
-            }
+            transaction->transactionType = type;
+            changesMade = true;
         }
     }
     return changesMade;
@@ -81,17 +72,14 @@ bool TransactionDAO::UpdateType(QString id, TransactionType type)
 
 bool TransactionDAO::UpdateComment(QString id, QString comment)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    TransactionDTO *transaction = FindTransactionById(id);
     bool changesMade = false;
-    for(int i = 0; i < transactionList->count(); i++)
+    if(transaction != NULL)
     {
-        if(transactionList->at(i).id == id)
+        if(transaction->comment != comment)
         {
-            if(transactionList->at(i).comment != comment)
-            {
-                (*transactionList)[i].comment = comment;
-                changesMade = true;
-            }
+            transaction->comment = comment;
+            changesMade = true;
         }
     }
     return changesMade;
@@ -99,17 +87,14 @@ bool TransactionDAO::UpdateComment(QString id, QString comment)
 
 bool TransactionDAO::UpdateCategory(QString id, QString categoryId)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    TransactionDTO *transaction = FindTransactionById(id);
     bool changesMade = false;
-    for(int i = 0; i < transactionList->count(); i++)
+    if(transaction != NULL)
     {
-        if(transactionList->at(i).id == id)
+        if(transaction->categoryId != categoryId)
         {
-            if(transactionList->at(i).categoryId != categoryId)
-            {
-                (*transactionList)[i].categoryId = categoryId;
-                changesMade = true;
-            }
+            transaction->categoryId = categoryId;
+            changesMade = true;
         }
     }
     return changesMade;
@@ -127,4 +112,17 @@ QList<TransactionDTO> TransactionDAO::GetTransactionsByCategoryId(QString catego
         }
     }
     return retTransactionList;
+}
+
+TransactionDTO* TransactionDAO::FindTransactionById(QString id)
+{
+    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    for(int i = 0; i < transactionList->count(); i++)
+    {
+        if(transactionList->at(i).id == id)
+        {
+            return &(*transactionList)[i];
+        }
+    }
+    return NULL;
 }

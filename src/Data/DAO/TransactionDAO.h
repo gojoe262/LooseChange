@@ -11,7 +11,6 @@ class TransactionDAO : public QObject
     Q_OBJECT
 public:
     TransactionDAO(CachedData *inCachedDataPointer, QWidget *parent = 0);
-
     ~TransactionDAO();
 
     /**
@@ -63,6 +62,12 @@ public:
     QList<TransactionDTO> GetTransactionsByCategoryId(QString categoryId);
 
 private:
+    /**
+     * @brief FindTransactionById - Find the transaciton with the given transactionId
+     * @param id
+     * @return Returns a pointer to the transaction.
+     */
+    TransactionDTO* FindTransactionById(QString id);
 
     /**
      * @brief cachedDataPointer
