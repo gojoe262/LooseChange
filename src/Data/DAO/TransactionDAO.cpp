@@ -52,10 +52,6 @@ bool TransactionDAO::UpdateDate(QString id, QDate date)
             changesMade = true;
         }
     }
-//    if(changesMade)
-//    {
-//        SortTransactionListByDate();
-//    }
     return changesMade;
 }
 

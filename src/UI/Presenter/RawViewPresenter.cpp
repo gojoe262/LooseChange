@@ -20,7 +20,6 @@ RawViewPresenter::RawViewPresenter(CachedData *inCachedDataPointer, QWidget *par
     //Set Model for tableView
     ui->tableView->setModel(model);
     ui->tableView->setSortingEnabled(true);
-    //ui->tableView->sortByColumn(0);
 
     //Initialize Delegates
     dateEdit = new DateEditDelegate(this);
