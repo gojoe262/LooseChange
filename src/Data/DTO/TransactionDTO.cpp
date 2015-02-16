@@ -13,3 +13,13 @@ TransactionDTO::TransactionDTO(QString inId, QDate inDate, double inAmount, Tran
     categoryId = inCategoryId;
     comment = inComment;
 }
+
+bool TransactionDTO::IsLessThanByDate(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.date < t2.date;
+}
+
+bool TransactionDTO::IsGreaterThanByDate(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.date > t2.date;
+}

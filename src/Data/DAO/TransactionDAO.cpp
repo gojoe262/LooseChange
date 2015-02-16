@@ -52,6 +52,10 @@ bool TransactionDAO::UpdateDate(QString id, QDate date)
             changesMade = true;
         }
     }
+//    if(changesMade)
+//    {
+//        SortTransactionListByDate();
+//    }
     return changesMade;
 }
 
@@ -125,4 +129,20 @@ TransactionDTO* TransactionDAO::FindTransactionById(QString id)
         }
     }
     return NULL;
+}
+
+void TransactionDAO::SortTransactionListByDate(Qt::SortOrder order)
+{
+    if(order == Qt::AscendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDTO::IsLessThanByDate);
+    }
+    else if(order == Qt::DescendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDTO::IsGreaterThanByDate);
+    }
 }

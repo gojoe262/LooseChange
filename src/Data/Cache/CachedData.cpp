@@ -1,8 +1,6 @@
 #include "CachedData.h"
-
 #include <Data/FileAccess/FileReader.h>
 #include <Data/FileAccess/FileWriter.h>
-
 
 CachedData::CachedData(QObject *parent) :
     QObject(parent)

@@ -4,6 +4,7 @@
 
 #include <Data/DTO/TransactionDTO.h>
 #include <Data/Cache/CachedData.h>
+#include <QtAlgorithms>
 
 
 class TransactionDAO : public QObject
@@ -60,6 +61,12 @@ public:
      * @return
      */
     QList<TransactionDTO> GetTransactionsByCategoryId(QString categoryId);
+
+    /**
+     * @brief SortTransactionList - Sorts the Transaction List by date in either
+     * ascending or descending order.
+     */
+    void SortTransactionListByDate(Qt::SortOrder order = Qt::AscendingOrder);
 
 private:
     /**

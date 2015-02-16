@@ -121,13 +121,10 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     return changesMade;
 }
 
-
 void RawViewTableModel::Refresh()
 {
     layoutChanged();
 }
-
-
 
 Qt::ItemFlags RawViewTableModel::flags(const QModelIndex &index) const
 {
@@ -136,4 +133,16 @@ Qt::ItemFlags RawViewTableModel::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
     }
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+}
+
+void RawViewTableModel::sort(int column, Qt::SortOrder order)
+{
+    if(column == 1)
+    {
+        transactionDAO->SortTransactionListByDate(order);
+        Refresh();
+        // Order of data should not matter. If it does, then emit that
+        // the data has changed
+        ///emit(dataChanged(QModelIndex(), QModelIndex()));
+    }
 }

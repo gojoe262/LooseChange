@@ -20,6 +20,11 @@ public:
      */
     int rowCount(const QModelIndex &index) const;
 
+    /**
+     * @brief columnCount
+     * @param index
+     * @return
+     */
     int columnCount(const QModelIndex &index) const;
 
     /**
@@ -33,6 +38,13 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
+
+    /**
+     * @brief sort - Allows the user to sort by a column
+     * @param column
+     * @param order
+     */
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
     /**
      * @brief Refresh - Forces a re-retreive from the cached data
