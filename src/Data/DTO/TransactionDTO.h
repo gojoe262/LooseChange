@@ -52,22 +52,7 @@ public:
      */
     QString comment;
 
-    /**
-     * @brief IsLessThanByDate - Compares the transaction dtos by date.
-     * @param t1
-     * @param t2
-     * @return True if t1.date is less than t2.date, otherwise false.
-     */
-    static bool IsLessThanByDate(const TransactionDTO& t1, const TransactionDTO& t2);
-
-    /**
-     * @brief IsGreaterThanByDate - Compares the transaction dtos by date.
-     * @param t1
-     * @param t2
-     * @return True if t1.date is greater than t2.date, otherwise false.
-     */
-    static bool IsGreaterThanByDate(const TransactionDTO& t1, const TransactionDTO& t2);
-
+    TransactionDTO & operator =(const TransactionDTO & other);
 };
 
 #endif // TRANSACTIONDTO_H

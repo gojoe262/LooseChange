@@ -137,12 +137,37 @@ Qt::ItemFlags RawViewTableModel::flags(const QModelIndex &index) const
 
 void RawViewTableModel::sort(int column, Qt::SortOrder order)
 {
+    // Order of data should not matter. If it does, then emit that
+    // the data has changed
+    ///emit(dataChanged(QModelIndex(), QModelIndex()));
+
+    /// Column 1 - DATE
     if(column == 1)
     {
         transactionDAO->SortTransactionListByDate(order);
         Refresh();
-        // Order of data should not matter. If it does, then emit that
-        // the data has changed
-        ///emit(dataChanged(QModelIndex(), QModelIndex()));
     }
+    /// Column 2 - AMOUNT
+    else if(column == 2)
+    {
+        transactionDAO->SortTransactionListByAmount(order);
+        Refresh();
+    }
+    /// Column 3 - TRANSACTION TYPE
+    else if(column == 3)
+    {
+        transactionDAO->SortTransactionListByTransactionType(order);
+        Refresh();
+    }
+    /// Column 4 - CATEGORY
+    else if(column == 4)
+    {
+        transactionDAO->SortTransactionListByCategory(order);
+        Refresh();
+    }
+//    /// Column 5 - COMMENT
+//    else if(index.column() == 5)
+//    {
+//        changesMade = transactionDAO->UpdateComment(id, value.toString());
+//    }
 }

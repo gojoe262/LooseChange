@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QFile>
 #include <Utility/TransactionType.h>
+#include <Data/DAO/CategoryDAO.h>
 #include <Data/FileAccess/FileReader.h>
 #include <Data/FileAccess/FileWriter.h>
 #include <QMessageBox>
@@ -127,18 +128,139 @@ TransactionDTO* TransactionDAO::FindTransactionById(QString id)
     return NULL;
 }
 
+bool TransactionDAO::IsLessThanByDate(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.date < t2.date;
+}
+
+bool TransactionDAO::IsGreaterThanByDate(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.date > t2.date;
+}
+
+bool TransactionDAO::IsLessThanByAmount(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.amount < t2.amount;
+}
+
+bool TransactionDAO::IsGreaterThanByAmount(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.amount > t2.amount;
+}
+
+bool TransactionDAO::IsLessThanByTransactionType(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return ((int) t1.transactionType) < ((int) t2.transactionType);
+}
+
+bool TransactionDAO::IsGreaterThanByTransactionType(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return ((int) t1.transactionType) > ((int) t2.transactionType);
+}
+
+bool TransactionDAO::IsLessThanByCategory(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    CategoryDAO *c = new CategoryDAO(cachedDataPointer);
+    QString str1 = c->GetCategoryById(t1.categoryId).description;
+    QString str2 = c->GetCategoryById(t2.categoryId).description;
+    delete c;
+    return (str1.toUpper() < str2.toUpper());
+}
+
+bool TransactionDAO::IsGreaterThanByCategory(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    CategoryDAO *c = new CategoryDAO(cachedDataPointer);
+    QString str1 = c->GetCategoryById(t1.categoryId).description;
+    QString str2 = c->GetCategoryById(t2.categoryId).description;
+    delete c;
+    return (str1.toUpper() > str2.toUpper());
+}
+
 void TransactionDAO::SortTransactionListByDate(Qt::SortOrder order)
 {
     if(order == Qt::AscendingOrder)
     {
         qSort(cachedDataPointer->transactionList.begin(),
               cachedDataPointer->transactionList.end(),
-              TransactionDTO::IsLessThanByDate);
+              TransactionDAO::IsLessThanByDate);
     }
     else if(order == Qt::DescendingOrder)
     {
         qSort(cachedDataPointer->transactionList.begin(),
               cachedDataPointer->transactionList.end(),
-              TransactionDTO::IsGreaterThanByDate);
+              TransactionDAO::IsGreaterThanByDate);
+    }
+}
+
+void TransactionDAO::SortTransactionListByAmount(Qt::SortOrder order)
+{
+    if(order == Qt::AscendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsLessThanByAmount);
+    }
+    else if(order == Qt::DescendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsGreaterThanByAmount);
+    }
+}
+
+void TransactionDAO::SortTransactionListByTransactionType(Qt::SortOrder order)
+{
+    if(order == Qt::AscendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsLessThanByTransactionType);
+    }
+    else if(order == Qt::DescendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsGreaterThanByTransactionType);
+    }
+}
+
+void TransactionDAO::SortTransactionListByCategory(Qt::SortOrder order)
+{
+    SortByCategory(order);
+}
+
+void TransactionDAO::SortByCategory(Qt::SortOrder order)
+{
+    TransactionDTO tmp;
+    int i, j, minIndex;
+    int n = cachedDataPointer->transactionList.size();
+
+    for (i = 0; i < n - 1; i++)
+    {
+        minIndex = i;
+
+        for (j = i + 1; j < n; j++)
+        {
+            if(order == Qt::DescendingOrder)
+            {
+                if (IsGreaterThanByCategory(cachedDataPointer->transactionList.at(j), cachedDataPointer->transactionList.at(minIndex)))
+                {
+                    minIndex = j;
+                }
+            }
+            else
+            {
+                if (IsLessThanByCategory(cachedDataPointer->transactionList.at(j), cachedDataPointer->transactionList.at(minIndex)))
+                {
+                    minIndex = j;
+                }
+            }
+        }
+        if (minIndex != i)
+        {
+            tmp = cachedDataPointer->transactionList[i];
+            cachedDataPointer->transactionList[i] = cachedDataPointer->transactionList[minIndex];
+            cachedDataPointer->transactionList[minIndex] = tmp;
+        }
     }
 }
