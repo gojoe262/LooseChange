@@ -84,11 +84,17 @@ public:
 
     /**
      * @brief SortTransactionListByCategory - Sorts the Transaction List by type in either
-     * ascending or descending order.
+     * ascending or descending order. Sort Implemented by hand.
      * @param order
      */
     void SortTransactionListByCategory(Qt::SortOrder order = Qt::AscendingOrder);
 
+    /**
+     * @brief SortTransactionListByComment - Sorts the Transaction List by comment in either
+     * ascending or descending order.
+     * @param order
+     */
+    void SortTransactionListByComment(Qt::SortOrder order = Qt::AscendingOrder);
 
 
 private:
@@ -121,7 +127,7 @@ private:
     static bool IsGreaterThanByTransactionType(const TransactionDTO &t1, const TransactionDTO &t2);
 
     /**
-     * @brief IsLessThanByCategory
+     * @brief IsLessThanByCategory - Compares the transactionDTOs by category.
      * @param t1
      * @param t2
      * @return
@@ -130,10 +136,13 @@ private:
     bool IsGreaterThanByCategory(const TransactionDTO &t1, const TransactionDTO &t2);
 
     /**
-     * @brief SortByCategory - Sorts the transaction List by category
-     * @param order
+     * @brief IsLessThanByComment - Compares the transactionDTOs by comment.
+     * @param t1
+     * @param t2
+     * @return
      */
-    void SortByCategory(Qt::SortOrder order = Qt::AscendingOrder);
+    static bool IsLessThanByComment(const TransactionDTO &t1, const TransactionDTO &t2);
+    static bool IsGreaterThanByComment(const TransactionDTO &t1, const TransactionDTO &t2);
 
     /**
      * @brief FindTransactionById - Find the transaciton with the given transactionId

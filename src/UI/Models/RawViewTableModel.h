@@ -40,7 +40,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     /**
-     * @brief sort - Allows the user to sort by a column
+     * @brief sort - Allows the user to sort by a column. This is
+     * used when the user click on a column header.
      * @param column
      * @param order
      */

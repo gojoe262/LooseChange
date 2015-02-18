@@ -158,6 +158,16 @@ bool TransactionDAO::IsGreaterThanByTransactionType(const TransactionDTO &t1, co
     return ((int) t1.transactionType) > ((int) t2.transactionType);
 }
 
+bool TransactionDAO::IsLessThanByComment(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.comment.toUpper() < t2.comment.toUpper();
+}
+
+bool TransactionDAO::IsGreaterThanByComment(const TransactionDTO &t1, const TransactionDTO &t2)
+{
+    return t1.comment.toUpper() > t2.comment.toUpper();
+}
+
 bool TransactionDAO::IsLessThanByCategory(const TransactionDTO &t1, const TransactionDTO &t2)
 {
     CategoryDAO *c = new CategoryDAO(cachedDataPointer);
@@ -226,11 +236,6 @@ void TransactionDAO::SortTransactionListByTransactionType(Qt::SortOrder order)
 
 void TransactionDAO::SortTransactionListByCategory(Qt::SortOrder order)
 {
-    SortByCategory(order);
-}
-
-void TransactionDAO::SortByCategory(Qt::SortOrder order)
-{
     TransactionDTO tmp;
     int i, j, minIndex;
     int n = cachedDataPointer->transactionList.size();
@@ -262,5 +267,21 @@ void TransactionDAO::SortByCategory(Qt::SortOrder order)
             cachedDataPointer->transactionList[i] = cachedDataPointer->transactionList[minIndex];
             cachedDataPointer->transactionList[minIndex] = tmp;
         }
+    }
+}
+
+void TransactionDAO::SortTransactionListByComment(Qt::SortOrder order)
+{
+    if(order == Qt::AscendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsLessThanByComment);
+    }
+    else if(order == Qt::DescendingOrder)
+    {
+        qSort(cachedDataPointer->transactionList.begin(),
+              cachedDataPointer->transactionList.end(),
+              TransactionDAO::IsGreaterThanByComment);
     }
 }

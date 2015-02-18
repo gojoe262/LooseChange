@@ -85,7 +85,6 @@ bool RawViewTableModel::setData(const QModelIndex &index, const QVariant &value,
     {
         QString id = data(this->index(index.row(), 0)).toString();
 
-
         /// Column 1 - DATE
         if(index.column() == 1)
         {
@@ -137,8 +136,8 @@ Qt::ItemFlags RawViewTableModel::flags(const QModelIndex &index) const
 
 void RawViewTableModel::sort(int column, Qt::SortOrder order)
 {
-    // Order of data should not matter. If it does, then emit that
-    // the data has changed
+    // Order of data should not matter. If it does, then emit the
+    // following to show that the data has changed:
     ///emit(dataChanged(QModelIndex(), QModelIndex()));
 
     /// Column 1 - DATE
@@ -165,9 +164,10 @@ void RawViewTableModel::sort(int column, Qt::SortOrder order)
         transactionDAO->SortTransactionListByCategory(order);
         Refresh();
     }
-//    /// Column 5 - COMMENT
-//    else if(index.column() == 5)
-//    {
-//        changesMade = transactionDAO->UpdateComment(id, value.toString());
-//    }
+    /// Column 5 - COMMENT
+    else if(column == 5)
+    {
+        transactionDAO->SortTransactionListByComment(order);
+        Refresh();
+    }
 }
