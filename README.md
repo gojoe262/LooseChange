@@ -1,7 +1,7 @@
 # Loose Change
 Budgeting Program which tracks income and spending into a JSON file. Using Qt/Qt Creator (C++)
 
-Requirements/Fixes are now located in "Issues"
+Requirements/Fixes are now located in [Issues](https://github.com/gojoe262/LooseChange/issues)
 
 ### Raw View
 
