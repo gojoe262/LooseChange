@@ -1,7 +1,10 @@
 # Loose Change
 Budgeting Program which tracks income and spending into a JSON file. Using Qt/Qt Creator (C++)
 
-Requirements list located at https://trello.com/loosechange1/ 
+**[Requirements](https://trello.com/b/GgRr0G4m/requirements) are now located at Trello. Trello is being used because it is easy to order the lists.**
+> **https://trello.com/loosechange1**
+
+
 
 ### Raw View
 
