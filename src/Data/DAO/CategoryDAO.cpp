@@ -30,7 +30,9 @@ CategoryDTO CategoryDAO::GetCategoryById(QString inCategoryId)
             return category;
         }
     }
-    throw CategoryNotFoundException(inCategoryId);
+    return CategoryDTO();
+
+    //throw CategoryNotFoundException(inCategoryId);
 }
 
 bool CategoryDAO::UpdateDescription(QString categoryId, QString categoryDescription)

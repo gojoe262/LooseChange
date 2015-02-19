@@ -59,15 +59,8 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         }
         if(index.column() == 4)
         {
-            try
-            {
-                QString categoryId = dtoList[index.row()].categoryId;
-                return categoryDAO->GetCategoryById(categoryId).description;
-            }
-            catch(CategoryNotFoundException e)
-            {
-                QMessageBox::information(0, "Category Not Found Exception", e.Message() + "\nIn RawViewTableModel Line 69");
-            }
+            QString categoryId = dtoList[index.row()].categoryId;
+            return categoryDAO->GetCategoryById(categoryId).description;
         }
         if(index.column() == 5)
         {

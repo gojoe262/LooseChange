@@ -65,3 +65,12 @@ void RawViewPresenter::MarkDirty()
 {
     emit DataChanged();
 }
+
+void RawViewPresenter::on_pushButtonAddTransaction_clicked()
+{
+    transactionDAO->AddTransaction();
+    model->Refresh();
+    ui->tableView->scrollToTop();
+    ui->tableView->selectRow(0);
+    MarkDirty();
+}

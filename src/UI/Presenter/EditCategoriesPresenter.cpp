@@ -87,6 +87,7 @@ void EditCategoriesPresenter::on_pushButtonRemove_clicked()
         }
         else
         {
+            //Let the user know that the category is in use
             QString transactionDetails = "";
             foreach(TransactionDTO transaction, matchedTransactionList)
             {

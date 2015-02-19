@@ -10,6 +10,7 @@
 #include <Data/FileAccess/FileReader.h>
 #include <Data/FileAccess/FileWriter.h>
 #include <QMessageBox>
+#include <Utility/UniqueKeyGenerator.h>
 
 TransactionDAO::TransactionDAO(CachedData *inCachedDataPointer, QWidget *parent) : QObject(parent)
 {
@@ -24,6 +25,24 @@ TransactionDAO::~TransactionDAO()
 QList<TransactionDTO> TransactionDAO::GetTransactionList()
 {
     return cachedDataPointer->transactionList;
+}
+
+void TransactionDAO::AddTransaction()
+{
+    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    UniqueKeyGenerator generator;
+    QList<QString> prevUsedIds;
+    foreach(TransactionDTO transaction, cachedDataPointer->transactionList)
+    {
+        prevUsedIds.append(transaction.id);
+    }
+
+    transactionList->insert(transactionList->begin(), TransactionDTO(generator.GenerateUniqueKey(prevUsedIds),
+                                                                     QDate::currentDate(),
+                                                                     00.00,
+                                                                     OUT,
+                                                                     "",
+                                                                     ""));
 }
 
 bool TransactionDAO::UpdateAmount(QString id, double amount)

@@ -21,6 +21,11 @@ public:
     QList<TransactionDTO> GetTransactionList();
 
     /**
+     * @brief AddTransaction - Appends a transaction to the start of the list
+     */
+    void AddTransaction();
+
+    /**
      * @brief UpdateAmount - Updates the amount on the dto with the matching Id
      * @param id
      * @param amount

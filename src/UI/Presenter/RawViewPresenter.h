@@ -38,6 +38,11 @@ public:
 private slots:
     void MarkDirty();
 
+    /**
+     * @brief on_pushButtonAddTransaction_clicked - Add a transaction to the end of the list
+     */
+    void on_pushButtonAddTransaction_clicked();
+
 signals:
     void DataChanged();
 
