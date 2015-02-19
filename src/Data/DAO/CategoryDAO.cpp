@@ -78,3 +78,29 @@ bool CategoryDAO::RemoveCategory(QString categoryId)
     }
     return changesMade;
 }
+
+void CategoryDAO::SortCategories(Qt::SortOrder order)
+{
+    if(order == Qt::AscendingOrder)
+    {
+        qSort(cachedDataPointer->categoryList.begin(),
+              cachedDataPointer->categoryList.end(),
+              CategoryDAO::IsLessThanByDescription);
+    }
+    else if(order == Qt::DescendingOrder)
+    {
+        qSort(cachedDataPointer->categoryList.begin(),
+              cachedDataPointer->categoryList.end(),
+              CategoryDAO::IsGreaterThanByDescription);
+    }
+}
+
+bool CategoryDAO::IsLessThanByDescription(const CategoryDTO &c1, const CategoryDTO &c2)
+{
+    return c1.description.toUpper() < c2.description.toUpper();
+}
+
+bool CategoryDAO::IsGreaterThanByDescription(const CategoryDTO &c1, const CategoryDTO &c2)
+{
+    return c1.description.toUpper() > c2.description.toUpper();
+}

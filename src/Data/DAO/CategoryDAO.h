@@ -45,7 +45,23 @@ public:
      */
     bool RemoveCategory(QString categoryId);
 
+    /**
+     * @brief SortCategories
+     * @param order
+     * @return
+     */
+    void SortCategories(Qt::SortOrder order = Qt::AscendingOrder);
+
 private:
+    /**
+     * @brief IsLessThanByDate - Compares the categoryDTOs by date.
+     * @param t1
+     * @param t2
+     * @return True if c1.description is less than c2.description, otherwise false.
+     */
+    static bool IsLessThanByDescription(const CategoryDTO& c1, const CategoryDTO& c2);
+    static bool IsGreaterThanByDescription(const CategoryDTO& c1, const CategoryDTO& c2);
+
     CachedData *cachedDataPointer;  
 };
 

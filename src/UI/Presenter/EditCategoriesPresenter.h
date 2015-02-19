@@ -24,7 +24,7 @@ public:
     /**
      * @brief Load - Load the data to the table
      */
-    void Load();
+    void LoadDataToView();
 
 private slots:
     void on_pushButtonSave_clicked();

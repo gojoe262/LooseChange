@@ -20,7 +20,7 @@ EditCategoriesPresenter::EditCategoriesPresenter(CachedData *cachedDataPointer, 
     ui->tableView->hideColumn(0);
     ui->tableView->verticalHeader()->hide();
     ui->tableView->horizontalHeader()->hide();
-    Load();
+    LoadDataToView();
 }
 
 EditCategoriesPresenter::~EditCategoriesPresenter()
@@ -30,7 +30,7 @@ EditCategoriesPresenter::~EditCategoriesPresenter()
     delete ui;
 }
 
-void EditCategoriesPresenter::Load()
+void EditCategoriesPresenter::LoadDataToView()
 {
     model->Refresh();
 }
@@ -39,6 +39,7 @@ void EditCategoriesPresenter::on_pushButtonSave_clicked()
 {
     if(dirty)
     {
+        categoryDAO->SortCategories();
         accept();// Changes were made
     }
     else
@@ -61,7 +62,7 @@ void EditCategoriesPresenter::on_pushButtonAdd_clicked()
 {
     categoryDAO->AddCategory();
     MarkDirty();
-    Load();
+    LoadDataToView();
 }
 
 void EditCategoriesPresenter::on_pushButtonRemove_clicked()
@@ -107,7 +108,7 @@ void EditCategoriesPresenter::on_pushButtonRemove_clicked()
     {
         MarkDirty();
     }
-    Load();
+    LoadDataToView();
 }
 
 QList<QString> EditCategoriesPresenter::GetSelectedCategoriesIds()
