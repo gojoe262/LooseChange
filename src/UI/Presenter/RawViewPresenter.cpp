@@ -74,3 +74,59 @@ void RawViewPresenter::on_pushButtonAddTransaction_clicked()
     ui->tableView->selectRow(0);
     MarkDirty();
 }
+
+void RawViewPresenter::on_pushButtonRemoveSelectedTransactions_clicked()
+{
+    bool changesMade = false;
+
+    int firstSelectedRow = ui->tableView->selectionModel()->selectedIndexes().first().row();
+
+
+    /// First get the selected categoryIds and put them into a list.
+    QList<QString> transactionIdList = GetSelectedTransactionsIds();
+
+    /// Next, iterate thru the categoryIdList and remove categories with that id.
+    foreach(QString transactionId, transactionIdList)
+    {
+        /// If Category is used in a transaction, DO NOT REMOVE THE CATEGORY.
+
+        bool change = transactionDAO->RemoveTransaction(transactionId);
+        if(change)
+        {
+            changesMade = true;
+        }
+    }
+
+    if(changesMade)
+    {
+        MarkDirty();
+    }
+    LoadDataToView();
+    ui->tableView->selectRow(firstSelectedRow - 1);
+}
+
+QList<QString> RawViewPresenter::GetSelectedTransactionsIds()
+{
+    /// Get the selected indexes
+    QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+
+    /// Get all the transactionIds (contained in column zero) and put them into a list.
+    QList<QString> transactionIdList;
+    foreach(QModelIndex index, indexList)
+    {
+        QString transactionId = ui->tableView->model()->
+                                data(ui->tableView->model()->index(index.row(), 0/*column zero*/))
+                                .toString();
+        /// Only append the transactionId if it's unique
+        if(!transactionIdList.contains(transactionId))
+        {
+            transactionIdList.append(transactionId);
+        }
+    }
+    return transactionIdList;
+}
+
+void RawViewPresenter::LoadDataToView()
+{
+    model->Refresh();
+}

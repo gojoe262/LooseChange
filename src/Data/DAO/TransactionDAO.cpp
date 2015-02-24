@@ -45,6 +45,21 @@ void TransactionDAO::AddTransaction()
                                                                      ""));
 }
 
+bool TransactionDAO::RemoveTransaction(QString transactionId)
+{
+    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    bool changesMade = false;
+    for(int i = 0; i < transactionList->count(); i++)
+    {
+        if(transactionList->at(i).id == transactionId)
+        {
+            transactionList->removeAt(i);
+            changesMade = true;
+        }
+    }
+    return changesMade;
+}
+
 bool TransactionDAO::UpdateAmount(QString id, double amount)
 {
     TransactionDTO *transaction = FindTransactionById(id);

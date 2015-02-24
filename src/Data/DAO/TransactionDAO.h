@@ -26,6 +26,12 @@ public:
     void AddTransaction();
 
     /**
+     * @brief RemoveTransaction
+     * @param transactionId
+     */
+    bool RemoveTransaction(QString transactionId);
+
+    /**
      * @brief UpdateAmount - Updates the amount on the dto with the matching Id
      * @param id
      * @param amount

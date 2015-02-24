@@ -43,10 +43,17 @@ private slots:
      */
     void on_pushButtonAddTransaction_clicked();
 
+    void on_pushButtonRemoveSelectedTransactions_clicked();
+
 signals:
     void DataChanged();
 
 private:
+
+    QList<QString> GetSelectedTransactionsIds();
+
+    void LoadDataToView();
+
     Ui::RawViewPresenter *ui;
 
     RawViewTableModel *model;
