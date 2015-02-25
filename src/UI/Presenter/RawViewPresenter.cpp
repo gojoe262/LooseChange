@@ -81,15 +81,12 @@ void RawViewPresenter::on_pushButtonRemoveSelectedTransactions_clicked()
 
     int firstSelectedRow = ui->tableView->selectionModel()->selectedIndexes().first().row();
 
-
-    /// First get the selected categoryIds and put them into a list.
+    /// First get the selected transactionIds and put them into a list.
     QList<QString> transactionIdList = GetSelectedTransactionsIds();
 
-    /// Next, iterate thru the categoryIdList and remove categories with that id.
+    /// Next, iterate thru the transactionIdList and remove transactions with that id.
     foreach(QString transactionId, transactionIdList)
     {
-        /// If Category is used in a transaction, DO NOT REMOVE THE CATEGORY.
-
         bool change = transactionDAO->RemoveTransaction(transactionId);
         if(change)
         {
