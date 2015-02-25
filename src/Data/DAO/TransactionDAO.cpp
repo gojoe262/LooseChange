@@ -27,22 +27,27 @@ QList<TransactionDTO> TransactionDAO::GetTransactionList()
     return cachedDataPointer->transactionList;
 }
 
-void TransactionDAO::AddTransaction()
+void TransactionDAO::AddTransaction(QDate inDate, double inAmount, TransactionType inTransactionType,
+                                    QString inCategoryId, QString inComment)
 {
-    QList<TransactionDTO> *transactionList = &(cachedDataPointer->transactionList);
+    cachedDataPointer->transactionList.insert(cachedDataPointer->transactionList.begin(),
+                                              TransactionDTO(GenerateUniqueKey(),
+                                                             inDate,
+                                                             inAmount,
+                                                             inTransactionType,
+                                                             inCategoryId,
+                                                             inComment));
+}
+
+QString TransactionDAO::GenerateUniqueKey()
+{
     UniqueKeyGenerator generator;
     QList<QString> prevUsedIds;
     foreach(TransactionDTO transaction, cachedDataPointer->transactionList)
     {
         prevUsedIds.append(transaction.id);
     }
-
-    transactionList->insert(transactionList->begin(), TransactionDTO(generator.GenerateUniqueKey(prevUsedIds),
-                                                                     QDate::currentDate(),
-                                                                     00.00,
-                                                                     OUT,
-                                                                     "",
-                                                                     ""));
+    return generator.GenerateUniqueKey(prevUsedIds);
 }
 
 bool TransactionDAO::RemoveTransaction(QString transactionId)

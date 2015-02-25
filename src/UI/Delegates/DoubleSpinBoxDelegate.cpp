@@ -26,7 +26,7 @@ void DoubleSpinBoxDelegate::setEditorData(QWidget *editor,
 
     QDoubleSpinBox *spinBox = static_cast<QDoubleSpinBox*>(editor);
     spinBox->setDecimals(2);
-    spinBox->setMaximum(999999999);
+    spinBox->setMaximum(99999999999);
     spinBox->setMinimum(0);
     spinBox->setSingleStep(1);
     spinBox->setValue(value);

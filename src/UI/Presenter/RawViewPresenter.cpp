@@ -39,7 +39,7 @@ RawViewPresenter::RawViewPresenter(CachedData *inCachedDataPointer, QWidget *par
     ui->tableView->hideColumn(0);
 
     //Load cached data from the model to the table view
-    RetriveAndLoadCachedData();
+    Refresh();
 }
 
 RawViewPresenter::~RawViewPresenter()
@@ -56,7 +56,7 @@ RawViewPresenter::~RawViewPresenter()
     delete ui;
 }
 
-void RawViewPresenter::RetriveAndLoadCachedData()
+void RawViewPresenter::Refresh()
 {
     model->Refresh();
 }
@@ -68,7 +68,7 @@ void RawViewPresenter::MarkDirty()
 
 void RawViewPresenter::on_pushButtonAddTransaction_clicked()
 {
-    transactionDAO->AddTransaction();
+    transactionDAO->AddTransaction(QDate::currentDate(), 00.00, OUT, "", "");
     model->Refresh();
     ui->tableView->scrollToTop();
     ui->tableView->selectRow(0);
@@ -101,7 +101,7 @@ void RawViewPresenter::on_pushButtonRemoveSelectedTransactions_clicked()
     {
         MarkDirty();
     }
-    LoadDataToView();
+    Refresh();
     ui->tableView->selectRow(firstSelectedRow - 1);
 }
 
@@ -124,9 +124,4 @@ QList<QString> RawViewPresenter::GetSelectedTransactionsIds()
         }
     }
     return transactionIdList;
-}
-
-void RawViewPresenter::LoadDataToView()
-{
-    model->Refresh();
 }

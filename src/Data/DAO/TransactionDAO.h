@@ -22,8 +22,13 @@ public:
 
     /**
      * @brief AddTransaction - Appends a transaction to the start of the list
+     * @param inDate
+     * @param inAmount
+     * @param inTransactionType
+     * @param inCategoryId
+     * @param inComment
      */
-    void AddTransaction();
+    void AddTransaction(QDate inDate, double inAmount, TransactionType inTransactionType, QString inCategoryId, QString inComment);
 
     /**
      * @brief RemoveTransaction
@@ -161,6 +166,12 @@ private:
      * @return Returns a pointer to the transaction.
      */
     TransactionDTO* FindTransactionById(QString id);
+
+    /**
+     * @brief GenerateUniqueKey - Generates a unique key. Check uniqueness against the current transaction list.
+     * @return
+     */
+    QString GenerateUniqueKey();
 
     /**
      * @brief cachedDataPointer

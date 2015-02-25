@@ -41,6 +41,15 @@ void TransactionDAOTest::RunTests()
     TestGetTransactionsByCategoryId_Found();
     TestGetTransactionsByCategoryId_NotFound();
 
+    /// Test AddTransaction
+    TestAddTransaction_EmptyTransactionList();
+    TestAddTransaction_NonEmptyTransactionList();
+
+    /// Test RemoveTransaction
+    TestRemoveTransaction_Found();
+    TestRemoveTransaction_NotFoundEmptyList();
+    TestRemoveTransaction_NotFoundNonEmptyList();
+
 }
 
 /// Test GetTransactionList
@@ -274,6 +283,84 @@ void TransactionDAOTest::TestGetTransactionsByCategoryId_NotFound()
 
     QList<TransactionDTO> list = t->GetTransactionsByCategoryId("nonCategory");
     Assert(list.count() == 0, "TestGetTransactionsByCategoryId_NotFound()");
+}
+
+/// Test AddTransaction
+void TransactionDAOTest::TestAddTransaction_EmptyTransactionList()
+{
+    CachedData *c = new CachedData();
+
+    TransactionDAO *t = new TransactionDAO(c);
+
+    t->AddTransaction(QDate(2004, 4, 4), 10, IN, "CAT2", "COMMENT");
+
+    Assert(c->transactionList.at(0).amount == 10 &&
+           c->transactionList.at(0).date ==  QDate(2004, 4, 4) &&
+           c->transactionList.at(0).transactionType == IN &&
+           c->transactionList.at(0).categoryId == "CAT2" &&
+           c->transactionList.at(0).comment == "COMMENT" &&
+           c->transactionList.count() == 1,
+           "TestAddTransaction_EmptyTransactionList()");
+}
+
+void TransactionDAOTest::TestAddTransaction_NonEmptyTransactionList()
+{
+    CachedData *c = new CachedData();
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+
+    TransactionDAO *t = new TransactionDAO(c);
+
+    t->AddTransaction(QDate(2004, 4, 4), 10, IN, "CAT2", "COMMENT");
+
+    Assert(c->transactionList.at(0).amount == 10 &&
+           c->transactionList.at(0).date ==  QDate(2004, 4, 4) &&
+           c->transactionList.at(0).transactionType == IN &&
+           c->transactionList.at(0).categoryId == "CAT2" &&
+           c->transactionList.at(0).comment == "COMMENT" &&
+           c->transactionList.count() == 4,
+           "TestAddTransaction_NonEmptyTransactionList()");
+}
+
+/// Test RemoveTransaction
+void TransactionDAOTest::TestRemoveTransaction_Found()
+{
+    CachedData *c = new CachedData();
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+
+    TransactionDAO *t = new TransactionDAO(c);
+    bool result = t->RemoveTransaction("id2");
+
+    Assert(c->transactionList.count() == 2 && result,
+           "TestRemoveTransaction_Found()");
+}
+
+void TransactionDAOTest::TestRemoveTransaction_NotFoundEmptyList()
+{
+    CachedData *c = new CachedData();
+
+    TransactionDAO *t = new TransactionDAO(c);
+    bool result = t->RemoveTransaction("GARBAGE_ID");
+
+    Assert(c->transactionList.count() == 0 && !result,
+           "TestRemoveTransaction_NotFoundEmptyList()");
+}
+
+void TransactionDAOTest::TestRemoveTransaction_NotFoundNonEmptyList()
+{
+    CachedData *c = new CachedData();
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+
+    TransactionDAO *t = new TransactionDAO(c);
+    bool result = t->RemoveTransaction("GARBAGE_ID");
+
+    Assert(c->transactionList.count() == 3 && !result,
+           "TestRemoveTransaction_NotFoundNonEmptyList()");
 }
 
 

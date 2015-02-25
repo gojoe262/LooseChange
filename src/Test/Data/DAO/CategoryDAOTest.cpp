@@ -71,19 +71,10 @@ void CategoryDAOTest::TestGetCategoryById_NoMatch()
     c->categoryList.append(CategoryDTO("id3", "Description"));
 
     CategoryDAO *dao = new CategoryDAO(c);
-    bool exceptionHit = false;
 
-    try
-    {
-        dao->GetCategoryById("id4");
-    }
-    catch (CategoryNotFoundException e)
-    {
-        /// Should be expecting the exception
-        exceptionHit = true;
-    }
+    CategoryDTO dto = dao->GetCategoryById("id4");
 
-    Assert(exceptionHit, "TestGetCategoryById_NoMatch()");
+    Assert((dto.description == "" && dto.id == ""), "TestGetCategoryById_NoMatch()");
 }
 
 void CategoryDAOTest::TestGetCategoryById_EmptyList()
@@ -91,19 +82,9 @@ void CategoryDAOTest::TestGetCategoryById_EmptyList()
     CachedData *c = new CachedData();
     CategoryDAO *dao = new CategoryDAO(c);
 
-    bool exceptionHit = false;
+    CategoryDTO dto = dao->GetCategoryById("id4");
 
-    try
-    {
-        dao->GetCategoryById("id4");
-    }
-    catch (CategoryNotFoundException e)
-    {
-        /// Should be expecting the exception
-        exceptionHit = true;
-    }
-
-    Assert(exceptionHit, "TestGetCategoryById_EmptyList()");
+    Assert((dto.description == "" && dto.id == ""), "TestGetCategoryById_EmptyList()");
 }
 
 void CategoryDAOTest::TestUpdateDescription_ChangeMade()

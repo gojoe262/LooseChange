@@ -46,6 +46,15 @@ private:
     /// Test GetTransactionByCategoryId
     void TestGetTransactionsByCategoryId_Found();
     void TestGetTransactionsByCategoryId_NotFound();
+
+    /// Test AddTransaction
+    void TestAddTransaction_EmptyTransactionList();
+    void TestAddTransaction_NonEmptyTransactionList();
+
+    /// Test RemoveTransaction
+    void TestRemoveTransaction_Found();
+    void TestRemoveTransaction_NotFoundEmptyList();
+    void TestRemoveTransaction_NotFoundNonEmptyList();
 };
 
 #endif // TRANSACTIONDAOTEST_H

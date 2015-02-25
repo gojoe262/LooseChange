@@ -63,7 +63,20 @@ private slots:
      */
     void on_toolButtonShowRawViewPresenter_clicked();
 
+    /**
+     * @brief on_actionE_xit_triggered - Closes the program
+     */
     void on_actionE_xit_triggered();
+
+    /**
+     * @brief on_toolButtonAddTransaction_clicked - Opens the add transaction window
+     */
+    void on_toolButtonAddTransaction_clicked();
+
+    /**
+     * @brief on_actionAdd_Transaction_triggered - Opens the add transaction window
+     */
+    void on_actionAdd_Transaction_triggered();
 
 private:
     /**

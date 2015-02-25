@@ -31,9 +31,9 @@ public:
     ~RawViewPresenter();
 
     /**
-     * @brief RetriveAndLoadCachedData - Retrives and Load the cached
+     * @brief Refresh - Retrives and loads the cached data
      */
-    void RetriveAndLoadCachedData();
+    void Refresh();
 
 private slots:
     void MarkDirty();
@@ -43,6 +43,9 @@ private slots:
      */
     void on_pushButtonAddTransaction_clicked();
 
+    /**
+     * @brief on_pushButtonRemoveSelectedTransactions_clicked - Removes the selected transactions
+     */
     void on_pushButtonRemoveSelectedTransactions_clicked();
 
 signals:
@@ -51,8 +54,6 @@ signals:
 private:
 
     QList<QString> GetSelectedTransactionsIds();
-
-    void LoadDataToView();
 
     Ui::RawViewPresenter *ui;
 

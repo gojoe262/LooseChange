@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>417</height>
+    <width>900</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LooseChangePresenter</string>
+   <string>Loose Change</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QToolButton" name="toolButtonOpen">
@@ -20,8 +20,11 @@
       <x>91</x>
       <y>10</y>
       <width>28</width>
-      <height>27</height>
+      <height>28</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Open File</string>
     </property>
     <property name="text">
      <string notr="true"/>
@@ -41,9 +44,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>13</y>
-      <width>75</width>
-      <height>21</height>
+      <y>10</y>
+      <width>70</width>
+      <height>28</height>
      </rect>
     </property>
     <property name="text">
@@ -59,7 +62,7 @@
       <x>125</x>
       <y>10</y>
       <width>28</width>
-      <height>27</height>
+      <height>28</height>
      </rect>
     </property>
     <property name="text">
@@ -74,6 +77,26 @@
       <width>20</width>
       <height>20</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonAddTransaction">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>28</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Add Transaction [Ctrl+A]</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../Icons/Icons.qrc">
+      <normaloff>:/PlusIcon.png</normaloff>:/PlusIcon.png</iconset>
     </property>
    </widget>
   </widget>
@@ -99,13 +122,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>762</width>
-     <height>19</height>
+     <width>900</width>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
@@ -114,9 +137,10 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="actionEdit_Categories"/>
+    <addaction name="actionAdd_Transaction"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTools"/>
@@ -156,6 +180,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionAdd_Transaction">
+   <property name="icon">
+    <iconset resource="../Icons/Icons.qrc">
+     <normaloff>:/PlusIcon.png</normaloff>:/PlusIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Add Transaction</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
    </property>
   </action>
  </widget>

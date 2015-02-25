@@ -57,7 +57,7 @@ bool FileWriter::WriteFile(QList<TransactionDTO> transactionList, QList<Category
         QJsonDocument doc(mainJsonObj);
         if(file.write(doc.toJson()) < 0) //file.write(doc.toJson()) returns -1 if error
         {
-            QMessageBox::information(0, "Error", "Error writing JSON Document to file.\n" + file.fileName());
+            QMessageBox::warning(0, "Error", "Error writing JSON Document to file.\n" + file.fileName());
             return false;
         }
         else
@@ -67,7 +67,7 @@ bool FileWriter::WriteFile(QList<TransactionDTO> transactionList, QList<Category
     }
     else
     {
-        QMessageBox::information(0, "Error", "Error writing to file " + file.fileName());
+        QMessageBox::warning(0, "Error", "Error writing to file " + file.fileName());
         return false;
     }
 }

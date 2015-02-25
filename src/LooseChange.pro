@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     UI/Presenter/RawViewPresenter.cpp \
     Test/TestBase.cpp \
     Test/Data/DAO/TransactionDAOTest.cpp \
-    Test/Data/DAO/CategoryDAOTest.cpp 
+    Test/Data/DAO/CategoryDAOTest.cpp \ 
+    UI/Presenter/AddTransactionPresenter.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -57,12 +58,14 @@ HEADERS  += \
     UI/Presenter/RawViewPresenter.h \
     Test/TestBase.h \
     Test/Data/DAO/TransactionDAOTest.h \
-    Test/Data/DAO/CategoryDAOTest.h 
+    Test/Data/DAO/CategoryDAOTest.h \ 
+    UI/Presenter/AddTransactionPresenter.h
     
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \
     UI/Presenter/LooseChangePresenter.ui \
-    UI/Presenter/RawViewPresenter.ui
+    UI/Presenter/RawViewPresenter.ui \
+    UI/Presenter/AddTransactionPresenter.ui
 
 DISTFILES += \
     Test/testSaveFile_JSON.json

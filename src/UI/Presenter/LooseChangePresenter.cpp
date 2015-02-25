@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QFileDialog>
+#include <UI/Presenter/AddTransactionPresenter.h>
 
 
 LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
@@ -15,6 +16,8 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     ///Add Buttons to the toolbar
     ui->mainToolBar->addWidget(ui->toolButtonOpen);
     ui->mainToolBar->addWidget(ui->toolButtonSave);
+    ui->mainToolBar->addSeparator();
+    ui->mainToolBar->addWidget(ui->toolButtonAddTransaction);
     ui->mainToolBar->addSeparator();
     ui->mainToolBar->addWidget(ui->toolButtonShowRawViewPresenter);
     ui->toolButtonShowRawViewPresenter->setCheckable(true);
@@ -29,9 +32,10 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     rawView->hide();
 
     ///Load Data to Presenters
-    rawView->RetriveAndLoadCachedData();
+    rawView->Refresh();
 
-    DisableSave(); //Disables saves when first loading.
+    ///Disables saves when first loading.
+    DisableSave();
 
 }
 
@@ -49,7 +53,7 @@ void LooseChangePresenter::Open()
     if(fileLocation != "")
     {
         cachedData.ReadFile(fileLocation);
-        rawView->RetriveAndLoadCachedData();
+        rawView->Refresh();
         fileLocationTemp = fileLocation;
         DisableSave();
     }
@@ -62,7 +66,7 @@ void LooseChangePresenter::Save()
                                                         tr("LooseChange Files (*.json);;All Files (*.* *"));
     cachedData.WriteFile(fileLocation);
     cachedData.ReadFile(fileLocation);
-    rawView->RetriveAndLoadCachedData();
+    rawView->Refresh();
     DisableSave();
 }
 
@@ -104,8 +108,6 @@ void LooseChangePresenter::on_actionEdit_Categories_triggered()
 {
     CachedData tempCachedData = cachedData;
 
-
-
     EditCategoriesPresenter *e = new EditCategoriesPresenter(&tempCachedData, this);
 
     int result = e->exec();
@@ -115,6 +117,7 @@ void LooseChangePresenter::on_actionEdit_Categories_triggered()
         cachedData = tempCachedData;
         this->EnableSave();
     }
+    delete e;
 }
 
 void LooseChangePresenter::on_toolButtonShowRawViewPresenter_clicked()
@@ -133,4 +136,25 @@ void LooseChangePresenter::on_toolButtonShowRawViewPresenter_clicked()
 void LooseChangePresenter::on_actionE_xit_triggered()
 {
     this->close();
+}
+
+void LooseChangePresenter::on_toolButtonAddTransaction_clicked()
+{
+    on_actionAdd_Transaction_triggered();
+}
+
+void LooseChangePresenter::on_actionAdd_Transaction_triggered()
+{
+    CachedData tempCachedData = cachedData;
+
+    AddTransactionPresenter *t = new AddTransactionPresenter(&tempCachedData, this);
+    int result = t->exec();
+
+    if(result == QDialog::Accepted)
+    {
+        cachedData = tempCachedData;
+        EnableSave();
+        rawView->Refresh();
+    }
+    delete t;
 }

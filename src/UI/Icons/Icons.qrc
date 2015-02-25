@@ -4,5 +4,6 @@
         <file>GridIcon.png</file>
         <file>OpenIcon.png</file>
         <file>SaveIcon.png</file>
+        <file>PlusIcon.png</file>
     </qresource>
 </RCC>

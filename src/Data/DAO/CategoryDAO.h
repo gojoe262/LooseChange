@@ -21,7 +21,7 @@ public:
     /**
      * @brief GetCategory
      * @param inCategoryId
-     * @return
+     * @return Empty Category if not found. The category if found.
      */
     CategoryDTO GetCategoryById(QString inCategoryId);
 
