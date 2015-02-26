@@ -22,6 +22,9 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     ui->mainToolBar->addWidget(ui->toolButtonShowRawViewPresenter);
     ui->toolButtonShowRawViewPresenter->setCheckable(true);
 
+    /// Initialize the FileAccessor
+    fileAccessor = new FileAccessor();
+
     /// Initialize Presenters
     rawView = new RawViewPresenter(&cachedData, this);
 
@@ -32,7 +35,7 @@ LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     rawView->hide();
 
     ///Load Data to Presenters
-    rawView->Refresh();
+    RefreshAllViews();
 
     ///Disables saves when first loading.
     DisableSave();
@@ -48,26 +51,22 @@ LooseChangePresenter::~LooseChangePresenter()
 
 void LooseChangePresenter::Open()
 {
-    QString fileLocation = QFileDialog::getOpenFileName(this, tr("Open File"), "./",
-                                                        tr("LooseChange Files (*.json);;All Files (*.* *"));
-    if(fileLocation != "")
+    CachedData temp;
+    if(fileAccessor->OpenFile(&temp))
     {
-        cachedData.ReadFile(fileLocation);
-        rawView->Refresh();
-        fileLocationTemp = fileLocation;
+        cachedData.Clear();
+        cachedData = temp;
+        RefreshAllViews();
         DisableSave();
     }
 }
 
 void LooseChangePresenter::Save()
 {
-    QString fileLocation = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                        fileLocationTemp,
-                                                        tr("LooseChange Files (*.json);;All Files (*.* *"));
-    cachedData.WriteFile(fileLocation);
-    cachedData.ReadFile(fileLocation);
-    rawView->Refresh();
-    DisableSave();
+    if(fileAccessor->SaveFile(&cachedData))
+    {
+        DisableSave();
+    }
 }
 
 void LooseChangePresenter::on_toolButtonOpen_clicked()
@@ -90,19 +89,24 @@ void LooseChangePresenter::on_actionSave_triggered()
     Save();
 }
 
-
 void LooseChangePresenter::EnableSave()
 {
     ui->actionSave->setEnabled(true);
     ui->toolButtonSave->setEnabled(true);
+    this->setWindowTitle("* " + fileAccessor->GetFileName() + " - Loose Change");
 }
 
 void LooseChangePresenter::DisableSave()
 {
     ui->actionSave->setEnabled(false);
     ui->toolButtonSave->setEnabled(false);
+    this->setWindowTitle(fileAccessor->GetFileName() + " - Loose Change");
 }
 
+void LooseChangePresenter::RefreshAllViews()
+{
+    rawView->Refresh();
+}
 
 void LooseChangePresenter::on_actionEdit_Categories_triggered()
 {
@@ -154,7 +158,7 @@ void LooseChangePresenter::on_actionAdd_Transaction_triggered()
     {
         cachedData = tempCachedData;
         EnableSave();
-        rawView->Refresh();
+        RefreshAllViews();
     }
     delete t;
 }

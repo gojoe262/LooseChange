@@ -7,6 +7,7 @@
 #include <QStandardItemModel>
 #include <UI/Presenter/RawViewPresenter.h>
 #include <UI/Presenter/EditCategoriesPresenter.h>
+#include <Data/FileAccess/FileAccessor.h>
 
 namespace Ui {
 class LooseChangePresenter;
@@ -90,6 +91,11 @@ private:
     void Save();
 
     /**
+     * @brief RefreshAllViews - Forces RawView to refresh.
+     */
+    void RefreshAllViews();
+
+    /**
      * @brief ui
      */
     Ui::LooseChangePresenter *ui;
@@ -105,11 +111,14 @@ private:
     CachedData cachedData;
 
     /**
+     * @brief fileAccessor - Used to access the file (read and write)
+     */
+    FileAccessor *fileAccessor;
+
+    /**
      * @brief fileLocationTemp - Stores the file location.
      */
     QString fileLocationTemp;
-
-
 
 };
 

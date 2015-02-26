@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     Test/TestBase.cpp \
     Test/Data/DAO/TransactionDAOTest.cpp \
     Test/Data/DAO/CategoryDAOTest.cpp \ 
-    UI/Presenter/AddTransactionPresenter.cpp
+    UI/Presenter/AddTransactionPresenter.cpp \
+    Data/FileAccess/FileAccessor.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -59,7 +60,8 @@ HEADERS  += \
     Test/TestBase.h \
     Test/Data/DAO/TransactionDAOTest.h \
     Test/Data/DAO/CategoryDAOTest.h \ 
-    UI/Presenter/AddTransactionPresenter.h
+    UI/Presenter/AddTransactionPresenter.h \
+    Data/FileAccess/FileAccessor.h
     
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \

@@ -1,74 +1,174 @@
 {
     "CATEGORIES": [
         {
-            "DESCRIPTION": "Gas/Travel",
+            "DESCRIPTION": "Gas/Travel ",
             "ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq"
+        },
+        {
+            "DESCRIPTION": "Laundry",
+            "ID": "xO5TztTCFrkru4bxchC07SLeEDydTJ"
         },
         {
             "DESCRIPTION": "Laundry",
             "ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8"
         },
         {
+            "DESCRIPTION": "Online Shopping",
+            "ID": "0RTwK7m2cYYarHWrZUtDWimFQHUZlh"
+        },
+        {
+            "DESCRIPTION": "Other",
+            "ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU"
+        },
+        {
+            "DESCRIPTION": "Phone",
+            "ID": "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
+        },
+        {
             "DESCRIPTION": "Restaurants",
             "ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL"
+        },
+        {
+            "DESCRIPTION": "Shopping",
+            "ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9"
         }
     ],
     "TRANSACTIONS": [
         {
-            "AMOUNT": 0,
-            "CATEGORY_ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8",
-            "COMMENT": "",
-            "DATE": "20150219",
-            "ID": "0RTwK7m2cYYarHWrZUtDWimFQHUZlh",
+            "AMOUNT": 2,
+            "CATEGORY_ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+            "COMMENT": "Candy at Shopko for movie",
+            "DATE": "20150116",
+            "ID": "8LrgQP1KebkbgfRv2sKj60rqeg1mcQ",
             "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 127.48999999999999,
-            "CATEGORY_ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8",
-            "COMMENT": "Just a test test",
-            "DATE": "20150211",
-            "ID": "JiLnKXmpB3dPn3emQXpZDBDM7jzL9i",
+            "AMOUNT": 19.489999999999998,
+            "CATEGORY_ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU",
+            "COMMENT": "Movie American Sniper",
+            "DATE": "20150116",
+            "ID": "NfxVhsvqROTw0hWtmcdqvG4br1nYVs",
             "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 14444.209999999999,
-            "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
-            "COMMENT": "THIS IS A TEST",
-            "DATE": "20150113",
-            "ID": "SDfdsawer435dfdsDFffd6FFfgDSFH",
-            "TRANSACTION_TYPE": "OUT"
-        },
-        {
-            "AMOUNT": 14444.209999999999,
-            "CATEGORY_ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8",
-            "COMMENT": "THIS IS A TEST",
-            "DATE": "20150113",
-            "ID": "SDfdsawer435dfdq34ffd6FFfgDSFH",
-            "TRANSACTION_TYPE": "OUT"
-        },
-        {
-            "AMOUNT": 50,
+            "AMOUNT": 25,
             "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
-            "COMMENT": "Test Comment",
-            "DATE": "20141223",
-            "ID": "EGLT0G5riAuhTlOLRySsrrrvPoyTii",
-            "TRANSACTION_TYPE": "IN"
+            "COMMENT": "BWW",
+            "DATE": "20150113",
+            "ID": "5riAuhTlOLRySswodvPoyTiiCvBbxM",
+            "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 50,
-            "CATEGORY_ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8",
-            "COMMENT": "Test Comment",
-            "DATE": "20141218",
-            "ID": "EGLT0G5riAuhTlOLRySswodvPoyTii",
-            "TRANSACTION_TYPE": "IN"
+            "AMOUNT": 26.920000000000002,
+            "CATEGORY_ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU",
+            "COMMENT": "Tomb in Pidgen Forge",
+            "DATE": "20150112",
+            "ID": "mpB3dPn3emQXpZDBDM7jzL9iEGLT0G",
+            "TRANSACTION_TYPE": "OUT"
         },
         {
-            "AMOUNT": 127.48999999999999,
+            "AMOUNT": 0.98999999999999999,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "Starbucks",
+            "DATE": "20150112",
+            "ID": "8m6diUQq8WrQMyjbhRk0mxVPn8JiLn",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 21,
+            "CATEGORY_ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU",
+            "COMMENT": "Regal Movie Theathers",
+            "DATE": "20150111",
+            "ID": "sVx13iC7I0Suya8qHFc8up1GoL19XW",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 7.9500000000000002,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "Baskin Robbins",
+            "DATE": "20150111",
+            "ID": "zuaIGxstACf2CshoJDUORO2fBqLxDA",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 45.149999999999999,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "Pizza with Uncle Mike and Auntie Linda",
+            "DATE": "20150110",
+            "ID": "jjAWCvyJEQsTYOgAxv2VQwUYRNhJym",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 16.460000000000001,
+            "CATEGORY_ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU",
+            "COMMENT": "Old Time Pictures",
+            "DATE": "20150110",
+            "ID": "w8C1e46k5xenu5IrNRjFNyEbfYUUBr",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 18.710000000000001,
             "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
-            "COMMENT": "Just a test test",
-            "DATE": "20141015",
-            "ID": "JiLnKXmpB3dPn3emQXpZDBDM7o9p9i",
-            "TRANSACTION_TYPE": "IN"
+            "COMMENT": "Gas to TN",
+            "DATE": "20150109",
+            "ID": "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 1.0700000000000001,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "McDons on way to TN",
+            "DATE": "20150109",
+            "ID": "iXGcYeoFGwco50zmFQLVFHbaNBb4KU",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 20.879999999999999,
+            "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
+            "COMMENT": "Gas to TN",
+            "DATE": "20150109",
+            "ID": "zHYZ827c2OPWXWC6VTyVN8VmZU3XzO",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 3.75,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "TacoBell With Maddie",
+            "DATE": "20150106",
+            "ID": "vKzCHjIxb6mAXjOzvOebW8W6xqooAB",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 7.9699999999999998,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "Subway for Maddie",
+            "DATE": "20150106",
+            "ID": "o9DZgXVBGteqxTq5YF6s3cBnz8Swy7",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 11.619999999999999,
+            "CATEGORY_ID": "LxDAsVx13iC7I0Suya8qHFc8up1GoL",
+            "COMMENT": "ColdStone",
+            "DATE": "20150103",
+            "ID": "rAIJN9WP4j66lYLOfxCNn2EMCZZwHc",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 3.5499999999999998,
+            "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
+            "COMMENT": "Gas for Maddie",
+            "DATE": "20150101",
+            "ID": "ghMDvXd3K59uiiGun1gwbWmXdR7RV1",
+            "TRANSACTION_TYPE": "OUT"
+        },
+        {
+            "AMOUNT": 6.6100000000000003,
+            "CATEGORY_ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+            "COMMENT": "HowDea BP Minimart run",
+            "DATE": "20150101",
+            "ID": "1WlX4wd62gohZ7g8Bwj6J7V28aYMcn",
+            "TRANSACTION_TYPE": "OUT"
         }
     ]
 }

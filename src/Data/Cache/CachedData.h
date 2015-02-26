@@ -1,32 +1,23 @@
-#ifndef CACHEDDTOLIST_H
-#define CACHEDDTOLIST_H
+#ifndef CACHEDDATA_H
+#define CACHEDDATA_H
 
 #include <Data/DTO/TransactionDTO.h>
 #include <Data/DTO/CategoryDTO.h>
-#include <QObject>
 
-class CachedData : public QObject
+
+class CachedData
 {
-    Q_OBJECT
 public:
-    CachedData(QObject *parent = 0);
+    CachedData();
     CachedData(const CachedData & other);
     ~CachedData();
 
     CachedData & operator =(const CachedData & other);
 
-    void ReadFile(QString fileLocation);
-
-    void WriteFile(QString fileLocation);
+    void Clear();
 
     QList<TransactionDTO>   transactionList;
     QList<CategoryDTO>      categoryList;
-
-signals:
-    void MarkDirty() const;
-    void MarkClean() const;
-
-
 };
 
-#endif // CACHEDDTOLIST_H
+#endif // CACHEDDDATA_H

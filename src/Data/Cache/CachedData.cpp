@@ -1,39 +1,23 @@
 #include "CachedData.h"
-#include <Data/FileAccess/FileReader.h>
-#include <Data/FileAccess/FileWriter.h>
 
-CachedData::CachedData(QObject *parent) :
-    QObject(parent)
+CachedData::CachedData()
 {
 }
 
-CachedData::CachedData(const CachedData &other):
-    QObject(0)
+CachedData::CachedData(const CachedData &other)
 {
     this->operator =(other);
 }
 
+void CachedData::Clear()
+{
+    transactionList.clear();
+    categoryList.clear();
+}
+
 CachedData::~CachedData()
 {
-    transactionList.clear();
-    categoryList.clear();
-}
-
-void CachedData::ReadFile(QString fileLocation)
-{
-    FileReader reader;
-    transactionList.clear();
-    categoryList.clear();
-    reader.ReadFile(fileLocation, transactionList, categoryList);
-
-    emit MarkClean();
-}
-
-void CachedData::WriteFile(QString fileLocation)
-{
-    FileWriter writer;
-    writer.WriteFile(transactionList, categoryList,fileLocation);
-    emit MarkClean();
+    Clear();
 }
 
 CachedData & CachedData::operator =(const CachedData & other)

@@ -5,6 +5,7 @@
 #include <Data/DTO/TransactionDTO.h>
 #include <Data/Cache/CachedData.h>
 #include <QtAlgorithms>
+#include <QObject>
 
 
 class TransactionDAO : public QObject
