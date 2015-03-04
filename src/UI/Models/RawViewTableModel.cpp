@@ -47,7 +47,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
 
         if(index.column() == 1)
         {
-            return dtoList[index.row()].date;
+            return dtoList[index.row()].date.toString("ddd, MMM d, yyyy");
         }
         if(index.column() == 2)
         {

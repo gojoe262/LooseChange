@@ -17,7 +17,7 @@ RawViewPresenter::RawViewPresenter(CachedData *inCachedDataPointer, QWidget *par
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(MarkDirty()));
 
-    //Set Model for tableView
+    //Set Model for tableView and allow sorting.
     ui->tableView->setModel(model);
     ui->tableView->setSortingEnabled(true);
 

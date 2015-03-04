@@ -24,9 +24,10 @@ QWidget *DateEditDelegate::createEditor(QWidget *parent,
 void DateEditDelegate::setEditorData(QWidget *editor,
                                      const QModelIndex &index) const
 {
-    QDate value = index.model()->data(index, Qt::EditRole).toDate();
+    QDate value = QDate::fromString(index.model()->data(index, Qt::EditRole).toString(), "ddd, MMM d, yyyy");
 
     QDateEdit *dateEdit = static_cast<QDateEdit*>(editor);
+    dateEdit->setDisplayFormat("ddd, MMM d, yyyy");
     dateEdit->setCalendarPopup(true);
     dateEdit->setDate(value);
 }
