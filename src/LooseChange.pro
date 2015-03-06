@@ -72,12 +72,18 @@ FORMS    += \
 DISTFILES += \
     Test/testSaveFile_JSON.json
 
-# Copies testSaveFile_JSON.json to the build directory
-copydata.commands = $(COPY_DIR) $$PWD/Test/testSaveFile_JSON.json $$OUT_PWD
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
+##  Copies files to the build directory
+#   Requires an additional build step:
+#       1. Click on projects in QtSideBar
+#       2. Add build step, Make
+#       3. Leave Override blank
+#       4. Make arguments: install
+##  This will ensure that the files are copied to the build directory.
+copyjson.files      = Test/testSaveFile_JSON.json
+copyjson.path       = $$OUT_PWD #Represents the build directory
+
+INSTALLS       += copyjson
+
 
 RESOURCES += \
     UI/Icons/Icons.qrc
