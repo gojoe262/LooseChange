@@ -4,18 +4,23 @@
 #include <QString>
 enum TransactionType
 {
-    OUT = 0,
-    IN = 1
+    OUT_TRANSACTION = 0,
+    IN_TRANSACTION = 1
 };
 
 class TransactionTypeHelper
 {
 public:
+    TransactionTypeHelper()
+    {
+
+    }
+
     QString static ToString(TransactionType type)
     {
-        if(type == IN)
+        if(type == IN_TRANSACTION)
             return "IN";
-        else if(type == OUT)
+        else if(type == OUT_TRANSACTION)
             return "OUT";
         else
             return "";
@@ -24,9 +29,9 @@ public:
     TransactionType static FromString(QString strType)
     {
         if(strType == "OUT")
-            return OUT;
+            return OUT_TRANSACTION;
         else
-            return IN;
+            return IN_TRANSACTION;
     }
 };
 

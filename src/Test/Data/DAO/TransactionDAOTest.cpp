@@ -56,8 +56,8 @@ void TransactionDAOTest::RunTests()
 void TransactionDAOTest::TestGetTransactionList_HasTransactions()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -76,8 +76,8 @@ void TransactionDAOTest::TestGetTransactionList_HasNoTransactions()
 void TransactionDAOTest::TestUpdateAmount_ChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -88,8 +88,8 @@ void TransactionDAOTest::TestUpdateAmount_ChangeMade()
 void TransactionDAOTest::TestUpdateAmount_NoChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -100,8 +100,8 @@ void TransactionDAOTest::TestUpdateAmount_NoChangeMade()
 void TransactionDAOTest::TestUpdateAmount_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -113,8 +113,8 @@ void TransactionDAOTest::TestUpdateAmount_NotFound()
 void TransactionDAOTest::TestUpdateDate_ChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -125,8 +125,8 @@ void TransactionDAOTest::TestUpdateDate_ChangeMade()
 void TransactionDAOTest::TestUpdateDate_NoChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -137,8 +137,8 @@ void TransactionDAOTest::TestUpdateDate_NoChangeMade()
 void TransactionDAOTest::TestUpdateDate_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -150,36 +150,36 @@ void TransactionDAOTest::TestUpdateDate_NotFound()
 void TransactionDAOTest::TestUpdateType_ChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
-    bool changeMade = t->UpdateType("id2", OUT);
-    Assert(changeMade && (int)c->transactionList.at(1).transactionType == (int)OUT, "TestUpdateType_ChangeMade()");
+    bool changeMade = t->UpdateType("id2", OUT_TRANSACTION);
+    Assert(changeMade && (int)c->transactionList.at(1).transactionType == (int)OUT_TRANSACTION, "TestUpdateType_ChangeMade()");
 }
 
 void TransactionDAOTest::TestUpdateType_NoChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
-    bool changeMade = t->UpdateType("id2", IN);
-    Assert(!changeMade && (int)c->transactionList.at(1).transactionType == (int)IN, "TestUpdateType_NoChangeMade()");
+    bool changeMade = t->UpdateType("id2", IN_TRANSACTION);
+    Assert(!changeMade && (int)c->transactionList.at(1).transactionType == (int)IN_TRANSACTION, "TestUpdateType_NoChangeMade()");
 }
 
 void TransactionDAOTest::TestUpdateType_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
-    bool changeMade = t->UpdateType("555", IN);
+    bool changeMade = t->UpdateType("555", IN_TRANSACTION);
     Assert(!changeMade, "TestUpdateType_NotFound()");
 }
 
@@ -187,8 +187,8 @@ void TransactionDAOTest::TestUpdateType_NotFound()
 void TransactionDAOTest::TestUpdateComment_ChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -199,8 +199,8 @@ void TransactionDAOTest::TestUpdateComment_ChangeMade()
 void TransactionDAOTest::TestUpdateComment_NoChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -211,8 +211,8 @@ void TransactionDAOTest::TestUpdateComment_NoChangeMade()
 void TransactionDAOTest::TestUpdateComment_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -224,8 +224,8 @@ void TransactionDAOTest::TestUpdateComment_NotFound()
 void TransactionDAOTest::TestUpdateCategory_ChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -236,8 +236,8 @@ void TransactionDAOTest::TestUpdateCategory_ChangeMade()
 void TransactionDAOTest::TestUpdateCategory_NoChangeMade()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -248,8 +248,8 @@ void TransactionDAOTest::TestUpdateCategory_NoChangeMade()
 void TransactionDAOTest::TestUpdateCategory_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -261,10 +261,10 @@ void TransactionDAOTest::TestUpdateCategory_NotFound()
 void TransactionDAOTest::TestGetTransactionsByCategoryId_Found()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id4", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id4", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category3", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -275,9 +275,9 @@ void TransactionDAOTest::TestGetTransactionsByCategoryId_Found()
 void TransactionDAOTest::TestGetTransactionsByCategoryId_NotFound()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category3", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
@@ -292,11 +292,11 @@ void TransactionDAOTest::TestAddTransaction_EmptyTransactionList()
 
     TransactionDAO *t = new TransactionDAO(c);
 
-    t->AddTransaction(QDate(2004, 4, 4), 10, IN, "CAT2", "COMMENT");
+    t->AddTransaction(QDate(2004, 4, 4), 10, IN_TRANSACTION, "CAT2", "COMMENT");
 
     Assert(c->transactionList.at(0).amount == 10 &&
            c->transactionList.at(0).date ==  QDate(2004, 4, 4) &&
-           c->transactionList.at(0).transactionType == IN &&
+           c->transactionList.at(0).transactionType == IN_TRANSACTION &&
            c->transactionList.at(0).categoryId == "CAT2" &&
            c->transactionList.at(0).comment == "COMMENT" &&
            c->transactionList.count() == 1,
@@ -306,17 +306,17 @@ void TransactionDAOTest::TestAddTransaction_EmptyTransactionList()
 void TransactionDAOTest::TestAddTransaction_NonEmptyTransactionList()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category3", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
 
-    t->AddTransaction(QDate(2004, 4, 4), 10, IN, "CAT2", "COMMENT");
+    t->AddTransaction(QDate(2004, 4, 4), 10, IN_TRANSACTION, "CAT2", "COMMENT");
 
     Assert(c->transactionList.at(0).amount == 10 &&
            c->transactionList.at(0).date ==  QDate(2004, 4, 4) &&
-           c->transactionList.at(0).transactionType == IN &&
+           c->transactionList.at(0).transactionType == IN_TRANSACTION &&
            c->transactionList.at(0).categoryId == "CAT2" &&
            c->transactionList.at(0).comment == "COMMENT" &&
            c->transactionList.count() == 4,
@@ -327,9 +327,9 @@ void TransactionDAOTest::TestAddTransaction_NonEmptyTransactionList()
 void TransactionDAOTest::TestRemoveTransaction_Found()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category3", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
     bool result = t->RemoveTransaction("id2");
@@ -352,9 +352,9 @@ void TransactionDAOTest::TestRemoveTransaction_NotFoundEmptyList()
 void TransactionDAOTest::TestRemoveTransaction_NotFoundNonEmptyList()
 {
     CachedData *c = new CachedData();
-    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN, "category1", "comment"));
-    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN, "category2", "comment"));
-    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN, "category3", "comment"));
+    c->transactionList.append(TransactionDTO("id", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category1", "comment"));
+    c->transactionList.append(TransactionDTO("id2", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category2", "comment"));
+    c->transactionList.append(TransactionDTO("id3", QDate(1999, 9, 9), 111.11, IN_TRANSACTION, "category3", "comment"));
 
     TransactionDAO *t = new TransactionDAO(c);
     bool result = t->RemoveTransaction("GARBAGE_ID");

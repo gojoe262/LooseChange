@@ -68,7 +68,7 @@ void RawViewPresenter::MarkDirty()
 
 void RawViewPresenter::on_pushButtonAddTransaction_clicked()
 {
-    transactionDAO->AddTransaction(QDate::currentDate(), 00.00, OUT, "", "");
+    transactionDAO->AddTransaction(QDate::currentDate(), 00.00, OUT_TRANSACTION, "", "");
     model->Refresh();
     ui->tableView->scrollToTop();
     ui->tableView->selectRow(0);

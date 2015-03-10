@@ -17,8 +17,8 @@ QWidget *TransactionTypeComboBoxDelegate::createEditor(QWidget *parent,
 {
     QComboBox *editor = new QComboBox(parent);
 
-    editor->addItem(TransactionTypeHelper::ToString(OUT),OUT);
-    editor->addItem(TransactionTypeHelper::ToString(IN), IN);
+    editor->addItem(TransactionTypeHelper::ToString(OUT_TRANSACTION), OUT_TRANSACTION);
+    editor->addItem(TransactionTypeHelper::ToString(IN_TRANSACTION), IN_TRANSACTION);
     return editor;
 }
 

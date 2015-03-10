@@ -15,8 +15,8 @@ AddTransactionPresenter::AddTransactionPresenter(CachedData *inCachedDataPointer
 
 
     ui->dateEditDate->setDate(QDate::currentDate());
-    ui->comboBoxType->addItem(TransactionTypeHelper::ToString(OUT), OUT);
-    ui->comboBoxType->addItem(TransactionTypeHelper::ToString(IN), IN);
+    ui->comboBoxType->addItem(TransactionTypeHelper::ToString(OUT_TRANSACTION), OUT_TRANSACTION);
+    ui->comboBoxType->addItem(TransactionTypeHelper::ToString(IN_TRANSACTION), IN_TRANSACTION);
 
     QList<CategoryDTO> categoryList = categoryDAO->GetCategories();
     foreach(CategoryDTO category, categoryList)
