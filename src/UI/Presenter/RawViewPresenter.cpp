@@ -77,29 +77,32 @@ void RawViewPresenter::on_pushButtonAddTransaction_clicked()
 
 void RawViewPresenter::on_pushButtonRemoveSelectedTransactions_clicked()
 {
-    bool changesMade = false;
-
-    int firstSelectedRow = ui->tableView->selectionModel()->selectedIndexes().first().row();
-
-    /// First get the selected transactionIds and put them into a list.
-    QList<QString> transactionIdList = GetSelectedTransactionsIds();
-
-    /// Next, iterate thru the transactionIdList and remove transactions with that id.
-    foreach(QString transactionId, transactionIdList)
+    if(ui->tableView->selectionModel()->selectedIndexes().count() != 0)
     {
-        bool change = transactionDAO->RemoveTransaction(transactionId);
-        if(change)
+        bool changesMade = false;
+
+        int firstSelectedRow = ui->tableView->selectionModel()->selectedIndexes().first().row();
+
+        /// First get the selected transactionIds and put them into a list.
+        QList<QString> transactionIdList = GetSelectedTransactionsIds();
+
+        /// Next, iterate thru the transactionIdList and remove transactions with that id.
+        foreach(QString transactionId, transactionIdList)
         {
-            changesMade = true;
+            bool change = transactionDAO->RemoveTransaction(transactionId);
+            if(change)
+            {
+                changesMade = true;
+            }
         }
-    }
 
-    if(changesMade)
-    {
-        MarkDirty();
+        if(changesMade)
+        {
+            MarkDirty();
+        }
+        Refresh();
+        ui->tableView->selectRow(firstSelectedRow - 1);
     }
-    Refresh();
-    ui->tableView->selectRow(firstSelectedRow - 1);
 }
 
 QList<QString> RawViewPresenter::GetSelectedTransactionsIds()
