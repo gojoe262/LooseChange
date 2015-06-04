@@ -7,8 +7,6 @@
 #include <QFile>
 #include <Utility/TransactionType.h>
 #include <Data/DAO/CategoryDAO.h>
-#include <Data/FileAccess/FileReader.h>
-#include <Data/FileAccess/FileWriter.h>
 #include <QMessageBox>
 #include <Utility/UniqueKeyGenerator.h>
 

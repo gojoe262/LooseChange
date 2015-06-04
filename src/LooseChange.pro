@@ -22,8 +22,6 @@ SOURCES += main.cpp \
     UI/Delegates/TransactionTypeComboBoxDelegate.cpp \
     UI/Delegates/CategoryComboBoxDelegate.cpp \
     UI/Delegates/CommentLineEditDelegate.cpp \
-    Data/FileAccess/FileReader.cpp \
-    Data/FileAccess/FileWriter.cpp \
     Data/DTO/CategoryDTO.cpp \
     Data/DAO/CategoryDAO.cpp \
     UI/Models/RawViewTableModel.cpp \
@@ -48,8 +46,6 @@ HEADERS  += \
     UI/Delegates/TransactionTypeComboBoxDelegate.h \
     UI/Delegates/CategoryComboBoxDelegate.h \
     UI/Delegates/CommentLineEditDelegate.h \
-    Data/FileAccess/FileReader.h \
-    Data/FileAccess/FileWriter.h \
     Data/DTO/CategoryDTO.h \
     Data/DAO/CategoryDAO.h \
     UI/Models/RawViewTableModel.h \

@@ -26,6 +26,12 @@ int RawViewTableModel::columnCount(const QModelIndex &index) const
 
 QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
 {
+    //Handle the alignment role for column 2
+    if(index.column() == 2 && role == Qt::TextAlignmentRole)
+    {
+        return Qt::AlignRight;
+    }
+
     ///This sets the data that is seen in the table view
     if(transactionDAO->GetTransactionList().isEmpty())
     {
@@ -51,7 +57,7 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         }
         if(index.column() == 2)
         {
-            return dtoList[index.row()].amount;
+            return QString::number(dtoList[index.row()].amount, 'f', 2);
         }
         if(index.column() == 3)
         {
@@ -67,6 +73,8 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
             return dtoList[index.row()].comment;
         }
     }
+
+
 
     return QVariant();
 }

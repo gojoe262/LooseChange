@@ -14,7 +14,8 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent,
     const QStyleOptionViewItem &/* option */,
     const QModelIndex &/* index */) const
 {
-    QDoubleSpinBox *editor = new QDoubleSpinBox(parent);
+    QDoubleSpinBox *editor = new QDoubleSpinBox(parent);    
+    editor->setAlignment(Qt::AlignRight);
     return editor;
 }
 
