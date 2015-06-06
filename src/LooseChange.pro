@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     Test/Data/DAO/TransactionDAOTest.cpp \
     Test/Data/DAO/CategoryDAOTest.cpp \ 
     UI/Presenter/AddTransactionPresenter.cpp \
-    Data/FileAccess/FileAccessor.cpp
+    Data/FileAccess/FileAccessor.cpp \
+    UI/Presenter/PendingChangesWarningPresenter.cpp
 
 HEADERS  += \
     Data/DAO/TransactionDAO.h \
@@ -57,13 +58,15 @@ HEADERS  += \
     Test/Data/DAO/TransactionDAOTest.h \
     Test/Data/DAO/CategoryDAOTest.h \ 
     UI/Presenter/AddTransactionPresenter.h \
-    Data/FileAccess/FileAccessor.h
+    Data/FileAccess/FileAccessor.h \
+    UI/Presenter/PendingChangesWarningPresenter.h
     
 FORMS    += \
     UI/Presenter/EditCategoriesPresenter.ui \
     UI/Presenter/LooseChangePresenter.ui \
     UI/Presenter/RawViewPresenter.ui \
-    UI/Presenter/AddTransactionPresenter.ui
+    UI/Presenter/AddTransactionPresenter.ui \
+    UI/Presenter/PendingChangesWarningPresenter.ui
 
 DISTFILES += \
     Test/testSaveFile_JSON.json

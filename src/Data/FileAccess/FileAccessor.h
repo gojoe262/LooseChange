@@ -55,6 +55,8 @@ private:
      * @brief currentFileLocation - Variable to hold the current file location.
      */
     QString currentFileLocation;
+
+
 };
 
 #endif // FILEACCESSOR_H

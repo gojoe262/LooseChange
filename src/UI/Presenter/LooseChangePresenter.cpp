@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <UI/Presenter/AddTransactionPresenter.h>
-
+#include <UI/Presenter/PendingChangesWarningPresenter.h>
 
 LooseChangePresenter::LooseChangePresenter(QWidget *parent) :
     QMainWindow(parent),
@@ -49,6 +49,16 @@ LooseChangePresenter::~LooseChangePresenter()
 
 }
 
+void LooseChangePresenter::closeEvent(QCloseEvent *event)
+{
+    if(TryClose())
+        event->accept();
+    else
+        event->ignore();
+
+
+}
+
 void LooseChangePresenter::Open()
 {
     CachedData temp;
@@ -61,12 +71,14 @@ void LooseChangePresenter::Open()
     }
 }
 
-void LooseChangePresenter::Save()
+bool LooseChangePresenter::Save()
 {
     if(fileAccessor->SaveFile(&cachedData))
     {
         DisableSave();
+        return true;
     }
+    return false;
 }
 
 void LooseChangePresenter::on_toolButtonOpen_clicked()
@@ -101,6 +113,11 @@ void LooseChangePresenter::DisableSave()
     ui->actionSave->setEnabled(false);
     ui->toolButtonSave->setEnabled(false);
     this->setWindowTitle(fileAccessor->GetFileName() + " - Loose Change");
+}
+
+bool LooseChangePresenter::IsTherePendingChanges()
+{
+    ui->actionSave->isEnabled();
 }
 
 void LooseChangePresenter::RefreshAllViews()
@@ -162,3 +179,36 @@ void LooseChangePresenter::on_actionAdd_Transaction_triggered()
     }
     delete t;
 }
+
+bool LooseChangePresenter::TryClose()
+{
+    if(IsTherePendingChanges())
+    {
+        PendingChangesWarningPresenter *warning = new PendingChangesWarningPresenter(fileAccessor->GetFileName(), this);
+        int result = warning->exec();
+        delete warning;
+
+
+        if(result == QMessageBox::No)
+        {
+            return true;
+        }
+        else if(result == QMessageBox::Yes)
+        {
+            if(this->Save())
+            {
+                return true;
+            }
+            return false;
+        }
+        else if(result == QMessageBox::Cancel)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return true;
+    }
+}
+

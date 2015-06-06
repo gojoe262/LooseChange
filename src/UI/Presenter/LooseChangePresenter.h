@@ -2,6 +2,7 @@
 #define LOOSECHANGEPRESENTER_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 #include <Data/Cache/CachedData.h>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
@@ -20,6 +21,9 @@ class LooseChangePresenter : public QMainWindow
 public:
     explicit LooseChangePresenter(QWidget *parent = 0);
     ~LooseChangePresenter();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     /**
@@ -60,6 +64,12 @@ private slots:
     void DisableSave();
 
     /**
+     * @brief IsTherePendingChanges
+     * @return
+     */
+    bool IsTherePendingChanges();
+
+    /**
      * @brief on_toolButtonShowRawViewPresenter_clicked
      */
     void on_toolButtonShowRawViewPresenter_clicked();
@@ -87,11 +97,17 @@ private:
 
     /**
      * @brief Save - Save the data in cachedData to a JSON file
+     * @return True if saved, false if not saved.
      */
-    void Save();
+    bool Save();
 
     /**
-     * @brief RefreshAllViews - Forces RawView to refresh.
+     * @brief Close
+     */
+    bool TryClose();
+
+    /**
+     * @brief RefreshAllViews - Forces Views to refresh (pull data from the cached Data).
      */
     void RefreshAllViews();
 
@@ -119,7 +135,6 @@ private:
      * @brief fileLocationTemp - Stores the file location.
      */
     QString fileLocationTemp;
-
 };
 
 #endif // LOOSECHANGEPRESENTER_H

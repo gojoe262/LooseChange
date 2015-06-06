@@ -14,7 +14,8 @@ FileAccessor::~FileAccessor()
 
 QString FileAccessor::GetFileName()
 {
-    return currentFileLocation;
+    QFileInfo fileInfo(currentFileLocation);
+    return fileInfo.fileName();
 }
 
 bool FileAccessor::SaveFile(CachedData *inCachedDataPointer)

@@ -1,6 +1,10 @@
 {
     "CATEGORIES": [
         {
+            "DESCRIPTION": "Electronics",
+            "ID": "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
+        },
+        {
             "DESCRIPTION": "Gas/Travel ",
             "ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq"
         },
@@ -9,20 +13,12 @@
             "ID": "xO5TztTCFrkru4bxchC07SLeEDydTJ"
         },
         {
-            "DESCRIPTION": "Laundry",
-            "ID": "19XW8m6diUQq8WrQMyjbhRk0mxVPn8"
-        },
-        {
-            "DESCRIPTION": "Online Shopping",
-            "ID": "0RTwK7m2cYYarHWrZUtDWimFQHUZlh"
-        },
-        {
             "DESCRIPTION": "Other",
             "ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU"
         },
         {
-            "DESCRIPTION": "Phone",
-            "ID": "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
+            "DESCRIPTION": "Quad/Graphics",
+            "ID": "0RTwK7m2cYYarHWrZUtDWimFQHUZlh"
         },
         {
             "DESCRIPTION": "Restaurants",
@@ -31,19 +27,23 @@
         {
             "DESCRIPTION": "Shopping",
             "ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9"
+        },
+        {
+            "DESCRIPTION": "Test Category",   
+            "ID": "EsVMsvphlhJkczabOhLjzrOOJBaU1W"
         }
     ],
     "TRANSACTIONS": [
         {
             "AMOUNT": 18.710000000000001,
-            "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
-            "COMMENT": "Gas to TN",
+            "CATEGORY_ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+            "COMMENT": "McDons",
             "DATE": "20150109",
             "ID": "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
-            "TRANSACTION_TYPE": "OUT"
+            "TRANSACTION_TYPE": "IN"
         },
         {
-            "AMOUNT": 20.879999999999999,
+            "AMOUNT": 29.879999999999999,
             "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
             "COMMENT": "Gas to TN",
             "DATE": "20150109",
@@ -86,7 +86,7 @@
             "AMOUNT": 55555528.990000002,
             "CATEGORY_ID": "KhEsVMsvphlhJkczabOhLjzrOOJBaU",
             "COMMENT": "Regal Movie Theathers",
-            "DATE": "20150111",
+            "DATE": "20150409",
             "ID": "sVx13iC7I0Suya8qHFc8up1GoL19XW",
             "TRANSACTION_TYPE": "OUT"
         },
@@ -156,7 +156,7 @@
         },
         {
             "AMOUNT": 6.6100000000000003,
-            "CATEGORY_ID": "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+            "CATEGORY_ID": "UUBrzuaIGxstACf2CshoJDUORO2fBq",
             "COMMENT": "HowDea BP Minimart run",
             "DATE": "20150101",
             "ID": "1WlX4wd62gohZ7g8Bwj6J7V28aYMcn",
