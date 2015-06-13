@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
+    <width>293</width>
     <height>250</height>
    </rect>
   </property>
@@ -123,7 +123,7 @@
        <item>
         <widget class="QPushButton" name="pushButtonCancel">
          <property name="toolTip">
-          <string>Do not save this transaction [Esc]</string>
+          <string>Do not add this transaction [Esc]</string>
          </property>
          <property name="text">
           <string>&amp;Cancel</string>
