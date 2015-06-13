@@ -42,7 +42,7 @@ void AddTransactionPresenter::on_pushButtonAdd_clicked()
 {
     transactionDAO->AddTransaction(ui->dateEditDate->date(),
                                    ui->doubleSpinBoxAmount->value(),
-                                   (TransactionType)ui->comboBoxCategory->currentData().toInt(),
+                                   (TransactionType)ui->comboBoxType->currentData().toInt(),
                                    ui->comboBoxCategory->currentData().toString(),
                                    ui->lineEditComment->text());
     emit DataChanged();

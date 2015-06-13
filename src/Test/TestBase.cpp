@@ -6,9 +6,9 @@ TestBase::TestBase()
 }
 
 
-void TestBase::Assert(bool b, QString methodName)
+void TestBase::Assert(bool predicate, QString methodName)
 {
-    if(!b)
+    if(!predicate)
     {
         PrintFailedMessage(methodName);
     }

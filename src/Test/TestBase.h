@@ -11,7 +11,7 @@ public:
 
     virtual void RunTests() = 0;
 
-    void Assert(bool b, QString methodName);
+    void Assert(bool predicate, QString methodName);
 
 private:
     void PrintFailedMessage(QString methodName);
