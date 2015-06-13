@@ -55,8 +55,6 @@ void LooseChangePresenter::closeEvent(QCloseEvent *event)
         event->accept();
     else
         event->ignore();
-
-
 }
 
 void LooseChangePresenter::Open()
@@ -103,6 +101,7 @@ void LooseChangePresenter::on_actionSave_triggered()
 
 void LooseChangePresenter::EnableSave()
 {
+    pendingChanges = true;
     ui->actionSave->setEnabled(true);
     ui->toolButtonSave->setEnabled(true);
     this->setWindowTitle("* " + fileAccessor->GetFileName() + " - Loose Change");
@@ -110,6 +109,7 @@ void LooseChangePresenter::EnableSave()
 
 void LooseChangePresenter::DisableSave()
 {
+    pendingChanges = false;
     ui->actionSave->setEnabled(false);
     ui->toolButtonSave->setEnabled(false);
     this->setWindowTitle(fileAccessor->GetFileName() + " - Loose Change");
@@ -117,7 +117,7 @@ void LooseChangePresenter::DisableSave()
 
 bool LooseChangePresenter::IsTherePendingChanges()
 {
-    ui->actionSave->isEnabled();
+    return pendingChanges;
 }
 
 void LooseChangePresenter::RefreshAllViews()
@@ -188,27 +188,23 @@ bool LooseChangePresenter::TryClose()
         int result = warning->exec();
         delete warning;
 
-
         if(result == QMessageBox::No)
         {
-            return true;
+            return true; //Ignore changes. Close.
         }
         else if(result == QMessageBox::Yes)
         {
             if(this->Save())
             {
-                return true;
+                return true; //Close after save
             }
-            return false;
+            return false; //No save made. Don't close.
         }
         else if(result == QMessageBox::Cancel)
         {
-            return false;
+            return false; //Don't close.
         }
     }
-    else
-    {
-        return true;
-    }
+    return true;//Close
 }
 

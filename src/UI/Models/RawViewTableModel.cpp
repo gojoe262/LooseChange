@@ -74,8 +74,6 @@ QVariant RawViewTableModel::data(const QModelIndex &index, int role) const
         }
     }
 
-
-
     return QVariant();
 }
 
@@ -145,30 +143,26 @@ void RawViewTableModel::sort(int column, Qt::SortOrder order)
     if(column == 1)
     {
         transactionDAO->SortTransactionListByDate(order);
-        Refresh();
     }
     /// Column 2 - AMOUNT
     else if(column == 2)
     {
         transactionDAO->SortTransactionListByAmount(order);
-        Refresh();
     }
     /// Column 3 - TRANSACTION TYPE
     else if(column == 3)
     {
         transactionDAO->SortTransactionListByTransactionType(order);
-        Refresh();
     }
     /// Column 4 - CATEGORY
     else if(column == 4)
     {
         transactionDAO->SortTransactionListByCategory(order);
-        Refresh();
     }
     /// Column 5 - COMMENT
     else if(column == 5)
     {
         transactionDAO->SortTransactionListByComment(order);
-        Refresh();
     }
+    Refresh();
 }

@@ -2,7 +2,10 @@
 #define PENDINGCHANGESWARNINGPRESENTER_H
 
 #include <QDialog>
-
+/**
+ * This is a dialog box that asks the user if they
+ * want to save their unsaved changes.
+ */
 namespace Ui {
 class PendingChangesWarningPresenter;
 }

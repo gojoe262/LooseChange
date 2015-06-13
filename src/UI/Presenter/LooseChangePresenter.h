@@ -102,7 +102,8 @@ private:
     bool Save();
 
     /**
-     * @brief Close
+     * @brief TryClose - Try to close the program. Checks if there are
+     * pending changes.
      */
     bool TryClose();
 
@@ -135,6 +136,11 @@ private:
      * @brief fileLocationTemp - Stores the file location.
      */
     QString fileLocationTemp;
+
+    /**
+     * @brief pendingChanges
+     */
+    bool pendingChanges;
 };
 
 #endif // LOOSECHANGEPRESENTER_H

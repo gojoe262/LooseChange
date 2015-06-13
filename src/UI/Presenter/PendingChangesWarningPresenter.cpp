@@ -7,7 +7,10 @@ PendingChangesWarningPresenter::PendingChangesWarningPresenter(QString fileName,
     ui(new Ui::PendingChangesWarningPresenter)
 {
     ui->setupUi(this);
-    ui->labelMessage->setText("Save changes to '" + fileName +"'?");
+    if(fileName.trimmed() != "")
+        ui->labelMessage->setText("There are unsaved changes.\n\nSave changes to '" + fileName +"'?");
+    else
+        ui->labelMessage->setText("There are unsaved changes.\n\nSave changes?");
 }
 
 PendingChangesWarningPresenter::~PendingChangesWarningPresenter()
