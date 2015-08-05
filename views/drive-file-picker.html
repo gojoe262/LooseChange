@@ -70,12 +70,24 @@
     }
 
     // A simple callback implementation.
+//    function pickerCallback(data) {
+//      if (data.action == google.picker.Action.PICKED) {
+//        var fileId = data.docs[0].id;
+//        alert('The user selected: ' + fileId);
+//      }
+//    }
+    
+    // A simple callback implementation.
     function pickerCallback(data) {
-      if (data.action == google.picker.Action.PICKED) {
-        var fileId = data.docs[0].id;
-        alert('The user selected: ' + fileId);
+      var url = 'nothing';
+      if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+        var doc = data[google.picker.Response.DOCUMENTS][0];
+        url = doc[google.picker.Document.URL];
       }
+      var message = 'You picked: ' + url;
+      document.getElementById('result').innerHTML = message;
     }
+    
     </script>
   </head>
   <body>
