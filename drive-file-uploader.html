@@ -29,12 +29,25 @@
       function handleAuthResult(authResult) {
         var authButton = document.getElementById('authorizeButton');
         var filePicker = document.getElementById('filePicker');
+        var getContent = document.getElementById('get-content');
+
         authButton.style.display = 'none';
         filePicker.style.display = 'none';
         if (authResult && !authResult.error) {
           // Access token has been successfully retrieved, requests can be sent to the API.
           filePicker.style.display = 'block';
           filePicker.onchange = uploadFile;
+
+        getContent.onclick = function(){
+            $.get("https://www.googleapis.com/drive/v2/files/0B7oKa69AhDq5d2duX1k3ZXc4a00", function(data){
+                    alert("Data: " + data);
+              });
+            // httpGetAsync('');
+
+
+        };
+
+
         } else {
           // No access token could be retrieved, show the button to start the authorization flow.
           authButton.style.display = 'block';
@@ -45,6 +58,19 @@
           };
         }
       }
+
+
+
+        function httpGetAsync(theUrl, callback)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText);
+            }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous
+            xmlHttp.send(null);
+        }
 
       /**
        * Start the file upload.
@@ -106,11 +132,15 @@
           request.execute(callback);
         }
       }
+
+
     </script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <script type="text/javascript" src="../js/shared/jquery/jquery-2.1.4.js"></script>
   </head>
   <body>
     <!--Add a file picker for the user to start the upload process -->
+    <button id="get-content" >Get Content</button>
     <input type="file" id="filePicker" style="display: none" />
     <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
   </body>

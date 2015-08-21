@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <script type="text/javascript">
+    // The Browser API key obtained from the Google Developers Console.
+    // Replace with your own Browser API key, or your own key.
+    var developerKey = 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs';
+
+    // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
+    var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
+
+    // Replace with your own App ID. (Its the first number in your Client ID)
+    var appId = "759406020708";
+
+    // Scope to use to access user's Drive items.
+    var scope = ['https://www.googleapis.com/auth/drive'];
+
+    var oauthToken;
+
+    function init() {
+        gapi.auth.authorize({
+            'client_id': clientId,
+            'scope': scope,
+            'immediate': false
+        }, handleAuthResult);
+
+        $('#get-content').on('click', function(){
+            var fileId = '0B7oKa69AhDq5d2duX1k3ZXc4a00';
+            printFile(fileId);
+
+            downloadFile(getFile(fileId), function(text) { console.log(text); });
+        });
+    }
+
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        oauthToken = authResult.access_token;
+        gapi.client.load('drive', 'v2', function() { console.log('loaded.'); });
+      }
+    }
+
+
+    function getFile(fileId){
+        return gapi.client.drive.files.get({
+          'fileId': fileId
+        });
+    }
+
+    /**
+     * Print a file's metadata.
+     *
+     * @param {String} fileId ID of the file to print metadata for.
+     */
+    function printFile(fileId) {
+      var request = gapi.client.drive.files.get({
+        'fileId': fileId
+      });
+      request.execute(function(resp) {
+        downloadFile(resp, function(text) { console.log(text); })
+        console.log('Title: ' + resp.title);
+        console.log('Description: ' + resp.description);
+        console.log('MIME type: ' + resp.mimeType);
+        console.log('DownloadURL: ' + resp.downloadUrl);
+      });
+    }
+
+    /**
+     * Download a file's content.
+     *
+     * @param {File} file Drive File instance.
+     * @param {Function} callback Function to call when the request is complete.
+     */
+    function downloadFile(file, callback) {
+      if (file.downloadUrl) {
+        var accessToken = gapi.auth.getToken().access_token;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', file.downloadUrl);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        xhr.onload = function() {
+          callback(xhr.responseText);
+        };
+        xhr.onerror = function() {
+          callback(null);
+        };
+        xhr.send();
+      } else {
+        callback(null);
+      }
+    }
+
+    // $(document).ready(function(){
+    //     $('#get-content').on('click', function(){
+    //         printFile('0B7oKa69AhDq5d2duX1k3ZXc4a00');
+    //     });
+    // })
+
+    </script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+    <script type="text/javascript" src="../js/shared/jquery/jquery-2.1.4.js"></script>
+  </head>
+  <body>
+    <!--Add a file picker for the user to start the upload process -->
+    <button id="get-content" >Get Content</button>
+    <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+  </body>
+</html>
