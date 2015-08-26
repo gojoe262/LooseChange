@@ -2,105 +2,134 @@
   <head>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     <script type="text/javascript">
-    // The Browser API key obtained from the Google Developers Console.
-    // Replace with your own Browser API key, or your own key.
-    var developerKey = 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs';
+        // The Browser API key obtained from the Google Developers Console.
+        // Replace with your own Browser API key, or your own key.
+        var developerKey = 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs';
 
-    // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-    var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
+        // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
+        var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
 
-    // Replace with your own App ID. (Its the first number in your Client ID)
-    var appId = "759406020708";
+        // Replace with your own App ID. (Its the first number in your Client ID)
+        var appId = "759406020708";
 
-    // Scope to use to access user's Drive items.
-    var scope = ['https://www.googleapis.com/auth/drive'];
+        // Scope to use to access user's Drive items.
+        var scope = ['https://www.googleapis.com/auth/drive'];
 
-    var oauthToken;
+        var oauthToken;
 
-    function init() {
-        gapi.auth.authorize({
-            'client_id': clientId,
-            'scope': scope,
-            'immediate': false
-        }, handleAuthResult);
+        /**
+         * Handle google api javascript load
+         */
+        function handleGoogleApiLoad(){
+            //Set up Authorization for Google API
+            gapi.load('auth', {'callback': function(){
+                gapi.auth.authorize({
+                    'client_id': clientId,
+                    'scope': scope,
+                    'immediate': false
+                }, handleAuthResult);
+            }});
 
-        $('#get-content').on('click', function(){
-            var fileId = '0B7oKa69AhDq5d2duX1k3ZXc4a00';
-            printFile(fileId);
+        }
 
-            downloadFile(getFile(fileId), function(text) { console.log(text); });
-        });
-    }
+        /**
+         * Handle Google Client/Drive Load
+         */
+        function handleGoogleClientLoad(){
+            gapi.load('client', {'callback': function(){
+                gapi.client.load('drive', 'v2');
+            }})
+        }
 
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
-        oauthToken = authResult.access_token;
-        gapi.client.load('drive', 'v2', function() { console.log('loaded.'); });
-      }
-    }
+        /**
+         * Handle google drive picker load.
+         */
+        function handleGoogleDrivePickerLoad(){
+            gapi.load('picker', {'callback': function(){
+                if (oauthToken) {
+                    var view = new google.picker.View(google.picker.ViewId.DOCS);
+                    //view.setMimeTypes("image/png,image/jpeg,image/jpg");
+                    var picker = new google.picker.PickerBuilder()
+                        .enableFeature(google.picker.Feature.NAV_HIDDEN)
+                        // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+                        .setAppId(appId)
+                        .setOAuthToken(oauthToken)
+                        .addView(view)
+                        .addView(new google.picker.DocsUploadView())
+                        //.setDeveloperKey(developerKey)
+                        .setCallback(onGoogleDrivePickerFilePicked)
+                        .build();
 
+                    picker.setVisible(true);
+                    // console.log('Google Drive Picker API loaded successfully');
+                }
+                else {
+                    console.log('Unable to load Google Drive Picker API');
+                }
+            }});
+        }
 
-    function getFile(fileId){
-        return gapi.client.drive.files.get({
-          'fileId': fileId
-        });
-    }
+        /**
+         * Checks if the Google API authroization was successful.
+         */
+        function handleAuthResult(authResult) {
+            if (authResult && !authResult.error) {
+                oauthToken = authResult.access_token;
 
-    /**
-     * Print a file's metadata.
-     *
-     * @param {String} fileId ID of the file to print metadata for.
-     */
-    function printFile(fileId) {
-      var request = gapi.client.drive.files.get({
-        'fileId': fileId
-      });
-      request.execute(function(resp) {
-        downloadFile(resp, function(text) { console.log(text); })
-        console.log('Title: ' + resp.title);
-        console.log('Description: ' + resp.description);
-        console.log('MIME type: ' + resp.mimeType);
-        console.log('DownloadURL: ' + resp.downloadUrl);
-      });
-    }
+                //If successful, load the rest of the google api stuff.
+                handleGoogleDrivePickerLoad();
+                handleGoogleClientLoad();
+            } else {
+                console.log('Google API NOT authorized');
+            }
+        }
 
-    /**
-     * Download a file's content.
-     *
-     * @param {File} file Drive File instance.
-     * @param {Function} callback Function to call when the request is complete.
-     */
-    function downloadFile(file, callback) {
-      if (file.downloadUrl) {
-        var accessToken = gapi.auth.getToken().access_token;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', file.downloadUrl);
-        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-        xhr.onload = function() {
-          callback(xhr.responseText);
-        };
-        xhr.onerror = function() {
-          callback(null);
-        };
-        xhr.send();
-      } else {
-        callback(null);
-      }
-    }
+        /**
+         * Callback for Google Drive Picker. Called when a file is picked.
+         */
+        function onGoogleDrivePickerFilePicked(data) {
+            if (data.action == google.picker.Action.PICKED) {
+                var fileId = data.docs[0].id;
+                showFileText(fileId);
+            }
+        }
 
-    // $(document).ready(function(){
-    //     $('#get-content').on('click', function(){
-    //         printFile('0B7oKa69AhDq5d2duX1k3ZXc4a00');
-    //     });
-    // })
+        /**
+        * Dowload a file from Google Drive and display it's text.
+        */
+        function showFileText(fileId) {
+            var accessToken = gapi.auth.getToken().access_token;
+            var request = gapi.client.drive.files.get({
+              'fileId': fileId
+            });
 
-    </script>
-    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
-    <script type="text/javascript" src="../js/shared/jquery/jquery-2.1.4.js"></script>
-  </head>
-  <body>
-    <!--Add a file picker for the user to start the upload process -->
-    <button id="get-content" >Get Content</button>
-    <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
-  </body>
+            request.execute(function(resp){
+                console.log('Title: ' + resp.title);
+                console.log('Description: ' + resp.description);
+                console.log('MIME type: ' + resp.mimeType);
+                console.log('DownloadURL: ' + resp.downloadUrl);
+
+                $.ajax({
+                    url: resp.downloadUrl,
+                    type: 'GET',
+                    dataType: 'text',
+                    cache: false,
+                    headers: {'Authorization': 'Bearer ' + accessToken },
+                    success: function(text){
+                        $('#documentText').html(text);
+                    }
+                });
+            });
+        }
+
+        </script>
+
+        <script type="text/javascript" src="../js/shared/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=handleGoogleApiLoad"></script>
+    </head>
+    <body>
+        <div id="documentText"></div>
+
+    </body>
 </html>
