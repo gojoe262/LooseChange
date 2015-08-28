@@ -1,12 +1,10 @@
-///http://coursesweb.net/javascript/create-use-class-javascript
-///
-///http://www.hacksparrow.com/how-to-create-class-in-javascript.html
-///
-/// public variables and functions prefaced with "this."
-/// private variables and functions prefaced with "var "
-DataAccess.gdrive = function(config){
+/**
+ * http://www.codeproject.com/Articles/636699/JavaScript-Design-Patterns
+ * Revealing Module Pattern
+ */
+gdrive = function(config){
     var self = this;
-	
+
 	var defaults = {
 		developerKey: '',
 		clientId: "",
@@ -14,9 +12,9 @@ DataAccess.gdrive = function(config){
 		scope: '',
 		oauthToken: ''
 	};
-	
+
 	config = $.extend(defaults, config);
-	
+
 	/**
      * Handle google api javascript load
      */
@@ -27,7 +25,7 @@ DataAccess.gdrive = function(config){
                 'client_id': clientId,
                 'scope': scope,
                 'immediate': false
-            }, this.handleAuthResult);
+            }, handleAuthResult);
         }});
     }
 
@@ -36,11 +34,11 @@ DataAccess.gdrive = function(config){
      */
     function handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
-            this.oauthToken = authResult.access_token;
+            config.oauthToken = authResult.access_token;
 
             //If successful, load the rest of the google api stuff.
-            this.handleGoogleDrivePickerLoad();
-            this.handleGoogleClientLoad();
+            handleGoogleDrivePickerLoad();
+            handleGoogleClientLoad();
         } else {
             console.log('Google API NOT authorized');
         }
@@ -60,18 +58,18 @@ DataAccess.gdrive = function(config){
      */
     function handleGoogleDrivePickerLoad(){
         gapi.load('picker', {'callback': function(){
-            if (this.oauthToken) {
+            if (config.oauthToken) {
                 var view = new google.picker.View(google.picker.ViewId.DOCS);
                 //view.setMimeTypes("image/png,image/jpeg,image/jpg");
                 var picker = new google.picker.PickerBuilder()
                     .enableFeature(google.picker.Feature.NAV_HIDDEN)
                     // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
                     .setAppId(appId)
-                    .setOAuthToken(this.oauthToken)
+                    .setOAuthToken(config.oauthToken)
                     .addView(view)
                     .addView(new google.picker.DocsUploadView())
                     //.setDeveloperKey(developerKey)
-                    .setCallback(this.onGoogleDrivePickerFilePicked)
+                    .setCallback(onGoogleDrivePickerFilePicked)
                     .build();
 
                 picker.setVisible(true);
@@ -89,7 +87,7 @@ DataAccess.gdrive = function(config){
     function onGoogleDrivePickerFilePicked(data) {
         if (data.action == google.picker.Action.PICKED) {
             var fileId = data.docs[0].id;
-            this.showFileText(fileId);
+            showFileText(fileId);
         }
     }
 
@@ -125,9 +123,12 @@ DataAccess.gdrive = function(config){
             });
         });
     }
-	
+
+    /**
+     * Public functions/variables inside return statement
+     */
 	return {
-		init: init,
-		//other external functions/variables
+		handleGoogleApiLoad: handleGoogleApiLoad,
+		//other external functions/variables here
 	};
 };

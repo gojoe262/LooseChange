@@ -7,145 +7,31 @@
         // The Browser API key obtained from the Google Developers Console.
         // Replace with your own Browser API key, or your own key.
         var developerKey = 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs';
-
         // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
         var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
-
         // Replace with your own App ID. (Its the first number in your Client ID)
         var appId = "759406020708";
-
         // Scope to use to access user's Drive items.
         var scope = ['https://www.googleapis.com/auth/drive'];
 
-        var oauthToken;
 
 
-        //
-        // /**
-        //  * Handle google api javascript load
-        //  */
-        // function handleGoogleApiLoad(){
-        //     //Set up Authorization for Google API
-        //     gapi.load('auth', {'callback': function(){
-        //         gapi.auth.authorize({
-        //             'client_id': clientId,
-        //             'scope': scope,
-        //             'immediate': false
-        //         }, handleAuthResult);
-        //     }});
-        //
-        // }
-        //
-        // /**
-        //  * Handle Google Client/Drive Load
-        //  */
-        // function handleGoogleClientLoad(){
-        //     gapi.load('client', {'callback': function(){
-        //         gapi.client.load('drive', 'v2');
-        //     }})
-        // }
-        //
-        // /**
-        //  * Handle google drive picker load.
-        //  */
-        // function handleGoogleDrivePickerLoad(){
-        //     gapi.load('picker', {'callback': function(){
-        //         if (oauthToken) {
-        //             var view = new google.picker.View(google.picker.ViewId.DOCS);
-        //             //view.setMimeTypes("image/png,image/jpeg,image/jpg");
-        //             var picker = new google.picker.PickerBuilder()
-        //                 .enableFeature(google.picker.Feature.NAV_HIDDEN)
-        //                 // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-        //                 .setAppId(appId)
-        //                 .setOAuthToken(oauthToken)
-        //                 .addView(view)
-        //                 .addView(new google.picker.DocsUploadView())
-        //                 //.setDeveloperKey(developerKey)
-        //                 .setCallback(onGoogleDrivePickerFilePicked)
-        //                 .build();
-        //
-        //             picker.setVisible(true);
-        //             // console.log('Google Drive Picker API loaded successfully');
-        //         }
-        //         else {
-        //             console.log('Unable to load Google Drive Picker API');
-        //         }
-        //     }});
-        // }
-        //
-        // /**
-        //  * Checks if the Google API authroization was successful.
-        //  */
-        // function handleAuthResult(authResult) {
-        //     if (authResult && !authResult.error) {
-        //         oauthToken = authResult.access_token;
-        //
-        //         //If successful, load the rest of the google api stuff.
-        //         handleGoogleDrivePickerLoad();
-        //         handleGoogleClientLoad();
-        //     } else {
-        //         console.log('Google API NOT authorized');
-        //     }
-        // }
-        //
-        // /**
-        //  * Callback for Google Drive Picker. Called when a file is picked.
-        //  */
-        // function onGoogleDrivePickerFilePicked(data) {
-        //     if (data.action == google.picker.Action.PICKED) {
-        //         var fileId = data.docs[0].id;
-        //         showFileText(fileId);
-        //     }
-        // }
-        //
-        // /**
-        // * Dowload a file from Google Drive and display it's text.
-        // */
-        // function showFileText(fileId) {
-        //     var accessToken = gapi.auth.getToken().access_token;
-        //     var request = gapi.client.drive.files.get({
-        //       'fileId': fileId
-        //     });
-        //
-        //     request.execute(function(resp){
-        //         console.log('Downloading File\n' +
-        //                     '    Title: ' + resp.title + '\n' +
-        //                     '    Description: ' + resp.description + '\n' +
-        //                     '    MIME type: ' + resp.mimeType + '\n' +
-        //                     '    DownloadURL: ' + resp.downloadUrl);
-        //
-        //         $.ajax({
-        //             url: resp.downloadUrl,
-        //             type: 'GET',
-        //             dataType: 'text',
-        //             cache: false,
-        //             headers: {'Authorization': 'Bearer ' + accessToken },
-        //         }).done(function(text){
-        //             $('#documentText').html(text);
-        //         }).fail(function(){
-        //             console.log('Unable to download selected file\n' +
-        //                          '    Title: ' + resp.title + '\n' +
-        //                          '    Description: ' + resp.description + '\n' +
-        //                          '    MIME type: ' + resp.mimeType);
-        //         });
-        //     });
-        // }
+        var accessor = new gdrive({
+            developerKey: developerKey,
+            clientId: clientId,
+            appId: appId,
+            scope: scope,
+        });
 
-        var accessor = new gdriveAccessor();
-        accessor.developerKey = developerKey;
-        accessor.clientId = clientId;
-        accessor.appId = appId;
-        accessor.scope = scope;
-        accessor.oauthToken = oauthToken;
 
-        function start(){
+        function init(){
             accessor.handleGoogleApiLoad();
         }
 
         </script>
 
         <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
-        <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=start"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=init"></script>
     </head>
     <body>
         <div id="documentText"></div>
