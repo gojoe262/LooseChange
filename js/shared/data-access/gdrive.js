@@ -4,24 +4,23 @@
 ///
 /// public variables and functions prefaced with "this."
 /// private variables and functions prefaced with "var "
-
-
-gdriveAccessor = function(){
-    //private variables
-    var privateVariableOneExample = 1;
-
-    //public variables
-    this.developerKey = '';
-    this.clientId = "";
-    this.appId = "";
-    this.scope = '';
-    this.oauthToken = '';
-
-
-    /**
+DataAccess.gdrive = function(config){
+    var self = this;
+	
+	var defaults = {
+		developerKey: '',
+		clientId: "",
+		appId: "",
+		scope: '',
+		oauthToken: ''
+	};
+	
+	config = $.extend(defaults, config);
+	
+	/**
      * Handle google api javascript load
      */
-    this.handleGoogleApiLoad = function(){
+    function handleGoogleApiLoad(){
         //Set up Authorization for Google API
         gapi.load('auth', {'callback': function(){
             gapi.auth.authorize({
@@ -35,7 +34,7 @@ gdriveAccessor = function(){
     /**
      * Checks if the Google API authroization was successful.
      */
-    this.handleAuthResult = function(authResult) {
+    function handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
             this.oauthToken = authResult.access_token;
 
@@ -50,7 +49,7 @@ gdriveAccessor = function(){
     /**
      * Handle Google Client/Drive Load
      */
-    this.handleGoogleClientLoad = function(){
+    function handleGoogleClientLoad(){
         gapi.load('client', {'callback': function(){
             gapi.client.load('drive', 'v2');
         }})
@@ -59,7 +58,7 @@ gdriveAccessor = function(){
     /**
      * Handle google drive picker load.
      */
-    this.handleGoogleDrivePickerLoad = function(){
+    function handleGoogleDrivePickerLoad(){
         gapi.load('picker', {'callback': function(){
             if (this.oauthToken) {
                 var view = new google.picker.View(google.picker.ViewId.DOCS);
@@ -87,7 +86,7 @@ gdriveAccessor = function(){
     /**
      * Callback for Google Drive Picker. Called when a file is picked.
      */
-    this.onGoogleDrivePickerFilePicked = function(data) {
+    function onGoogleDrivePickerFilePicked(data) {
         if (data.action == google.picker.Action.PICKED) {
             var fileId = data.docs[0].id;
             this.showFileText(fileId);
@@ -97,7 +96,7 @@ gdriveAccessor = function(){
     /**
     * Dowload a file from Google Drive and display it's text.
     */
-    this.showFileText = function(fileId) {
+    function showFileText(fileId) {
         var accessToken = gapi.auth.getToken().access_token;
         var request = gapi.client.drive.files.get({
           'fileId': fileId
@@ -126,4 +125,9 @@ gdriveAccessor = function(){
             });
         });
     }
-}
+	
+	return {
+		init: init,
+		//other external functions/variables
+	};
+};
