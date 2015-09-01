@@ -43,12 +43,6 @@ gdrive = function(config){
         }
     }
 
-    function viewResults(){
-        listFilesInApplicationDataFolder(function(results){
-            var r = results;
-        });
-    }
-
     /**
      * Load Google Client/Drive Load
      */
@@ -66,7 +60,9 @@ gdrive = function(config){
         gapi.load('picker', {'callback': function(){
             if (config.oauthToken) {
                 var view = new google.picker.View(google.picker.ViewId.DOCS);
-                //view.setMimeTypes("image/png,image/jpeg,image/jpg");
+                if(typeof options.mimeTypes != 'undefined'){
+                    view.setMimeTypes(options.mimeTypes);
+                }
                 var picker = new google.picker.PickerBuilder()
                     .enableFeature(google.picker.Feature.NAV_HIDDEN)
                     // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
@@ -93,16 +89,6 @@ gdrive = function(config){
             }
         }});
     }
-
-    /**
-     * Callback for Google Drive Picker. Called when a file is picked.
-     */
-    // function onGoogleDrivePickerFilePicked(data) {
-    //     if (data.action == google.picker.Action.PICKED) {
-    //         var fileId = data.docs[0].id;
-    //         showFileText(fileId);
-    //     }
-    // }
 
     /**
      * Dowload a file from Google Drive.
@@ -148,7 +134,6 @@ gdrive = function(config){
             parents: [{id: 'appdata'}]
         }
 
-
         var fileData = {
             id: 123456,
             value: 44.45,
@@ -170,10 +155,6 @@ gdrive = function(config){
             processData: false,
             type: fileId === undefined ? 'POST' : 'PUT'
         });
-
-
-
-
     }
 
     function getFileListInApplicationDataFolder(callback){
@@ -189,12 +170,13 @@ gdrive = function(config){
      * Public functions/variables inside return statement
      */
 	return {
+        //other external functions/variables here
 		authorize: authorize,
         picker: picker,
         getFileContent: getFileContent,
         //getFileListInApplicationDataFolder: getFileListInApplicationDataFolder,
         //uploadSampleFile: uploadSampleFile,
         //promisedAjaxCall: promisedAjaxCall
-		//other external functions/variables here
+
 	};
 };
