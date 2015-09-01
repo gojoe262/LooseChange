@@ -18,7 +18,7 @@ gdrive = function(config){
 	/**
      * Handle google api javascript load
      */
-    function handleGoogleApiLoad(){
+    function authorize(){
         //Set up Authorization for Google API
         gapi.load('auth', {'callback': function(){
             gapi.auth.authorize({
@@ -163,7 +163,7 @@ gdrive = function(config){
      * Public functions/variables inside return statement
      */
 	return {
-		handleGoogleApiLoad: handleGoogleApiLoad,
+		authorize: authorize,
 		//other external functions/variables here
 	};
 };
