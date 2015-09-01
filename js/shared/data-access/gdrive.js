@@ -16,7 +16,7 @@ gdrive = function(config){
 	config = $.extend(defaults, config);
 
 	/**
-     * Handle google api javascript load
+     * Loads Google API
      */
     function authorize(){
         //Set up Authorization for Google API
@@ -37,10 +37,10 @@ gdrive = function(config){
             config.oauthToken = authResult.access_token;
 
             //If successful, load the rest of the google api stuff.
-            handleGoogleDrivePickerLoad();
-            handleGoogleClientLoad();
+            //loadGoogleDrivePicker();
+            loadGoogleClient();
         } else {
-            console.log('Google API NOT authorized');
+            console.log('Unable to authorize Google API');
         }
     }
 
@@ -51,18 +51,18 @@ gdrive = function(config){
     }
 
     /**
-     * Handle Google Client/Drive Load
+     * Load Google Client/Drive Load
      */
-    function handleGoogleClientLoad(){
+    function loadGoogleClient(){
         gapi.load('client', {'callback': function(){
             gapi.client.load('drive', 'v2');
         }})
     }
 
     /**
-     * Handle google drive picker load.
+     * Open Google Drive Picker
      */
-    function handleGoogleDrivePickerLoad(){
+    function openGoogleDrivePicker(){
         gapi.load('picker', {'callback': function(){
             if (config.oauthToken) {
                 var view = new google.picker.View(google.picker.ViewId.DOCS);
@@ -74,12 +74,10 @@ gdrive = function(config){
                     .setOAuthToken(config.oauthToken)
                     .addView(view)
                     .addView(new google.picker.DocsUploadView())
-                    //.setDeveloperKey(developerKey)
                     .setCallback(onGoogleDrivePickerFilePicked)
                     .build();
 
                 picker.setVisible(true);
-                // console.log('Google Drive Picker API loaded successfully');
             }
             else {
                 console.log('Unable to load Google Drive Picker API');
@@ -111,8 +109,7 @@ gdrive = function(config){
             console.log('Downloading File\n' +
                         '    Title: ' + resp.title + '\n' +
                         '    Description: ' + resp.description + '\n' +
-                        '    MIME type: ' + resp.mimeType + '\n' +
-                        '    DownloadURL: ' + resp.downloadUrl);
+                        '    MIME type: ' + resp.mimeType);
 
             $.ajax({
                 url: resp.downloadUrl,
@@ -164,6 +161,7 @@ gdrive = function(config){
      */
 	return {
 		authorize: authorize,
+        openGoogleDrivePicker: openGoogleDrivePicker
 		//other external functions/variables here
 	};
 };

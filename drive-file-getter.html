@@ -16,24 +16,30 @@
             var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
             // Replace with your own App ID. (Its the first number in your Client ID)
             var appId = "759406020708";
-            // Scope to use to access user's Drive items.
+            // Scope to access user's Drive items.
             var scope = ['https://www.googleapis.com/auth/drive'];
 
 
             $(document).ready(function() {
 
-                var accessor = new gdrive({
+                var gdriveAccessor = new gdrive({
                     developerKey: developerKey,
                     clientId: clientId,
                     appId: appId,
                     scope: scope,
                 });
 
-                accessor.authorize();
+                gdriveAccessor.authorize();
+
+                $('#btnOpenPicker').click(function(){
+                    gdriveAccessor.openGoogleDrivePicker();
+                })
             });
         </script>
     </head>
     <body>
+        <button id="btnOpenPicker">Pick a file</button>
+        <br/>
         <div id="documentText"></div>
     </body>
 </html>
