@@ -37,7 +37,6 @@ gdrive = function(config){
             config.oauthToken = authResult.access_token;
 
             //If successful, load the rest of the google api stuff.
-            //loadGoogleDrivePicker();
             loadGoogleClient();
         } else {
             console.log('Unable to authorize Google API');
@@ -60,9 +59,10 @@ gdrive = function(config){
     }
 
     /**
-     * Open Google Drive Picker
+     * Open Google Drive Picker.
+     * @param options: onSelected(fileId), onCanceled(), onLoaded()
      */
-    function openGoogleDrivePicker(){
+    function picker(options){
         gapi.load('picker', {'callback': function(){
             if (config.oauthToken) {
                 var view = new google.picker.View(google.picker.ViewId.DOCS);
@@ -74,7 +74,16 @@ gdrive = function(config){
                     .setOAuthToken(config.oauthToken)
                     .addView(view)
                     .addView(new google.picker.DocsUploadView())
-                    .setCallback(onGoogleDrivePickerFilePicked)
+                    .setCallback(function(data){
+                        if(data.action == google.picker.Action.PICKED && (typeof options.onSelected == 'function')){
+                            var fileId = data.docs[0].id;
+                            options.onSelected(fileId);
+                        } else if(data.action == google.picker.Action.CANCEL && (typeof options.onCanceled == 'function')){
+                            options.onCanceled();
+                        } else if(data.action == google.picker.Action.LOADED && (typeof options.onLoaded == 'function')){
+                            options.onLoaded();
+                        }
+                    })
                     .build();
 
                 picker.setVisible(true);
@@ -88,21 +97,21 @@ gdrive = function(config){
     /**
      * Callback for Google Drive Picker. Called when a file is picked.
      */
-    function onGoogleDrivePickerFilePicked(data) {
-        if (data.action == google.picker.Action.PICKED) {
-            var fileId = data.docs[0].id;
-            showFileText(fileId);
-        }
-    }
+    // function onGoogleDrivePickerFilePicked(data) {
+    //     if (data.action == google.picker.Action.PICKED) {
+    //         var fileId = data.docs[0].id;
+    //         showFileText(fileId);
+    //     }
+    // }
 
     /**
-     * Dowload a file from Google Drive and display it's text.
-     * @param fileId to download and show
+     * Dowload a file from Google Drive.
+     * @param options: fileId, dataType, onSuccess(resp), onFail()
      */
-    function showFileText(fileId) {
+    function getFileContent(options) {
         var accessToken = gapi.auth.getToken().access_token;
         var request = gapi.client.drive.files.get({
-          'fileId': fileId
+          'fileId': options.fileId
         });
 
         request.execute(function(resp){
@@ -111,57 +120,81 @@ gdrive = function(config){
                         '    Description: ' + resp.description + '\n' +
                         '    MIME type: ' + resp.mimeType);
 
-            $.ajax({
+            promisedAjaxCall({
                 url: resp.downloadUrl,
                 type: 'GET',
-                dataType: 'text',
-                cache: false,
-                headers: {'Authorization': 'Bearer ' + accessToken },
-            }).done(function(text){
-                $('#documentText').html(text);
+                dataType: (typeof options.dataType == 'undefined') ? 'json' : options.dataType,
+                headers: {'Authorization': 'Bearer ' + accessToken}
+            }).done(function(resp){
+                if(typeof options.onSuccess == 'function') options.onSuccess(resp);
             }).fail(function(){
-                console.log('Unable to download selected file\n' +
-                             '    Title: ' + resp.title + '\n' +
-                             '    Description: ' + resp.description + '\n' +
-                             '    MIME type: ' + resp.mimeType);
+                if(typeof options.onFail == 'function') options.onFail();
             });
         });
     }
 
-    /**
-     * https://developers.google.com/drive/web/appdata
-     *
-     * List all files contained in the Application Data folder.
-     *
-     * @param {Function} callback Function to call when the request is complete.
-     */
-    // function listFilesInApplicationDataFolder(callback) {
-    //   var retrievePageOfFiles = function(request, result) {
-    //     request.execute(function(resp) {
-    //       result = result.concat(resp.items);
-    //       var nextPageToken = resp.nextPageToken;
-    //       if (nextPageToken) {
-    //         request = gapi.client.drive.files.list({
-    //           'pageToken': nextPageToken
-    //         });
-    //         retrievePageOfFiles(request, result);
-    //       } else {
-    //         callback(result);
-    //       }
-    //     });
-    //   }
-    //   var initialRequest = gapi.client.drive.files.list({
-    //     'q': '\'appfolder\' in parents'
-    //   });
-    //   retrievePageOfFiles(initialRequest, []);
-    // }
+    function promisedAjaxCall(options){
+        var defaultOptions = {
+            cache: false,
+        };
+
+        return $.ajax($.extend(defaultOptions, options));
+    }
+
+    function uploadSampleFile(fileId){
+        var metadata = {
+            title: "LooseChange UploadSampleFile",
+            mimeType: 'application/json',
+            parents: [{id: 'appdata'}]
+        }
+
+
+        var fileData = {
+            id: 123456,
+            value: 44.45,
+            type: "IN",
+            category: "Gas"
+        };
+
+        data = new FormData();
+        data.append("metadata", new Blob([ JSON.stringify(metadata) ], { type: "application/json" }));
+        data.append("file", new Blob([ JSON.stringify(fileData) ], { type: "appliction/json" }));
+
+        var accessToken = gapi.auth.getToken().access_token;
+        var up = fileId === undefined ? '' : '/' + fileId;
+        var promise = promisedAjaxCall({
+            url: "https://www.googleapis.com/upload/drive/v2/files" + up + "?uploadType=multipart",
+            data: data,
+            headers: {Authorization: 'Bearer ' + accessToken},
+            contentType: false,
+            processData: false,
+            type: fileId === undefined ? 'POST' : 'PUT'
+        });
+
+
+
+
+    }
+
+    function getFileListInApplicationDataFolder(callback){
+        var request = gapi.client.drive.files.list({
+            'q': '\'appdata\' in parents'
+        });
+        request.execute(function(resp) {
+            if(typeof callback == 'function') callback(resp.items);
+        });
+    }
 
     /**
      * Public functions/variables inside return statement
      */
 	return {
 		authorize: authorize,
-        openGoogleDrivePicker: openGoogleDrivePicker
+        picker: picker,
+        getFileContent: getFileContent,
+        //getFileListInApplicationDataFolder: getFileListInApplicationDataFolder,
+        //uploadSampleFile: uploadSampleFile,
+        //promisedAjaxCall: promisedAjaxCall
 		//other external functions/variables here
 	};
 };

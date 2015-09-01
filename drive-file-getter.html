@@ -32,8 +32,24 @@
                 gdriveAccessor.authorize();
 
                 $('#btnOpenPicker').click(function(){
-                    gdriveAccessor.openGoogleDrivePicker();
-                })
+                    gdriveAccessor.picker({
+                        onSelected: function(fileId){
+                            showFileContent(fileId);
+                        }
+                    });
+                });
+
+                function showFileContent(fileId){
+                    gdriveAccessor.getFileContent({
+                        fileId: fileId,
+                        dataType: 'text',
+                        onSuccess: function(text){
+                            $('#documentText').html(text);
+                        }
+                    })
+                }
+
+
             });
         </script>
     </head>
