@@ -24,7 +24,7 @@ gdrive = function(config){
             gapi.auth.authorize({
                 'client_id': clientId,
                 'scope': scope,
-                'immediate': false
+                'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
             }, handleAuthResult);
         }});
     }
@@ -34,19 +34,23 @@ gdrive = function(config){
      */
     function handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
+            //Success
             config.oauthToken = authResult.access_token;
-
-            //If successful, load the rest of the google api stuff.
-            loadGoogleClient();
+            loadGoogleDriveAPI();
         } else {
-            console.log('Unable to authorize Google API');
+            //Authorization Failed. Show popup.
+            gapi.auth.authorize({
+                'client_id': clientId,
+                'scope': scope,
+                'immediate': false //Show Authorization Popup. To Skip = true. To Show = false.
+            }, handleAuthResult);
         }
     }
 
     /**
      * Load Google Client/Drive Load
      */
-    function loadGoogleClient(){
+    function loadGoogleDriveAPI(){
         gapi.load('client', {'callback': function(){
             gapi.client.load('drive', 'v2');
         }})
@@ -94,7 +98,7 @@ gdrive = function(config){
      * Dowload a file from Google Drive.
      * @param options: fileId, dataType, onSuccess(resp), onFail()
      */
-    function getFileContent(options) {
+    function getFile(options) {
         var accessToken = gapi.auth.getToken().access_token;
         var request = gapi.client.drive.files.get({
           'fileId': options.fileId
@@ -117,6 +121,23 @@ gdrive = function(config){
                 if(typeof options.onFail == 'function') options.onFail();
             });
         });
+    }
+
+
+    function updateFile(options){
+        var accessToken = gapi.auth.getToken().access_token;
+        var request = gapi.client.request({
+            'path': '/upload/drive/v2/files/' + fileId,
+            'method': 'PUT',
+            'params': {'uploadType': 'multipart', 'alt': 'json'},
+            'headers': {
+                'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+            },
+            'body': options.data
+        });
+
+
+
     }
 
     function promisedAjaxCall(options){
@@ -173,7 +194,7 @@ gdrive = function(config){
         //other external functions/variables here
 		authorize: authorize,
         picker: picker,
-        getFileContent: getFileContent,
+        getFile: getFile,
         //getFileListInApplicationDataFolder: getFileListInApplicationDataFolder,
         //uploadSampleFile: uploadSampleFile,
         //promisedAjaxCall: promisedAjaxCall

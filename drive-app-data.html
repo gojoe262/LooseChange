@@ -16,8 +16,8 @@
             var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
             // Replace with your own App ID. (Its the first number in your Client ID)
             var appId = "759406020708";
-            // Scope to access user's Drive items.
-            var scope = ['https://www.googleapis.com/auth/drive'];
+            // Scope to access application data folder.
+            var scope = ['https://www.googleapis.com/auth/drive.appfolder'];
 
 
             $(document).ready(function() {
@@ -29,38 +29,30 @@
                     scope: scope,
                 });
 
-                $('#btnOpenPicker').click(function(){
-                    gdriveAccessor.picker({
-                        mimeTypes: "text/plain",
-                        onSelected: function(fileId){
-                            showFileContent(fileId);
-                        }
-                    });
+                gdriveAccessor.authorize();
+
+
+                $('#btnUploadSampleFile').click(function(){
+                    gdriveAccessor.uploadSampleFile();
                 });
 
-                function showFileContent(fileId){
-                    $('#documentText').val('Loading....');
-                    setTimeout(function(){
-                        gdriveAccessor.getFileContent({
-                            fileId: fileId,
-                            dataType: 'text',
-                            onSuccess: function(text){
-                                $('#documentText').val(text);
-                            }
-                        });
-                    }, 2);
-                }
+                $('#btnShowAppDataFolder').click(function(){
+                    var promise = gdriveAccessor.getFileListInApplicationDataFolder();
 
-                gdriveAccessor.authorize();
-                $('#documentText').val('');
-
-
+                    // gdriveAccessor.getFileListInApplicationDataFolder(function(fileList){
+                    //     $.each(fileList, function(){
+                    //         gdriveAccessor.showFileText(this.id);
+                    //         $('#documentText').html($('#documentText').html() + this.title + "<br/>");
+                    //     });
+                    // });
+                });
             });
         </script>
     </head>
     <body>
-        <button id="btnOpenPicker">Pick a file</button>
+        <button id="btnUploadSampleFile">Upload Sample File</button>
+        <button id="btnShowAppDataFolder">Show Application Data Folder</button>
         <br/>
-        <textarea id="documentText" style="height: 80%; width: 90%" readonly="readonly"></textarea>
+        <textarea id="documentText"></textarea>
     </body>
 </html>

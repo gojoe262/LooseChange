@@ -1,0 +1,38 @@
+<!--
+Google Sign In Button Example
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <meta name="google-signin-client_id" content="759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com">
+
+        <!--Javascript Files-->
+        <script type="text/javascript" src="js/shared/jquery/jquery-2.1.4.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+        <!--Javascript Inline-->
+        <script type="text/javascript">
+
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail());
+            }
+
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <!--Google Sign In/Out Button-->
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <br/>
+        <a href="#" onclick="signOut();">Sign out</a>
+    </body>
+</html>
