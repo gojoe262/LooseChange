@@ -31,25 +31,29 @@
 
                 $('#btnOpenPicker').click(function(){
                     gdriveAccessor.picker({
-                        mimeTypes: "text/plain",
+                        mimeTypes: "application/json",
                         onSelected: function(fileId){
                             showFileContent(fileId);
                         }
                     });
                 });
 
-                function showFileContent(fileId){
-                    $('#documentText').val('Loading....');
-                    setTimeout(function(){
-                        gdriveAccessor.getFileContent({
-                            fileId: fileId,
-                            dataType: 'text',
-                            onSuccess: function(text){
-                                $('#documentText').val(text);
-                            }
-                        });
-                    }, 2);
-                }
+                // function showFileContent(fileId){
+                //     $('#documentText').val('Loading....');
+                //     setTimeout(function(){
+                //         gdriveAccessor.getFile({
+                //             fileId: fileId,
+                //             dataType: 'text',
+                //             onSuccess: function(text){
+                //                 $('#documentText').val(text);
+                //             }
+                //         });
+                //     }, 2);
+                // }
+
+                // $('#btnUploadSample').click(function(){
+                //     gdriveAccessor.uploadSampleFile();
+                // });
 
                 gdriveAccessor.authorize();
                 $('#documentText').val('');
@@ -60,6 +64,7 @@
     </head>
     <body>
         <button id="btnOpenPicker">Pick a file</button>
+        <button id=btnUploadSample>Upload Sample</button>
         <br/>
         <textarea id="documentText" style="height: 80%; width: 90%" readonly="readonly"></textarea>
     </body>

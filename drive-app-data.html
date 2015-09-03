@@ -32,27 +32,69 @@
                 gdriveAccessor.authorize();
 
 
-                $('#btnUploadSampleFile').click(function(){
-                    gdriveAccessor.uploadSampleFile();
+                $('#btnUploadData').click(function(){
+                    gdriveAccessor.uploadData({
+                        metadata: {title: "TestingLooseChangeUploadRawData"},
+                        data:
+                        {
+                            CATEGORIES: [
+                                {
+                                    DESCRIPTION: "Electronics",
+                                    ID: "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
+                                },
+                                {
+                                    DESCRIPTION: "Gas/Travel ",
+                                    ID: "UUBrzuaIGxstACf2CshoJDUORO2fBq"
+                                }
+                            ],
+                            TRANSACTIONS: [
+                                {
+                                    AMOUNT: 18.71,
+                                    CATEGORY_ID: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+                                    COMMENT: "McDons",
+                                    DATE: "20150109",
+                                    ID: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
+                                    TRANSACTION_TYPE: "IN"
+                                },
+                                {
+                                    AMOUNT: 400,
+                                    CATEGORY_ID: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+                                    COMMENT: "McDons",
+                                    DATE: "20150109",
+                                    ID: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
+                                    TRANSACTION_TYPE: "IN"
+                                }
+                            ]
+                        }
+                    });
                 });
 
-                $('#btnShowAppDataFolder').click(function(){
-                    var promise = gdriveAccessor.getFileListInApplicationDataFolder();
-
-                    // gdriveAccessor.getFileListInApplicationDataFolder(function(fileList){
-                    //     $.each(fileList, function(){
-                    //         gdriveAccessor.showFileText(this.id);
-                    //         $('#documentText').html($('#documentText').html() + this.title + "<br/>");
-                    //     });
-                    // });
+                $('#picker').click(function(){
+                    gdriveAccessor.picker({
+                        mimeTypes: "application/json",
+                        onSelected: function(fileId){
+                            gdriveAccessor.getData({
+                                fileId: fileId,
+                                onSuccess: function(resp){
+                                    var testData = resp;
+                                }
+                            });
+                        }
+                    });
                 });
+
+
+
+
+
             });
         </script>
     </head>
     <body>
-        <button id="btnUploadSampleFile">Upload Sample File</button>
-        <button id="btnShowAppDataFolder">Show Application Data Folder</button>
-        <br/>
-        <textarea id="documentText"></textarea>
+        <button id="btnUploadData">Upload Data</button>
+        <button id='picker'>Picker</button>
+        <!-- <button id="btnShowAppDataFolder">Show Application Data Folder</button> -->
+        <!-- <br/> -->
+        <!-- <textarea id="documentText"></textarea> -->
     </body>
 </html>

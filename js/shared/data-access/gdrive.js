@@ -95,25 +95,20 @@ gdrive = function(config){
     }
 
     /**
-     * Dowload a file from Google Drive.
-     * @param options: fileId, dataType, onSuccess(resp), onFail()
+     * Download a file from Google Drive.
+     * @param options: fileId, onSuccess(resp), onFail()
      */
-    function getFile(options) {
+    function getData(options) {
         var accessToken = gapi.auth.getToken().access_token;
         var request = gapi.client.drive.files.get({
           'fileId': options.fileId
         });
 
         request.execute(function(resp){
-            console.log('Downloading File\n' +
-                        '    Title: ' + resp.title + '\n' +
-                        '    Description: ' + resp.description + '\n' +
-                        '    MIME type: ' + resp.mimeType);
-
             promisedAjaxCall({
                 url: resp.downloadUrl,
                 type: 'GET',
-                dataType: (typeof options.dataType == 'undefined') ? 'json' : options.dataType,
+                dataType: 'json',
                 headers: {'Authorization': 'Bearer ' + accessToken}
             }).done(function(resp){
                 if(typeof options.onSuccess == 'function') options.onSuccess(resp);
@@ -124,20 +119,95 @@ gdrive = function(config){
     }
 
 
+
+
+    /**
+     * Upload json data to Google Drive. Stored in Google Drive as text file.
+     * @param options: metadata {title}, data, onSuccess, onFail
+     */
+    function uploadData(options){
+        var accessToken = gapi.auth.getToken().access_token;
+        //Create metadata
+        var defaultMetadata = {
+            title: 'LooseChange',
+            mimeType: "application/json",
+            //parents: [{id: 'appdata'}]
+        };
+        defaultMetadata = $.extend(defaultMetadata, options.metadata);
+
+        //Stringify the data
+        var strMetadata = JSON.stringify(defaultMetadata);
+        var strData = JSON.stringify(options.data);
+
+        //Create request form. (Combine metadata and )
+        data = new FormData();
+        data.append("metadata", new Blob([ strMetadata ], { type: "application/json" }));
+        data.append("file", new Blob([ strData ], { type: "appliction/json" }));
+
+        //var up = (typeof options.fileId != 'undefined') ? '/' + options.fileId : '';
+        promisedAjaxCall({
+            url: "https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart",
+            data: data,
+            headers: {'Authorization': 'Bearer ' + accessToken},
+            contentType: false,
+            processData: false,
+            type: 'POST' //POST to insert, PUT to update
+        }).done(function(resp){
+            if(typeof options.onSuccess == 'function') options.onSuccess(resp);
+        }).fail(function(){
+            if(typeof options.onFail == 'function') options.onFail();
+        });
+    }
+
+    /**
+     * Update/Upload file in Application Data Folder
+     * @param options: metadata, data,
+     */
     function updateFile(options){
         var accessToken = gapi.auth.getToken().access_token;
-        var request = gapi.client.request({
-            'path': '/upload/drive/v2/files/' + fileId,
-            'method': 'PUT',
-            'params': {'uploadType': 'multipart', 'alt': 'json'},
-            'headers': {
-                'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
-            },
-            'body': options.data
+        var metadata;
+        if(typeof options.fileId != 'undefined'){
+
+            var request = gapi.client.drive.files.get({
+              'fileId': options.fileId
+            });
+
+            request.execute(function(resp){
+
+            });
+
+
+
+            //Create metadata
+            var defaultMetadata = {
+                mimeType: "application/json",
+                parents: [{id: 'appdata'}]
+            };
+            defaultMetadata = $.extend(defaultMetadata, options.metadata);
+            var jsonMetadata = JSON.stringify(defaultMetadata);
+        }
+
+        //Create json data string
+        var jsonData = JSON.stringify(options.data);
+
+        //Create request form. (Combine metadata and )
+        data = new FormData();
+        data.append("metadata", new Blob([ jsonMeta ], { type: "application/json" }));
+        data.append("file", new Blob([ jsonData ], { type: "appliction/json" }));
+
+        var up = (typeof options.fileId != 'undefined') ? '/' + options.fileId : '';
+        promisedAjaxCall({
+            url: "https://www.googleapis.com/upload/drive/v2/files" + up + "?uploadType=multipart",
+            data: data,
+            headers: {'Authorization': 'Bearer ' + accessToken},
+            contentType: false,
+            processData: false,
+            type: (typeof options.fileId != 'undefined') ? 'PUT' : 'POST'
+        }).done(function(resp){
+            if(typeof options.onSuccess == 'function') options.onSuccess(resp);
+        }).fail(function(){
+            if(typeof options.onFail == 'function') options.onFail();
         });
-
-
-
     }
 
     function promisedAjaxCall(options){
@@ -146,36 +216,6 @@ gdrive = function(config){
         };
 
         return $.ajax($.extend(defaultOptions, options));
-    }
-
-    function uploadSampleFile(fileId){
-        var metadata = {
-            title: "LooseChange UploadSampleFile",
-            mimeType: 'application/json',
-            parents: [{id: 'appdata'}]
-        }
-
-        var fileData = {
-            id: 123456,
-            value: 44.45,
-            type: "IN",
-            category: "Gas"
-        };
-
-        data = new FormData();
-        data.append("metadata", new Blob([ JSON.stringify(metadata) ], { type: "application/json" }));
-        data.append("file", new Blob([ JSON.stringify(fileData) ], { type: "appliction/json" }));
-
-        var accessToken = gapi.auth.getToken().access_token;
-        var up = fileId === undefined ? '' : '/' + fileId;
-        var promise = promisedAjaxCall({
-            url: "https://www.googleapis.com/upload/drive/v2/files" + up + "?uploadType=multipart",
-            data: data,
-            headers: {Authorization: 'Bearer ' + accessToken},
-            contentType: false,
-            processData: false,
-            type: fileId === undefined ? 'POST' : 'PUT'
-        });
     }
 
     function getFileListInApplicationDataFolder(callback){
@@ -194,9 +234,9 @@ gdrive = function(config){
         //other external functions/variables here
 		authorize: authorize,
         picker: picker,
-        getFile: getFile,
+        getData: getData,
         //getFileListInApplicationDataFolder: getFileListInApplicationDataFolder,
-        //uploadSampleFile: uploadSampleFile,
+        uploadData: uploadData,
         //promisedAjaxCall: promisedAjaxCall
 
 	};
