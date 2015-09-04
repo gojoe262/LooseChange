@@ -3,98 +3,125 @@
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
         <!--Javascript Files-->
         <script type="text/javascript" src="js/shared/jquery/jquery-2.1.4.js"></script>
-        <script type="text/javascript" src="js/shared/data-access/gdrive.js"></script>
+        <script type="text/javascript" src="js/shared/data-access/gJsonCacher.js"></script>
         <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
         <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
         <!--Javascript Inline-->
         <script type="text/javascript">
-            // The Browser API key obtained from the Google Developers Console.
-            // Replace with your own Browser API key, or your own key.
-            var developerKey = 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs';
-            // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-            var clientId = "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com"
-            // Replace with your own App ID. (Its the first number in your Client ID)
-            var appId = "759406020708";
-            // Scope to access application data folder.
-            var scope = ['https://www.googleapis.com/auth/drive.appfolder'];
-
-
             $(document).ready(function() {
 
-                var gdriveAccessor = new gdrive({
-                    developerKey: developerKey,
-                    clientId: clientId,
-                    appId: appId,
-                    scope: scope,
-                });
+                var jsonCacher = new gJsonCacher();
+                jsonCacher.init();
 
-                gdriveAccessor.authorize();
+                $('#logText').val('');
 
-
-                $('#btnUploadData').click(function(){
-                    gdriveAccessor.uploadData({
-                        metadata: {title: "TestingLooseChangeUploadRawData"},
-                        data:
+                var categories = {
+                    categories: [
                         {
-                            CATEGORIES: [
-                                {
-                                    DESCRIPTION: "Electronics",
-                                    ID: "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
-                                },
-                                {
-                                    DESCRIPTION: "Gas/Travel ",
-                                    ID: "UUBrzuaIGxstACf2CshoJDUORO2fBq"
-                                }
-                            ],
-                            TRANSACTIONS: [
-                                {
-                                    AMOUNT: 18.71,
-                                    CATEGORY_ID: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
-                                    COMMENT: "McDons",
-                                    DATE: "20150109",
-                                    ID: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
-                                    TRANSACTION_TYPE: "IN"
-                                },
-                                {
-                                    AMOUNT: 400,
-                                    CATEGORY_ID: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
-                                    COMMENT: "McDons",
-                                    DATE: "20150109",
-                                    ID: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
-                                    TRANSACTION_TYPE: "IN"
-                                }
-                            ]
+                            name: "Electronics",
+                            id: "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
+                        },
+                        {
+                            name: "Gas/Travel ",
+                            id: "UUBrzuaIGxstACf2CshoJDUORO2fBq"
+                        }
+                    ]
+                };
+
+                var transactions = {
+                    transactions: [
+                        {
+                            amount: 18.71,
+                            categoryId: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+                            comment: "McDons",
+                            date: "20150109",
+                            id: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
+                            transactionType: "IN"
+                        },
+                        {
+                            amount: 40.22,
+                            categoryId: "9TCH3YOVBcD5RxCJFrLyIZxuhJDHY9",
+                            comment: "McDons",
+                            date: "20150109",
+                            id: "6VDHBs6wyKhmp61JKsX0tmgj9klifr",
+                            transactionType: "IN"
+                        }
+                    ]
+                };
+
+                //List objects
+                $('#btnListObjects').click(function(){
+                    logMessage('\n');
+                    jsonCacher.getObjectList(function(objectList){
+                        $.each(objectList, function(index, value){
+                            var object = value;
+                            logMessage(index + '. ' + object.title);
+                        });
+                    });
+                });
+
+                //Upload Objects
+                $('#btnUploadObjectCategories').click(function(){
+                    jsonCacher.insertObject({
+                        name: 'Categories',
+                        data: categories,
+                        onSuccess: function(){
+                            logMessage('Succesfully inserted Categories object');
+                        }
+                    })
+                });
+
+                $('#btnUploadObjectTransactions').click(function(){
+                    jsonCacher.insertObject({
+                        name: 'Transactions',
+                        data: transactions,
+                        onSuccess: function(){
+                            logMessage('Succesfully inserted Transactions object');
+                        }
+                    })
+                });
+
+                //Get Objects
+                $('#btnGetObject').click(function(){
+                    jsonCacher.getObject({
+                        name: $('#objectNameTextbox').val(),
+                        onSuccess: function(objectName, object){
+                            logMessage('Successfully downloaded object ' + objectName + '\n '
+                                + JSON.stringify(object));
                         }
                     });
                 });
 
-                $('#picker').click(function(){
-                    gdriveAccessor.picker({
-                        mimeTypes: "application/json",
-                        onSelected: function(fileId){
-                            gdriveAccessor.getData({
-                                fileId: fileId,
-                                onSuccess: function(resp){
-                                    var testData = resp;
-                                }
-                            });
+                //Delete Objects
+                $('#btnDeleteObject').click(function(){
+                    jsonCacher.deleteObject({
+                        name: $('#objectNameTextbox').val(),
+                        onSuccess: function(objectName){
+                            logMessage('Successfully delete object ' + objectName);
                         }
                     });
                 });
 
-
-
-
+                function logMessage(message){
+                    $('#logText').val($('#logText').val() + '\n\n' + message);
+                }
 
             });
         </script>
     </head>
     <body>
-        <button id="btnUploadData">Upload Data</button>
-        <button id='picker'>Picker</button>
-        <!-- <button id="btnShowAppDataFolder">Show Application Data Folder</button> -->
-        <!-- <br/> -->
-        <!-- <textarea id="documentText"></textarea> -->
+
+        <button id="btnListObjects">List Objects</button>
+        <br/>
+        <button id="btnUploadObjectCategories">Upload Object Categories</button>
+        <button id="btnUploadObjectTransactions">Upload Object Transactions</button>
+        <br/>
+        <button id="btnGetObject">Get Object</button>
+        <button id="btnDeleteObject">Delete Object</button>
+        <br/>
+        <input id="objectNameTextbox" type="text"/>
+        <br/>
+        <textarea id="logText" style="width: 95%; height: 75%"></textarea>
     </body>
 </html>
