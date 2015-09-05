@@ -33,8 +33,8 @@ gJsonCacher = function(config){
         //Set up Authorization for Google API
         gapi.load('auth', {'callback': function(){
             gapi.auth.authorize({
-                'client_id': clientId,
-                'scope': scope,
+                'client_id': config.clientId,
+                'scope': config.scope,
                 'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
             }, handleAuthResult);
         }});
@@ -51,8 +51,8 @@ gJsonCacher = function(config){
         } else {
             //Authorization Failed. Show popup.
             gapi.auth.authorize({
-                'client_id': clientId,
-                'scope': scope,
+                'client_id': config.clientId,
+                'scope': config.scope,
                 'immediate': false //Show Authorization Popup. To Skip = true. To Show = false.
             }, handleAuthResult);
         }
@@ -66,44 +66,6 @@ gJsonCacher = function(config){
             gapi.client.load('drive', 'v2');
         }})
     }
-
-    // /**
-    //  * Open Google Drive Picker.
-    //  * @param options: onSelected(fileId), onCanceled(), onLoaded()
-    //  */
-    // function picker(options){
-    //     gapi.load('picker', {'callback': function(){
-    //         if (config.oauthToken) {
-    //             var view = new google.picker.View(google.picker.ViewId.DOCS);
-    //             if(typeof options.mimeTypes != 'undefined'){
-    //                 view.setMimeTypes(options.mimeTypes);
-    //             }
-    //             var picker = new google.picker.PickerBuilder()
-    //                 .enableFeature(google.picker.Feature.NAV_HIDDEN)
-    //                 // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-    //                 .setAppId(appId)
-    //                 .setOAuthToken(config.oauthToken)
-    //                 .addView(view)
-    //                 .addView(new google.picker.DocsUploadView())
-    //                 .setCallback(function(data){
-    //                     if(data.action == google.picker.Action.PICKED && (typeof options.onSelected == 'function')){
-    //                         var fileId = data.docs[0].id;
-    //                         options.onSelected(fileId);
-    //                     } else if(data.action == google.picker.Action.CANCEL && (typeof options.onCanceled == 'function')){
-    //                         options.onCanceled();
-    //                     } else if(data.action == google.picker.Action.LOADED && (typeof options.onLoaded == 'function')){
-    //                         options.onLoaded();
-    //                     }
-    //                 })
-    //                 .build();
-    //
-    //             picker.setVisible(true);
-    //         }
-    //         else {
-    //             console.log('Unable to load Google Drive Picker API');
-    //         }
-    //     }});
-    // }
 
     /**
      * Get object from Google Drive Application Data folder.
@@ -131,7 +93,7 @@ gJsonCacher = function(config){
                     }).done(function(object){
                         if(typeof options.onSuccess == 'function') options.onSuccess(objectName, object);
                     }).fail(function(request, status, error){
-                        if(typeof options.onFail == 'function') options.onFail(request.responseText);
+                        if(typeof options.onFail == 'function') options.onFail(status + ' ' + error.message);
                     }).always(function(){
                         if(typeof options.always == 'function') options.always();
                     });
@@ -173,7 +135,7 @@ gJsonCacher = function(config){
         }).done(function(){
             if(typeof options.onSuccess == 'function') options.onSuccess(options.name);
         }).fail(function(request, status, error){
-            if(typeof options.onFail == 'function') options.onFail(request.responseText);
+            if(typeof options.onFail == 'function') options.onFail(status + ' ' + error.message);
         });
     }
 
@@ -212,13 +174,13 @@ gJsonCacher = function(config){
                 var objectName = this.title;
                 var objectId = this.id;
                 //Find the object that matches the name
-                if(objectName === options.name + ".json") {
+                if(objectName === options.name + '.json') {
                     //Call to delete the object
                     var requestDelete = gapi.client.drive.files.delete({
                         'fileId': objectId
                     });
                     requestDelete.execute(function(resp) {
-                        if(typeof options.onSuccess = 'function') options.onSuccess(objectName);
+                        if(typeof options.onSuccess == 'function') options.onSuccess(objectName);
                     });
                 }
             });
