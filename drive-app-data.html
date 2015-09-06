@@ -12,7 +12,11 @@
             $(document).ready(function() {
 
                 var jsonCacher = new gJsonCacher();
-                jsonCacher.init();
+                jsonCacher.authorize({
+                    onSuccess: function () {
+                        $('#buttons').show();
+                    }
+                });
 
                 $('#logText').val('');
 
@@ -61,11 +65,11 @@
                     });
                 });
 
-                //Upload Objects
+                //Insert Objects
                 $('#btnUploadObjectCategories').click(function(){
                     jsonCacher.insertObject({
                         name: 'Categories',
-                        data: categories,
+                        object: categories,
                         onSuccess: function(){
                             logMessage('Succesfully inserted Categories object');
                         }
@@ -75,7 +79,7 @@
                 $('#btnUploadObjectTransactions').click(function(){
                     jsonCacher.insertObject({
                         name: 'Transactions',
-                        data: transactions,
+                        object: transactions,
                         onSuccess: function(){
                             logMessage('Succesfully inserted Transactions object');
                         }
@@ -116,17 +120,20 @@
         </script>
     </head>
     <body>
-
-        <button id="btnListObjects">List Objects</button>
-        <br/>
-        <button id="btnUploadObjectCategories">Upload Object Categories</button>
-        <button id="btnUploadObjectTransactions">Upload Object Transactions</button>
-        <br/>
-        <button id="btnGetObject">Get Object</button>
-        <button id="btnDeleteObject">Delete Object</button>
-        <br/>
-        <input id="objectNameTextbox" type="text"/>
-        <br/>
-        <textarea id="logText" style="width: 95%; height: 75%"></textarea>
+        <div id='buttons' style="display: none;">
+            <button id="btnListObjects">List Objects</button>
+            <br/>
+            <button id="btnUploadObjectCategories">Upload Object Categories</button>
+            <button id="btnUploadObjectTransactions">Upload Object Transactions</button>
+            <br/>
+            <button id="btnGetObject">Get Object</button>
+            <button id="btnDeleteObject">Delete Object</button>
+            <br/>
+            <input id="objectNameTextbox" type="text"/>
+            <br/>
+        </div>
+        <div id='textarea'>
+            <textarea id="logText" style="width: 95%; height: 75%"></textarea>
+        </div>
     </body>
 </html>

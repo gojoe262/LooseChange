@@ -20,34 +20,40 @@ gJsonCacher = function(config){
         appId: "759406020708",
         // Scope to access application data folder.
         scope: ['https://www.googleapis.com/auth/drive.appfolder'],
-        // Token used to access Google Drive. This value is set successfully authorized.
+        // Token used to access Google Drive. This value is set when successfully authorized.
 		oauthToken: ''
 	};
 
 	config = $.extend(defaults, config);
 
 	/**
-     * Loads Google API authroization.
+     * Loads Google API authorization.
      */
-    function init(){
+    function authorize(options){
         //Set up Authorization for Google API
-        gapi.load('auth', {'callback': function(){
-            gapi.auth.authorize({
-                'client_id': config.clientId,
-                'scope': config.scope,
-                'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
-            }, handleAuthResult);
-        }});
+        gapi.load('auth', {
+            'callback': function(){
+                gapi.auth.authorize({
+                    'client_id': config.clientId,
+                    'scope': config.scope,
+                    'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
+                }, function(authResult){
+                    handleAuthResult(authResult, options)
+                });
+            }
+        });
     }
 
     /**
      * Checks if the Google API authroization was successful.
+     * If not, show the popup.
      */
-    function handleAuthResult(authResult) {
+    function handleAuthResult(authResult, options) {
         if (authResult && !authResult.error) {
             //Success
             config.oauthToken = authResult.access_token;
             loadGoogleDriveAPI();
+            if(typeof options.onSuccess == 'function') options.onSuccess();
         } else {
             //Authorization Failed. Show popup.
             gapi.auth.authorize({
@@ -62,15 +68,16 @@ gJsonCacher = function(config){
      * Load Google Client/Drive Load
      */
     function loadGoogleDriveAPI(){
-        gapi.load('client', {'callback': function(){
-            gapi.client.load('drive', 'v2');
-        }})
+        gapi.load('client', {
+            'callback': function(){
+                gapi.client.load('drive', 'v2');
+            }
+        })
     }
 
     /**
      * Get object from Google Drive Application Data folder.
      * @param options: name, onSuccess(object), onFail(errorText), always()
-     * TODO Handle multiple names?? Probably not
      */
     function getObject(options) {
         //Get the list of objects in application data folder.
@@ -108,8 +115,6 @@ gJsonCacher = function(config){
      * TODO check if the object already exists!
      */
     function insertObject(options){
-        var accessToken = gapi.auth.getToken().access_token;
-
         //Create metadata
         var metadata = {
             title: options.name + '.json',
@@ -124,7 +129,7 @@ gJsonCacher = function(config){
         //Create full file. (Combine metadata and data)
         var fullFile = new FormData();
         fullFile.append("metadata", new Blob([ strMetadata ], { type: "application/json" }));
-        fullFile.append("file", new Blob([ strObject ], { type: "appliction/json" }));
+        fullFile.append("file", new Blob([ strObject ], { type: "text/plain" }));
 
         promisedAjaxCall({
             url: "https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart",
@@ -139,28 +144,11 @@ gJsonCacher = function(config){
         });
     }
 
-    function updateObject(options){
-        //Get the list of objects in application data folder.
-        var request = gapi.client.drive.files.list({
-            'q': '\'appdata\' in parents'
-        });
-
-        request.execute(function(resp) {
-            var objectList = resp.items;
-            $.each(objectList, function(index, value){
-                //Find the object that matches the name
-                if(this.title === name) {
-                    //Object already exists, call updateObject
-
-                }
-            });
-        });
-    }
-
     /**
      * Delete object from Google Drive Application Data folder.
-     * @param options: name, object, onSuccess(objectName), onFail(errorText)
-     * TODO Object Does not exist!
+     * @param options: name, onSuccess(objectName)
+     * TODO 1. Object Does not exist!
+     *      2. onFail(errorText)
      */
     function deleteObject(options){
         //Get the list of objects
@@ -185,80 +173,30 @@ gJsonCacher = function(config){
                 }
             });
         });
-
-
-
-
-
-
-
-
     }
 
-    // /**
-    //  * Update/Upload file in Application Data Folder
-    //  * @param options: metadata, data,
-    //  */
-    // function updateFile(options){
-    //     var accessToken = gapi.auth.getToken().access_token;
-    //     var metadata;
-    //     if(typeof options.fileId != 'undefined'){
-    //
-    //         var request = gapi.client.drive.files.get({
-    //           'fileId': options.fileId
-    //         });
-    //
-    //         request.execute(function(resp){
-    //
-    //         });
-    //
-    //
-    //
-    //         //Create metadata
-    //         var defaultMetadata = {
-    //             mimeType: "application/json",
-    //             parents: [{id: 'appdata'}]
-    //         };
-    //         defaultMetadata = $.extend(defaultMetadata, options.metadata);
-    //         var jsonMetadata = JSON.stringify(defaultMetadata);
-    //     }
-    //
-    //     //Create json data string
-    //     var jsonData = JSON.stringify(options.data);
-    //
-    //     //Create request form. (Combine metadata and )
-    //     data = new FormData();
-    //     data.append("metadata", new Blob([ jsonMeta ], { type: "application/json" }));
-    //     data.append("file", new Blob([ jsonData ], { type: "appliction/json" }));
-    //
-    //     var up = (typeof options.fileId != 'undefined') ? '/' + options.fileId : '';
-    //     promisedAjaxCall({
-    //         url: "https://www.googleapis.com/upload/drive/v2/files" + up + "?uploadType=multipart",
-    //         data: data,
-    //         headers: {'Authorization': 'Bearer ' + accessToken},
-    //         contentType: false,
-    //         processData: false,
-    //         type: (typeof options.fileId != 'undefined') ? 'PUT' : 'POST'
-    //     }).done(function(resp){
-    //         if(typeof options.onSuccess == 'function') options.onSuccess(resp);
-    //     }).fail(function(){
-    //         if(typeof options.onFail == 'function') options.onFail();
-    //     });
-    // }
-
+    /**
+     * Executes an ajax call with the given options.
+     * Automatically creates the Authorization header that contains the
+     * gapi accessToken.
+     */
     function promisedAjaxCall(options){
         var accessToken = gapi.auth.getToken().access_token;
         var defaultOptions = {
             cache: false,
-            dataType: 'json',
+            //dataType: 'json',
             headers: {'Authorization': 'Bearer ' + accessToken}
         };
 
         return $.ajax($.extend(defaultOptions, options));
     }
 
-    // TODO Convert each object in resp.items to be simpler.
-    // Ex: {name: "name", object: {\object stuff here\}}
+    /**
+     * Gets a list of objects stored in the Application Data folder.
+     * @param callback function
+     * TODO Convert each object in resp.items to be simpler.
+     *      Ex: {name: "name", object: {\object stuff here\}}
+     */
     function getObjectList(callback){
         var request = gapi.client.drive.files.list({
             'q': '\'appdata\' in parents'
@@ -272,8 +210,7 @@ gJsonCacher = function(config){
      * Public functions/variables inside return statement
      */
 	return {
-        init: init,
-
+        authorize: authorize,
         getObjectList: getObjectList,
         getObject: getObject,
         insertObject: insertObject,
