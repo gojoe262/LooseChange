@@ -4,6 +4,7 @@
  *
  * gJsonCacher
  * Can get, insert, update, & delete JSON objects (json files).
+ * Objects must in such a format so they can be used in JSON.stringify and JSON.parse.
  * Objects are stored in the user's Google Drive - Application Data folder.
  * The Application Data folder is hidden from the user.
  */
@@ -28,32 +29,40 @@ gJsonCacher = function(config){
 
 	/**
      * Loads Google API authorization.
+     * @return promise: done()
      */
-    function authorize(options){
+    function authorize(){
         //Set up Authorization for Google API
-        gapi.load('auth', {
-            'callback': function(){
-                gapi.auth.authorize({
-                    'client_id': config.clientId,
-                    'scope': config.scope,
-                    'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
-                }, function(authResult){
-                    handleAuthResult(authResult, options)
-                });
-            }
-        });
+        var deferred = $.Deferred();
+
+        //Use a delay to ensure that gapi is fully loaded.
+        setTimeout(function(){
+            gapi.load('auth', {
+                'callback': function(){
+                    gapi.auth.authorize({
+                        'client_id': config.clientId,
+                        'scope': config.scope,
+                        'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
+                    }, function(authResult){
+                        handleAuthResult(authResult, deferred);
+                    });
+                }
+            });
+        }, 10);
+
+        return deferred.promise();
     }
 
     /**
      * Checks if the Google API authroization was successful.
      * If not, show the popup.
      */
-    function handleAuthResult(authResult, options) {
+    function handleAuthResult(authResult, deferred) {
         if (authResult && !authResult.error) {
             //Success
             config.oauthToken = authResult.access_token;
             loadGoogleDriveAPI();
-            if(typeof options.onSuccess == 'function') options.onSuccess();
+            deferred.resolve();
         } else {
             //Authorization Failed. Show popup.
             gapi.auth.authorize({
@@ -79,54 +88,63 @@ gJsonCacher = function(config){
 
     /**
      * Get object from Google Drive Application Data folder.
-     * @param options: name, onSuccess(object), onFail(errorText), always()
+     * @param inObjectName
+     * @return promise: done(objectName, object), fail(errorText)
      */
-    function getObject(options) {
-        //Get the list of objects in application data folder.
-        var request = gapi.client.drive.files.list({
-            'q': '\'appdata\' in parents'
+    function getObject(inObjectName) {
+        //deferred - allows use for .done(), .fail(), & .always()
+        var deferred = $.Deferred();
+
+        getObjectList()
+        .done(function(objectList){
+            if(objectList.length !== 0)
+            {
+                $.each(objectList, function(index, value){
+                    var objectName = this.title;
+                    var objectDownloadUrl = this.downloadUrl;
+
+                    //Find the file that matches the object name
+                    if(objectName === inObjectName + ".json") {
+                        //Call to download the object
+                        promisedAjaxCall({
+                            url: objectDownloadUrl,
+                            type: 'GET',
+                        }).done(function(object){
+                            deferred.resolve(inObjectName, object);
+                        }).fail(function(request, status, error){
+                            deferred.reject(status + ' ' + error.message);
+                        });
+                        return false;//break out of each loop
+                    } else if(index === objectList.length - 1){
+                        deferred.reject(inObjectName + ' not found');
+                    }
+                });
+            }
+            else {
+                deferred.reject(inObjectName + ' not found');
+            }
         });
 
-        request.execute(function(resp) {
-            var objectList = resp.items;
-            $.each(objectList, function(index, value){
-                var objectName = this.title;
-                var objectDownloadUrl = this.downloadUrl;
-
-                //Find the file that matches the object name
-                if(objectName === options.name + ".json") {
-                    //Call to download the object
-                    promisedAjaxCall({
-                        url: objectDownloadUrl,
-                        type: 'GET',
-                    }).done(function(object){
-                        if(typeof options.onSuccess == 'function') options.onSuccess(objectName, object);
-                    }).fail(function(request, status, error){
-                        if(typeof options.onFail == 'function') options.onFail(status + ' ' + error.message);
-                    }).always(function(){
-                        if(typeof options.always == 'function') options.always();
-                    });
-                }
-            });
-        });
+        return deferred.promise();
     }
 
     /**
      * Insert object to Google Drive Application Data folder.
-     * @param options: name, object, onSuccess(objectName), onFail(errorText)
-     * TODO check if the object already exists!
+     * @param inObjectName, inObject
+     * @return promise: done(inObjectName), fail(errorText)
      */
-    function insertObject(options){
+    function insertObject(inObjectName, inObject){
+        var deferred = $.Deferred();
         //Create metadata
         var metadata = {
-            title: options.name + '.json',
+            title: inObjectName + '.json',
             mimeType: "application/json",
             parents: [{id: 'appdata'}]
         };
 
         //Stringify the data
         var strMetadata = JSON.stringify(metadata);
-        var strObject = JSON.stringify(options.object);
+        var strObject = JSON.stringify(inObject);
 
         //Create full file. (Combine metadata and data)
         var fullFile = new FormData();
@@ -140,41 +158,65 @@ gJsonCacher = function(config){
             contentType: false, // Set content type to false as jQuery will tell the server its a query string request
             type: 'POST' //POST to insert, PUT to update
         }).done(function(){
-            if(typeof options.onSuccess == 'function') options.onSuccess(options.name);
+            deferred.resolve(inObjectName);
         }).fail(function(request, status, error){
-            if(typeof options.onFail == 'function') options.onFail(status + ' ' + error.message);
+            deferred.reject(status + ' ' + error.message);
         });
+
+        return deferred.promise();
     }
 
     /**
      * Delete object from Google Drive Application Data folder.
-     * @param options: name, onSuccess(objectName)
-     * TODO 1. Object Does not exist!
-     *      2. onFail(errorText)
+     * @param inObjectName
+     * @return promise: done(inObjectName), fail(errorText)
      */
-    function deleteObject(options){
-        //Get the list of objects
+    function deleteObject(inObjectName){
+        var deferred = $.Deferred();
+
+        getObjectList().done(function(objectList){
+            if(objectList.length !== 0)
+            {
+                $.each(objectList, function(index, value){
+                    var objectName = this.title;
+                    var objectId = this.id;
+                    //Find the object that matches the name
+                    if(objectName === inObjectName + '.json') {
+                        //Call to delete the object
+                        var requestDelete = gapi.client.drive.files.delete({
+                            'fileId': objectId
+                        });
+                        requestDelete.execute(function(resp) {
+                            deferred.resolve(inObjectName);
+                        });
+                        return false;//Break out of each loop. This will only delete the first occurence of the object.
+                    } else if(index === objectList.length - 1){
+                        deferred.reject(inObjectName + ' not found');
+                    }
+                });
+            } else {
+                deferred.reject(inObjectName + ' not found');
+            }
+        });
+
+        return deferred.promise();
+    }
+
+    /**
+     * Gets a list of objects stored in the Application Data folder.
+     * @return promise: done(objList)
+     * TODO Convert each object in resp.items to be simpler.
+     *      Ex: {name: "name", object: {\object stuff here\}}
+     */
+    function getObjectList(){
+        var deferred = $.Deferred();
         var request = gapi.client.drive.files.list({
             'q': '\'appdata\' in parents'
         });
-
         request.execute(function(resp) {
-            var objectList = resp.items;
-            $.each(objectList, function(index, value){
-                var objectName = this.title;
-                var objectId = this.id;
-                //Find the object that matches the name
-                if(objectName === options.name + '.json') {
-                    //Call to delete the object
-                    var requestDelete = gapi.client.drive.files.delete({
-                        'fileId': objectId
-                    });
-                    requestDelete.execute(function(resp) {
-                        if(typeof options.onSuccess == 'function') options.onSuccess(objectName);
-                    });
-                }
-            });
+            deferred.resolve(resp.items);
         });
+        return deferred.promise();
     }
 
     /**
@@ -186,26 +228,10 @@ gJsonCacher = function(config){
         var accessToken = gapi.auth.getToken().access_token;
         var defaultOptions = {
             cache: false,
-            //dataType: 'json',
             headers: {'Authorization': 'Bearer ' + accessToken}
         };
 
         return $.ajax($.extend(defaultOptions, options));
-    }
-
-    /**
-     * Gets a list of objects stored in the Application Data folder.
-     * @param callback function
-     * TODO Convert each object in resp.items to be simpler.
-     *      Ex: {name: "name", object: {\object stuff here\}}
-     */
-    function getObjectList(callback){
-        var request = gapi.client.drive.files.list({
-            'q': '\'appdata\' in parents'
-        });
-        request.execute(function(resp) {
-            if(typeof callback == 'function') callback(resp.items);
-        });
     }
 
     /**
