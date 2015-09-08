@@ -43,8 +43,8 @@ gJsonCacher = function(config){
                         'client_id': config.clientId,
                         'scope': config.scope,
                         'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
-                    }, function(authResult){
-                        handleAuthResult(authResult, deferred);
+                    }, function(authRslt){
+                        handleAuthResult(authRslt, deferred);
                     });
                 }
             });
