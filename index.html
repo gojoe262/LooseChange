@@ -1,50 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Loosechange : Budgeting Program which tracks income and spending into a JSON file. Using Qt/Qt Creator (C++)">
+    <title>Loose Change</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="css/index/stylesheet.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/shared/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/shared/bootstrap/bootstrap-theme.css" rel="stylesheet">
 
-    <title>Loosechange</title>
-  </head>
+    <!-- Custom styles for this template -->
+    <link href="css/theme/theme.css" rel="stylesheet">
 
-  <body>
+</head>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <!--<a id="forkme_banner" href="https://github.com/gojoe262/LooseChange">View on GitHub</a>-->
+<body role="document">
 
-          <h1 id="project_title">Loosechange</h1>
-          <h2 id="project_tagline">Budgeting Program which tracks income and spending into a JSON file. Using Qt/Qt Creator (C++)</h2>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Loose Change</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/gojoe262/LooseChange/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/gojoe262/LooseChange/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+    <!-- ***************************************************
+        MAIN CONTENT CONTAINER
+    ********************************************************-->
+
+    <div class="container theme-showcase" role="main">
+        <div id='buttons' style="display: none;">
+            <p>
+                <button id="btnListObjects" type="button" class="btn btn-default">List Objects</button>
+            </p>
+            <p>
+                <button id="btnUploadObjectCategories" type="button" class="btn btn-success">Upload Categories</button>
+                <button id="btnUploadObjectTransactions"  type="button" class="btn btn-success">Upload Transactions</button>
+            </p>
+            <p>
+                <button id="btnGetObject" type="button" class="btn btn-primary">Get Object</button>
+                <input id="txtbxGetObject" type="text"/>
+            </p>
+            <p>
+                <button id="btnDeleteObject" type="button" class="btn btn-danger">Delete Object</button>
+                <input id="txtbxDeleteObject" type="text"/>
+            </p>
+        </div>
+        <div id='textarea' >
+            <textarea id="logText" style="width: 100%; height: 500px" readonly="readonly"></textarea>
+        </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-loose-change" class="anchor" href="#welcome-to-loose-change" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Loose Change</h3>
-      </section>
+    <!--JS FILES-->
+    <script src="js/shared/jquery/jquery-2.1.4.js"></script>
+    <script src="js/shared/bootstrap/bootstrap.js"></script>
+    <script src="js/shared/theme/docs.js"></script>
+
+    <script type="text/javascript" src="js/shared/data-access/gJsonCacher.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var index = new Index();
+            index.init();
+        });
+    </script>
+
+    <!-- ***************************************************
+        MAIN CONTENT CONTAINER END
+    ********************************************************-->
+
+    <div data-original-title="Copy to clipboard" title="" style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;" class="global-zeroclipboard-container" id="global-zeroclipboard-html-bridge">
+        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" height="100%" width="100%">
+            <param name="movie" value="/assets/flash/ZeroClipboard.swf?noCache=1439610466441">
+            <param name="allowScriptAccess" value="sameDomain">
+            <param name="scale" value="exactfit">
+            <param name="loop" value="false">
+            <param name="menu" value="false">
+            <param name="quality" value="best">
+            <param name="bgcolor" value="#ffffff">
+            <param name="wmode" value="transparent">
+            <param name="flashvars" value="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com">
+            <embed src="bootstrap-theme_files/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" name="global-zeroclipboard-flash-bridge" allowscriptaccess="sameDomain" allowfullscreen="false" type="application/x-shockwave-flash" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com" scale="exactfit" height="100%" width="100%">                \
+        </object>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Loosechange maintained by <a href="https://github.com/gojoe262">gojoe262</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-
-
-  </body>
+    <svg style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;" preserveAspectRatio="none" viewBox="0 0 1140 500" height="500" width="1140">
+        <defs>
+            <style type="text/css"></style>
+        </defs>
+        <text style="font-weight:bold;font-size:57pt;font-family:Arial, Helvetica, Open Sans, sans-serif" y="57" x="0">Thirdslide</text>
+    </svg>
+</body>
 </html>
