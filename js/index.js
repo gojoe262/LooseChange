@@ -1,4 +1,4 @@
-Index = function () {
+var index = function () {
     var jsonCacher;
 
     function init(){
