@@ -14,16 +14,17 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/shared/bootstrap/bootstrap.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="css/shared/bootstrap/bootstrap-theme.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/theme/theme.css" rel="stylesheet">
+    <!-- Theme -->
+    <link href="css/shared/theme/theme.css" rel="stylesheet">
 
+    <!-- Shared JS Files-->
+    <script src="js/shared/jquery/jquery-2.1.4.js"></script>
+    <script src="js/shared/bootstrap/bootstrap.js"></script>
+    <script src="js/shared/theme/theme.js"></script>
 </head>
 
 <body role="document">
-
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -44,10 +45,9 @@
       </div>
     </nav>
 
-    <!-- ***************************************************
-        MAIN CONTENT CONTAINER
-    ********************************************************-->
+    <!-- ********** MAIN CONTENT START ******************-->
 
+    <!-- PAGE CONTENT-->
     <div class="container theme-showcase" role="main">
         <div id='buttons' style="display: none;">
             <p>
@@ -71,16 +71,16 @@
         </div>
     </div>
 
-    <!--JS FILES-->
-    <script src="js/shared/jquery/jquery-2.1.4.js"></script>
-    <script src="js/shared/bootstrap/bootstrap.js"></script>
-    <script src="js/shared/theme/docs.js"></script>
+    <!-- PAGE CSS -->
+    <link href="css/index.css" rel="stylesheet">
 
+    <!-- PAGE JS -->
     <script type="text/javascript" src="js/shared/data-access/gJsonCacher.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
+    <!-- INLINE JS -->
     <script type="text/javascript">
         $(document).ready(function(){
             var index = new Index();
@@ -88,30 +88,6 @@
         });
     </script>
 
-    <!-- ***************************************************
-        MAIN CONTENT CONTAINER END
-    ********************************************************-->
-
-    <div data-original-title="Copy to clipboard" title="" style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;" class="global-zeroclipboard-container" id="global-zeroclipboard-html-bridge">
-        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" height="100%" width="100%">
-            <param name="movie" value="/assets/flash/ZeroClipboard.swf?noCache=1439610466441">
-            <param name="allowScriptAccess" value="sameDomain">
-            <param name="scale" value="exactfit">
-            <param name="loop" value="false">
-            <param name="menu" value="false">
-            <param name="quality" value="best">
-            <param name="bgcolor" value="#ffffff">
-            <param name="wmode" value="transparent">
-            <param name="flashvars" value="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com">
-            <embed src="bootstrap-theme_files/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" name="global-zeroclipboard-flash-bridge" allowscriptaccess="sameDomain" allowfullscreen="false" type="application/x-shockwave-flash" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com" scale="exactfit" height="100%" width="100%">                \
-        </object>
-    </div>
-
-    <svg style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;" preserveAspectRatio="none" viewBox="0 0 1140 500" height="500" width="1140">
-        <defs>
-            <style type="text/css"></style>
-        </defs>
-        <text style="font-weight:bold;font-size:57pt;font-family:Arial, Helvetica, Open Sans, sans-serif" y="57" x="0">Thirdslide</text>
-    </svg>
+    <!-- ********** MAIN CONTENT END ********************-->
 </body>
 </html>
