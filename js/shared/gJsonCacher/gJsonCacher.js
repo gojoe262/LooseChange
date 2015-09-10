@@ -31,7 +31,7 @@ gJsonCacher = function(config){
      * Loads Google API authorization.
      * @return promise: done()
      */
-    function authorize(){
+    function authorize(options){
         //Set up Authorization for Google API
         var deferred = $.Deferred();
 
@@ -42,7 +42,7 @@ gJsonCacher = function(config){
                     gapi.auth.authorize({
                         'client_id': config.clientId,
                         'scope': config.scope,
-                        'immediate': true //Skip Authorization Popup. To Skip = true. To Show = false.
+                        'immediate': (typeof options) ? options.immediate : false //Skip Authorization Popup. To Skip = true. To Show = false.
                     }, function(authRslt){
                         handleAuthResult(authRslt, deferred);
                     });
@@ -64,14 +64,7 @@ gJsonCacher = function(config){
             loadGoogleDriveAPI();
             deferred.resolve();
         } else {
-            //Authorization Failed. Show popup.
-            gapi.auth.authorize({
-                'client_id': config.clientId,
-                'scope': config.scope,
-                'immediate': false //Show Authorization Popup. To Skip = true. To Show = false.
-            }, function(authResult){
-                handleAuthResult(authResult, deferred);
-            });
+            deferred.reject();
         }
     }
 

@@ -12,15 +12,28 @@
 
     <title>Loose Change</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/shared/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- Order should be
+        1. jQuery
+        2. Bootstrap
+        3. jQuery UI
+        4. Theme
+
+        See: http://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x
+    -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.5 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- jQuery UI 1.11.4 -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
     <!-- Theme -->
     <link href="css/shared/theme/theme.css" rel="stylesheet">
-
-    <!-- Shared JS Files-->
-    <script src="js/shared/jquery/jquery-2.1.4.js"></script>
-    <script src="js/shared/bootstrap/bootstrap.js"></script>
     <script src="js/shared/theme/theme.js"></script>
 </head>
 
@@ -48,8 +61,13 @@
     <!-- ********** MAIN CONTENT START ******************-->
 
     <!-- PAGE CONTENT-->
-    <div class="container theme-showcase" role="main">
-        <div id='buttons' style="display: none;">
+
+    <div id="gapiDialog" title="Login with Google" class='collapse'>
+        <p><small>Please login with Google to access all of functionality provided by Loose Change.</small></p>
+    </div>
+
+    <div id='pageContent' class="container theme-showcase" role="main" style='display: none;'>
+        <div id='buttons'>
             <p>
                 <button id="btnListObjects" type="button" class="btn btn-default">List Objects</button>
             </p>
@@ -75,16 +93,21 @@
     <link href="css/index.css" rel="stylesheet">
 
     <!-- PAGE JS -->
-    <script type="text/javascript" src="js/shared/data-access/gJsonCacher.js"></script>
+    <script type="text/javascript" src="js/shared/gJsonCacher/gJsonCacher.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
     <!-- INLINE JS -->
     <script type="text/javascript">
+        var pageJs;
         $(document).ready(function(){
-            var pageJs = new index();
+            pageJs = new index();
             pageJs.init();
+        });
+
+        $(window).resize(function() {
+            pageJs.onResize();
         });
     </script>
 
