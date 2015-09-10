@@ -64,11 +64,10 @@
     <!-- PAGE CONTENT-->
     <div class='container'>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Login</h3>
-            </div>
-            <div class="panel-body">
-                <button type="button" class="btn btn-lg btn-success">Login with Google</button>
+            <div class="panel-body" >
+                <div style="text-align: center;">
+                    <button id='btn-google' type="button" class="btn btn-lg btn-success">Connect with Google Drive</button>
+                </div>
             </div>
         </div>
     </div>
@@ -85,8 +84,9 @@
 
     <!-- INLINE JS -->
     <script type="text/javascript">
-        var pageJs;
+        var page;
         $(document).ready(function(){
+            page = new login();
 
         });
     </script>

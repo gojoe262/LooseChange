@@ -18,28 +18,6 @@ var index = function () {
             //If authorization failed, redirect the user to the login page.
             sessionStorage.setItem('login_complete', 'index.html');
             window.location.replace("login.html");
-
-            // $('#gapiDialog').dialog({
-            //     modal: true,
-            //     width: 'auto',
-            //     height: 'auto',
-            //     buttons: [
-            //         {
-            //             text: "Login with Google",
-            //             icons: {primary: "ui-icon-triangle-1-e"},
-            //             click: function(){
-            //                 authorize(false);
-            //                 $(this).dialog('close');
-            //             }
-            //         },
-            //         {
-            //             text: "Cancel",
-            //             click: function(){
-            //                 $(this).dialog('close');
-            //             }
-            //         }
-            //     ]
-            // }).dialog('open');
         });
     }
 
