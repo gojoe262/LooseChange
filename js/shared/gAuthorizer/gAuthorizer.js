@@ -30,10 +30,9 @@ var gAuthorizer = function (config) {
         //Set up Authorization for Google API
         var deferred = $.Deferred();
 
-        //Use a delay to ensure that gapi is fully loaded.
-        setTimeout(function(){
-            gapi.load('auth', {
-                'callback': function(){
+        gapi.load('auth', {
+            'callback': function(){
+                setTimeout(function () {
                     gapi.auth.authorize({
                         'client_id': config.clientId,
                         'scope': config.scope,
@@ -42,9 +41,9 @@ var gAuthorizer = function (config) {
                     }, function(authRslt){
                         handleAuthResult(authRslt, deferred);
                     });
-                }
-            });
-        }, 10);
+                },5);
+            }
+        });
 
         return deferred.promise();
     }
