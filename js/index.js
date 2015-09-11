@@ -1,28 +1,28 @@
 var index = function () {
-    var jsonCacher, gapiDialog;
+    var jsonCacher, authorizer, gapiDialog;
 
     function init(){
         setupButtons();
         $('#logText').val('');
 
-        jsonCacher = new gJsonCacher();
-        authorize(true);//Skip popup
+        authorizer = new gAuthorizer();
+
+        authorize();
     }
 
-    function authorize(skipPopup){
-        jsonCacher.authorize({
-            immediate: skipPopup
-        }).done(function(){
+    function authorize(){
+        authorizer.authorize({
+            immediate: true
+        }).done(function () {
+            //If authorized, load jsonCacher and show the page
+            jsonCacher = new gJsonCacher();
+            jsonCacher.init();
             $('#pageContent').show();
-        }).fail(function(){
+        }).fail(function () {
             //If authorization failed, redirect the user to the login page.
-            sessionStorage.setItem('login_complete', 'index.html');
+            sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
             window.location.replace("login.html");
         });
-    }
-
-    function onResize() {
-        $("#gapiDialog").dialog("option", "position", {my: "center", at: "center", of: window});
     }
 
     function setupButtons() {
@@ -128,7 +128,6 @@ var index = function () {
     };
 
     return {
-        init: init,
-        onResize: onResize
+        init: init
     };
 };

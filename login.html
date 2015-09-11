@@ -62,7 +62,7 @@
     <!-- ********** MAIN CONTENT START ******************-->
 
     <!-- PAGE CONTENT-->
-    <div class='container'>
+    <div id='pageContent' class='container collapse'>
         <div class="panel panel-default">
             <div class="panel-body" >
                 <div style="text-align: center;">
@@ -77,17 +77,17 @@
     <link href="css/index.css" rel="stylesheet">
 
     <!-- PAGE JS -->
-    <script type="text/javascript" src="js/shared/gJsonCacher/gJsonCacher.js"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/shared/gAuthorizer/gAuthorizer.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 
     <!-- INLINE JS -->
     <script type="text/javascript">
         var page;
         $(document).ready(function(){
             page = new login();
-
+            page.init();
         });
     </script>
 

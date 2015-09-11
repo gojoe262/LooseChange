@@ -89,9 +89,10 @@
     <link href="css/shared/footable/footable.standalone.css" rel="stylesheet" type="text/css" />
 
     <!-- PAGE JS -->
-    <script src="js/transaction-table.js" type="text/javascript"></script>
-    <script src="js/shared/footable/footable.js" type="text/javascript"></script>
-    <script src='js/shared/gJsonCacher/gJsonCacher.js' type="text/javascript"></script>
+    <script type="text/javascript" src="js/transaction-table.js"></script>
+    <script type="text/javascript" src="js/shared/footable/footable.js"></script>
+    <script type="text/javascript" src='js/shared/gAuthorizer/gAuthorizer.js'></script>
+    <script type="text/javascript" src='js/shared/gJsonCacher/gJsonCacher.js'></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
@@ -102,10 +103,6 @@
         $(document).ready(function(){
             page = new transactionTable();
             page.init();
-        });
-
-        $(window).resize(function() {
-            page.onResize();
         });
     </script>
 

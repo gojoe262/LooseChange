@@ -1,43 +1,25 @@
 var transactionTable = function(){
-    var jsonCacher;
+    var jsonCacher, authorizer;
     function init(){
         setupTable();
-        jsonCacher = new gJsonCacher();
-        authorize(true);//Skip popup
+        authorizer = new gAuthorizer();
+
+        authorize();
     }
 
-    function authorize(skipPopup){
-        jsonCacher.authorize({
-            immediate: skipPopup
+    function authorize(){
+        authorizer.authorize({
+            immediate: true
         }).done(function(){
+            //If authorization successful, load jsonCacher and show the page
+            jsonCacher = new gJsonCacher();
+            jsonCacher.init();
             $('#pageContent').show();
         }).fail(function(){
-            $('#gapiDialog').dialog({
-                modal: true,
-                width: 'auto',
-                height: 'auto',
-                buttons: [
-                    {
-                        text: "Login with Google",
-                        icons: {primary: "ui-icon-triangle-1-e"},
-                        click: function(){
-                            authorize(false);
-                            $(this).dialog('close');
-                        }
-                    },
-                    {
-                        text: "Cancel",
-                        click: function(){
-                            $(this).dialog('close');
-                        }
-                    }
-                ]
-            }).dialog('open');
+            //If authorization fail, redirect the user to the login page.
+            sessionStorage.setItem('loose-change-redirect-origin', 'transaction-table.html');
+            window.location.replace("login.html");
         });
-    }
-
-    function onResize() {
-        $("#gapiDialog").dialog("option", "position", {my: "center", at: "center", of: window});
     }
 
     function setupTable(){
@@ -48,7 +30,6 @@ var transactionTable = function(){
     }
 
     return {
-        init: init,
-        onResize: onResize
+        init: init
     };
 };

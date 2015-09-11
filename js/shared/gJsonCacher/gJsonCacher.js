@@ -1,82 +1,26 @@
 /**
- * http://www.codeproject.com/Articles/636699/JavaScript-Design-Patterns
- * Revealing Module Pattern
- *
  * gJsonCacher
  * Can get, insert, update, & delete JSON objects (json files).
  * Objects must in such a format so they can be used in JSON.stringify and JSON.parse.
  * Objects are stored in the user's Google Drive - Application Data folder.
  * The Application Data folder is hidden from the user.
  */
-gJsonCacher = function(config){
+var gJsonCacher = function(config){
     var self = this;
 
-    var defaults = {
-        // The Browser API key obtained from the Google Developers Console.
-        // Replace with your own Browser API key, or your own key.
-        developerKey: 'AIzaSyCAR6UKdY5VGl2oCCbD9tJi5IfI7TK7WPs',
-        // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-        clientId: "759406020708-acqg5ibu2gh81lestg0t8vea08nqsh9l.apps.googleusercontent.com",
-        // Replace with your own App ID. (Its the first number in your Client ID)
-        appId: "759406020708",
-        // Scope to access application data folder.
-        scope: ['https://www.googleapis.com/auth/drive.appfolder'],
-        // Token used to access Google Drive. This value is set when successfully authorized.
-		oauthToken: ''
-	};
-
-	config = $.extend(defaults, config);
-
 	/**
-     * Loads Google API authorization.
-     * @return promise: done()
-     */
-    function authorize(options){
-        //Set up Authorization for Google API
-        var deferred = $.Deferred();
-
-        //Use a delay to ensure that gapi is fully loaded.
-        setTimeout(function(){
-            gapi.load('auth', {
-                'callback': function(){
-                    gapi.auth.authorize({
-                        'client_id': config.clientId,
-                        'scope': config.scope,
-                        'immediate': (typeof options) ? options.immediate : false //Skip Authorization Popup. To Skip = true. To Show = false.
-                    }, function(authRslt){
-                        handleAuthResult(authRslt, deferred);
-                    });
-                }
-            });
-        }, 10);
-
-        return deferred.promise();
-    }
-
-    /**
-     * Checks if the Google API authroization was successful.
-     * If not, show the popup.
-     */
-    function handleAuthResult(authResult, deferred) {
-        if (authResult && !authResult.error) {
-            //Success
-            config.oauthToken = authResult.access_token;
-            loadGoogleDriveAPI();
-            deferred.resolve();
-        } else {
-            deferred.reject();
-        }
-    }
-
-    /**
      * Load Google Client/Drive Load
      */
-    function loadGoogleDriveAPI(){
+    function init(){
+        var deferred = $.Deferred();
         gapi.load('client', {
             'callback': function(){
-                gapi.client.load('drive', 'v2');
+                gapi.client.load('drive', 'v2', function(){
+                    deferred.resolve();
+                });
             }
-        })
+        });
+        return deferred.promise();
     }
 
     /**
@@ -231,7 +175,8 @@ gJsonCacher = function(config){
      * Public functions/variables inside return statement
      */
 	return {
-        authorize: authorize,
+        init: init,
+
         getObjectList: getObjectList,
         getObject: getObject,
         insertObject: insertObject,

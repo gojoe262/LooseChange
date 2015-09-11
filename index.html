@@ -95,6 +95,7 @@
 
     <!-- PAGE JS -->
     <script type="text/javascript" src="js/shared/gJsonCacher/gJsonCacher.js"></script>
+    <script type="text/javascript" src="js/shared/gAuthorizer/gAuthorizer.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
@@ -105,10 +106,6 @@
         $(document).ready(function(){
             pageJs = new index();
             pageJs.init();
-        });
-
-        $(window).resize(function() {
-            pageJs.onResize();
         });
     </script>
 
