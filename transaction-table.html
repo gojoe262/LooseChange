@@ -59,16 +59,14 @@
                 <h3 class="panel-title">Transactions</h3>
             </div>
             <div>  <!-- class="panel-body" -->
-                <table id='transactionTable'>
+                <table id='transactionTable' class="toggle-arrow" class='collapse'>
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Type</th>
                             <th>Amount</th>
                             <th data-hide='phone'>Category</th>
                             <th data-hide='phone'>Comment</th>
                             <th>Edit/Remove</th>
-                            <th data-hide='all' data-ignore="true">Id</th>
                         </tr>
                     </thead>
                     <tbody id='transactionTableBody'>
@@ -81,7 +79,6 @@
     <!-- PAGE CSS -->
     <link href="css/shared/footable/footable.core.css" rel="stylesheet" type="text/css"/>
     <link href="css/shared/footable/footable.standalone.css" rel="stylesheet" type="text/css" />
-    <!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css"> -->
 
     <!-- PAGE JS -->
     <script type="text/javascript" src="js/transaction-table.js"></script>
@@ -90,8 +87,6 @@
     <script type="text/javascript" src='js/shared/gJsonCacher/gJsonCacher.js'></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-    <!-- <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script> -->
-
 
     <!-- INLINE JS-->
     <script type="text/javascript">

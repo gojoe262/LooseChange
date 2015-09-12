@@ -1,6 +1,6 @@
 /**
  * gJsonCacher
- * Can get, insert, update, & delete JSON objects (json files).
+ * Can get, upload, & delete JSON objects (json files).
  * Objects must in such a format so they can be used in JSON.stringify and JSON.parse.
  * Objects are stored in the user's Google Drive - Application Data folder.
  * The Application Data folder is hidden from the user.
@@ -9,7 +9,9 @@ var gJsonCacher = function(config){
     var self = this;
 
 	/**
-     * Load Google Client/Drive Load
+     * Load Google Client/Drive Load.
+     * Note this does not authorize the user. That is actually
+     * handled in gAuthorizer.
      */
     function init(){
         var deferred = $.Deferred();
@@ -32,35 +34,19 @@ var gJsonCacher = function(config){
         //deferred - allows use for .done(), .fail(), & .always()
         var deferred = $.Deferred();
 
-        getObjectList()
-        .done(function(objectList){
-            if(objectList.length !== 0)
-            {
-                $.each(objectList, function(index, value){
-                    var objectName = this.title;
-                    var objectDownloadUrl = this.downloadUrl;
-
-                    //Find the file that matches the object name
-                    if(objectName === inObjectName + ".json") {
-                        //Call to download the object
-                        promisedAjaxCall({
-                            url: objectDownloadUrl,
-                            type: 'GET',
-                        }).done(function(object){
-                            deferred.resolve(inObjectName, object);
-                        }).fail(function(request, status, error){
-                            deferred.reject(status + ' ' + error.message);
-                        });
-                        return false;//break out of each loop
-                    } else if(index === objectList.length - 1){
-                        deferred.reject(inObjectName + ' not found');
-                    }
+        doesObjectExists(inObjectName)
+            .done(function (objectId, objectDownloadUrl) {
+                promisedAjaxCall({
+                    url: objectDownloadUrl,
+                    type: 'GET',
+                }).done(function(object){
+                    deferred.resolve(inObjectName, object);
+                }).fail(function(request, status, error){
+                    deferred.reject(status + ' ' + error.message);
                 });
-            }
-            else {
-                deferred.reject(inObjectName + ' not found');
-            }
-        });
+            }).fail(function (errText) {
+                deferred.reject(errText);
+            });
 
         return deferred.promise();
     }
@@ -70,7 +56,7 @@ var gJsonCacher = function(config){
      * @param inObjectName, inObject
      * @return promise: done(inObjectName), fail(errorText)
      */
-    function insertObject(inObjectName, inObject){
+    function uploadObject(inObjectName, inObject){
         var deferred = $.Deferred();
         //Create metadata
         var metadata = {
@@ -88,18 +74,29 @@ var gJsonCacher = function(config){
         fullFile.append("metadata", new Blob([ strMetadata ], { type: "application/json" }));
         fullFile.append("file", new Blob([ strObject ], { type: "text/plain" }));
 
-        promisedAjaxCall({
-            url: "https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart",
-            data: fullFile,
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            type: 'POST' //POST to insert, PUT to update
-        }).done(function(){
-            deferred.resolve(inObjectName);
-        }).fail(function(request, status, error){
-            deferred.reject(status + ' ' + error.message);
-        });
-
+        var exists = false;
+        var objId = '';
+        doesObjectExists(inObjectName)
+            .done(function (objectId, objectDownloadUrl) {
+                //Object was found! Update exists and objId to be used later in always
+                exists = true;
+                objId = objectId;
+            }).fail(function () {
+                //Not found, keep exists at false
+            }).always(function () {
+                promisedAjaxCall({
+                    //include file id if exists
+                    url: "https://www.googleapis.com/upload/drive/v2/files" + (exists ? '/' + objId : '') + "?uploadType=multipart",
+                    data: fullFile,
+                    processData: false, // Don't process the files
+                    contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+                    type: exists ? 'PUT' : 'POST' //POST to insert, PUT to update
+                }).done(function(){
+                    deferred.resolve(inObjectName);
+                }).fail(function(request, status, error){
+                    deferred.reject(status + ' ' + error.message);
+                });
+            });
         return deferred.promise();
     }
 
@@ -111,27 +108,43 @@ var gJsonCacher = function(config){
     function deleteObject(inObjectName){
         var deferred = $.Deferred();
 
+        doesObjectExists(inObjectName)
+            .done(function (objectId, objectDownloadUrl) {
+                var requestDelete = gapi.client.drive.files.delete({
+                    'fileId': objectId
+                });
+                requestDelete.execute(function(resp) {
+                    deferred.resolve(inObjectName);
+                });
+            }).fail(function (errText) {
+                deferred.reject(errText);
+            });
+        return deferred.promise();
+    }
+
+    /**
+     * Checks if an object with the name exists.
+     * @return promise: done(objectId, objectDownloadUrl) - found
+     *                  fail(errText) - not found
+     */
+    function doesObjectExists(inObjectName){
+        var deferred = $.Deferred();
+
         getObjectList().done(function(objectList){
-            if(objectList.length !== 0)
-            {
-                $.each(objectList, function(index, value){
+            if(objectList.length !== 0){
+                $.each(objectList, function (index, value) {
                     var objectName = this.title;
                     var objectId = this.id;
+                    var objectDownloadUrl = this.downloadUrl;
                     //Find the object that matches the name
                     if(objectName === inObjectName + '.json') {
-                        //Call to delete the object
-                        var requestDelete = gapi.client.drive.files.delete({
-                            'fileId': objectId
-                        });
-                        requestDelete.execute(function(resp) {
-                            deferred.resolve(inObjectName);
-                        });
-                        return false;//Break out of each loop. This will only delete the first occurence of the object.
+                        deferred.resolve(objectId, objectDownloadUrl);
+                        return false;//Break out of each loop. This will only find the first occurence of the object.
                     } else if(index === objectList.length - 1){
                         deferred.reject(inObjectName + ' not found');
                     }
                 });
-            } else {
+            } else{
                 deferred.reject(inObjectName + ' not found');
             }
         });
@@ -179,7 +192,7 @@ var gJsonCacher = function(config){
 
         getObjectList: getObjectList,
         getObject: getObject,
-        insertObject: insertObject,
+        uploadObject: uploadObject,
         deleteObject: deleteObject
 	};
 };
