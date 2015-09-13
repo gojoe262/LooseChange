@@ -1,270 +1,105 @@
-var index = function () {
+var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
-        setupButtons();
-        $('#logText').val('');
-
         authorizer = new gAuthorizer();
         authorizer.authorize({immediate: true})
             .done(function () {
-                //If authorized, load jsonCacher and show the page
-                jsonCacher = new gJsonCacher();
-                jsonCacher.init();
+                //If authorization successful, load jsonCacher and show the page
                 $('#pageContent').show();
+                $('#transactionTable').hide();
+                jsonCacher = new gJsonCacher();
+                jsonCacher.init()
+                    .done(function () {
+                        loadTable();
+                    });
+
             }).fail(function () {
-                //If authorization failed, redirect the user to the login page.
-                sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
+                //If authorization fail, redirect the user to the login page.
+                sessionStorage.setItem('loose-change-redirect-origin', 'transaction-table.html');
                 window.location.replace("login.html");
             });
     }
 
     /**
-     * Set up the button click events
+     * Set up footable on the html table.
+     * Footable styles the table and makes it reactive.
      */
-    function setupButtons() {
-        //List objects
-        $('#btnListObjects').click(function(){
-            jsonCacher.getObjectList()
-            .done(function (objectList) {
-                var message = '';
-                if(objectList.length !== 0){
-                    $.each(objectList, function(index, value){
-                        var object = value;
-                        message = message.concat(index + '. ' + object.title + (index === objectList.length - 1 ? '' : '\n'));
-                    });
-                } else {
-                    message = message.concat('Nothing found');
-                }
-                logMessage(message);
-            });
-        });
+    function setupFootable(){
+        $('#transactionTable').footable().show().trigger('footable_resize');
+    }
 
-        //Insert Objects
-        $('#btnUploadObjectCategories').click(function(){
-            jsonCacher.uploadObject('Categories', categories)
-            .done(function(objName){
-                logMessage('Succesfully uploaded ' + objName + ' object');
+    /**
+     * Get the transactions and load them into the table.
+     */
+    function loadTable() {
+        jsonCacher.getObject('Transactions')
+            .done(function(name, transactions){
+                setTable(transactions);
             })
-            .fail(function (errText) {
-                logMessage(errText);
+            .fail(function(){
+                //transactions object not found
             });
-        });
+    }
 
-        $('#btnUploadObjectTransactions').click(function(){
-            jsonCacher.uploadObject('Transactions', transactions)
-            .done(function(objName){
-                logMessage('Succesfully uploaded ' + objName + ' object');
-            })
-            .fail(function (errText) {
-                logMessage(errText);
-            });
-        });
+    /**
+     * Builds the HTML Table out of myList.
+     * http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
+     */
+    function setTable(items) {
+        var tableBody = '';
 
-        //Get Objects
-        $('#btnGetObject').click(function(){
-            var objectNameInput = $('#txtbxGetObject').val();
-            jsonCacher.getObject(objectNameInput)
-            .done(function(objectName, object){
-                logMessage('Successfully downloaded object ' + objectName + '\n '
-                    + JSON.stringify(object));
-            }).fail(function(errText){
-                logMessage(errText);
-            });
-        });
+        for (var i = 0 ; i < items.length ; i++) {
+            var row = items[i];
+            var htmlRow =
+            '<tr>' +
+                '<td>' + row['date'] + '</td>' +
+                '<td>' + row['amount'] + '</td>' +
+                '<td>' + row['category'] + '</td>' +
+                '<td>' + row['comment'] + '</td>' +
+                '<td>' + "edit/remove" + '</td>' +
+            '</tr>';
+            tableBody += htmlRow;
+        }
+        $('#transactionTableBody').html(tableBody);
+        setupFootable();
+    }
 
-        //Delete Objects
-        $('#btnDeleteObject').click(function(){
-            jsonCacher.deleteObject($('#txtbxDeleteObject').val())
-            .done(function(objName){
-                logMessage('Successfully deleted object ' + objName);
-            })
-            .fail(function(errText){
-                logMessage(errText);
-            });
+    /**
+     * Get the HTML Table and parse it into JSON
+     * TODO This does the opposite of the setTable
+     */
+    function getTable(){
+
+    }
+
+//HTML ENCODERS START
+    /**
+     * http://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
+     */
+    var entityMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;',
+        "/": '&#x2F;'
+    };
+    function escapeHtml(string) {
+        return String(string).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
         });
     }
 
     /**
-     * Log a message to the textarea
+     * http://bytes.com/topic/javascript/answers/469812-encoding-string-html-safe-characters
      */
-    function logMessage(message){
-        $('#logText').val(message  + '\n\n' + $('#logText').val());
-        $('#logText').scrollTop(0);
+    function htmlEncode(s)
+    {
+        return s.replace(/&(?!\w+([;\s]|$))/g, "&amp;")
+                .replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
-
-    var categories =
-        [
-            {
-                name: "Electronics",
-                id: "M7QXzfVCXYYxMVm7zETUw5P8u2aXXH"
-            },
-            {
-                name: "Gas/Travel ",
-                id: "UUBrzuaIGxstACf2CshoJDUORO2fBq"
-            }
-        ];
-
-    var transactions =
-        [
-            {
-                amount: 40.55,
-                category: "TestTEST",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.22,
-                category: "Gas/Travel",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },
-            {
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 40.55,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 10.73,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 10.73,
-                category: "Test",
-                comment: "Buying Stuff at Test Store",
-                date: "20150909"
-            },{
-                amount: 10.73,
-                category: "Test",
-                comment: "Buying Stuff at Test Store #2",
-                date: "20150909"
-            },{
-                amount: 10.73,
-                category: "Test",
-                comment: "Buying Stuff at Test Store #2",
-                date: "20150909"
-            },{
-                amount: 10.73,
-                category: "Test",
-                comment: "Buying Stuff at Test Store #2",
-                date: "20150909"
-            }
-        ];
+//HTML ENCODERS END
 
     return {
         init: init

@@ -12,15 +12,6 @@
 
     <title>Loose Change</title>
 
-    <!-- Order should be
-        1. jQuery
-        2. Bootstrap
-        3. jQuery UI
-        4. Theme
-
-        See: http://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x
-    -->
-
     <!-- jQuery 2.1.4 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -52,8 +43,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-              <li class="active"><a href="index.html">Home</a></li>
-              <li><a href="transaction-table.html">Transactions</a></li>
+            <li class="active"><a href="index.html">Home</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -62,48 +52,51 @@
     <!-- ********** MAIN CONTENT START ******************-->
 
     <!-- PAGE CONTENT-->
-    <div id='pageContent' class="container theme-showcase" role="main" style='display: none;'>
-        <div id='buttons'>
-            <p>
-                <button id="btnListObjects" type="button" class="btn btn-default">List Objects</button>
-            </p>
-            <p>
-                <button id="btnUploadObjectCategories" type="button" class="btn btn-success">Upload Categories</button>
-                <button id="btnUploadObjectTransactions"  type="button" class="btn btn-success">Upload Transactions</button>
-            </p>
-            <p>
-                <button id="btnGetObject" type="button" class="btn btn-primary">Get Object</button>
-                <input id="txtbxGetObject" type="text"/>
-            </p>
-            <p>
-                <button id="btnDeleteObject" type="button" class="btn btn-danger">Delete Object</button>
-                <input id="txtbxDeleteObject" type="text"/>
-            </p>
-        </div>
-        <div id='textarea' >
-            <textarea id="logText" style="width: 100%; height: 500px" readonly="readonly"></textarea>
+    <div id='pageContent' class="container collapse" >
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Transactions</h3>
+            </div>
+            <div>  <!-- class="panel-body" -->
+                <table id='transactionTable' class="toggle-arrow" class='collapse'>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th data-hide='phone'>Category</th>
+                            <th data-hide='phone'>Comment</th>
+                            <th>Edit/Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id='transactionTableBody'>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- PAGE CSS -->
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/shared/footable/footable.core.css" rel="stylesheet" type="text/css"/>
+    <link href="css/shared/footable/footable.standalone.css" rel="stylesheet" type="text/css" />
 
     <!-- PAGE JS -->
-    <script type="text/javascript" src="js/shared/gJsonCacher/gJsonCacher.js"></script>
-    <script type="text/javascript" src="js/shared/gAuthorizer/gAuthorizer.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/shared/footable/footable.js"></script>
+    <script type="text/javascript" src='js/shared/gAuthorizer/gAuthorizer.js'></script>
+    <script type="text/javascript" src='js/shared/gJsonCacher/gJsonCacher.js'></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
 
-    <!-- INLINE JS -->
+    <!-- INLINE JS-->
     <script type="text/javascript">
-        var pageJs;
+        var page;
         $(document).ready(function(){
-            pageJs = new index();
-            pageJs.init();
+            page = new index();
+            page.init();
         });
     </script>
 
     <!-- ********** MAIN CONTENT END ********************-->
+
 </body>
 </html>
