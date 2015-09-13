@@ -16,3 +16,7 @@ simplicity.
 ####Focus 2
 Our secondary focus is visual feedback. We generate charts and diagrams. This
 provides visual feedback for the raw data.
+
+---
+###Mockups
+![Imgur](http://i.imgur.com/NaqzMZS.png)
