@@ -2,6 +2,14 @@ var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
+        $('#btnSave').prop('disabled', true);
+        // $('#btnSave').click(function () {
+        //     $('#btnSave').prop('disabled', true);
+        //     var items = getTable();
+        //     jsonCacher.uploadObject('TestingGetJson', items).done(function () {
+        //         $('#btnSave').prop('disabled', false);
+        //     });
+        // });
         authorizer = new gAuthorizer();
         authorizer.authorize({immediate: true})
             .done(function () {
@@ -43,7 +51,7 @@ var index = function(){
     }
 
     /**
-     * Builds the HTML Table out of myList.
+     * Builds the HTML Table out of items.
      * http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
      */
     function setTable(items) {
@@ -66,11 +74,25 @@ var index = function(){
     }
 
     /**
-     * Get the HTML Table and parse it into JSON
-     * TODO This does the opposite of the setTable
+     * Get the HTML Table and return it as an array
      */
     function getTable(){
+        var rows = $('#transactionTableBody tr[class!="footable-row-detail"]'); //Get all table rows <tr>
+        var items = [];
+        for(var i = 0; i < rows.length; i++){
+            var dateText = $(rows[i]).children("td:nth-child(1)").text();
+            var amountText = $(rows[i]).children("td:nth-child(2)").text();
+            var categoryText = $(rows[i]).children("td:nth-child(3)").text();
+            var commentText = $(rows[i]).children("td:nth-child(4)").text();
 
+            items.push({
+                date: dateText,
+                amount: Number(amountText),
+                category: categoryText,
+                comment: commentText
+            });
+        }
+        return items;
     }
 
 //HTML ENCODERS START
