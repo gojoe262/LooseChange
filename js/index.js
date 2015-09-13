@@ -2,7 +2,6 @@ var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
-        $('#btnSave').prop('disabled', true);
         // $('#btnSave').click(function () {
         //     $('#btnSave').prop('disabled', true);
         //     var items = getTable();
