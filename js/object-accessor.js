@@ -109,8 +109,8 @@ var objectAccessor = function () {
         [
             {
                 amount: 40.55,
-                category: "TestTEST",
-                comment: "Buying Stuff at Test Store",
+                category: 'TestTEST<"',
+                comment: "<>&%$'",
                 date: "20150909"
             },
             {

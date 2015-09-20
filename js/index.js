@@ -60,11 +60,11 @@ var index = function(){
             var row = items[i];
             var htmlRow =
             '<tr>' +
-                '<td>' + row['date'] + '</td>' +
-                '<td>' + row['amount'] + '</td>' +
-                '<td>' + row['category'] + '</td>' +
-                '<td>' + row['comment'] + '</td>' +
-                '<td>' + "edit/remove" + '</td>' +
+                '<td>' + htmlStringEncode(row['date']) + '</td>' +
+                '<td style="text-align: right;">' + htmlStringEncode(accounting.formatMoney(row['amount'])) + '</td>' +
+                '<td>' + htmlStringEncode(row['category']) + '</td>' +
+                '<td>' + htmlStringEncode(row['comment']) + '</td>' +
+                '<td>' + htmlStringEncode("edit/remove") + '</td>' +
             '</tr>';
             tableBody += htmlRow;
         }
@@ -85,42 +85,34 @@ var index = function(){
             var commentText = $(rows[i]).children("td:nth-child(4)").text();
 
             items.push({
-                date: dateText,
-                amount: Number(amountText),
-                category: categoryText,
-                comment: commentText
+                date: htmlStringDecode(dateText),
+                amount: Number(accounting.unformat(htmlStringDecode(amountText))),
+                category: htmlStringDecode(categoryText),
+                comment: htmlStringDecode(commentText)
             });
         }
         return items;
     }
 
-//HTML ENCODERS START
-    /**
-     * http://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
-     */
-    var entityMap = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': '&quot;',
-        "'": '&#39;',
-        "/": '&#x2F;'
-    };
-    function escapeHtml(string) {
-        return String(string).replace(/[&<>"'\/]/g, function (s) {
-            return entityMap[s];
-        });
+    function htmlStringEncode(string) {
+        string = string.replace(/&/g, '&amp;');
+        string = string.replace(/</g, '&lt;');
+        string = string.replace(/>/g, '&gt;');
+        string = string.replace(/"/g, '&quot;');
+        string = string.replace(/'/g, "&#39;");
+        string = string.replace(/\//g, '&#x2F;');
+        return string;
     }
 
-    /**
-     * http://bytes.com/topic/javascript/answers/469812-encoding-string-html-safe-characters
-     */
-    function htmlEncode(s)
-    {
-        return s.replace(/&(?!\w+([;\s]|$))/g, "&amp;")
-                .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function htmlStringDecode(string){
+        string = string.replace(/&amp;/g, '&');
+        string = string.replace(/&lt;/g, '<');
+        string = string.replace(/&gt;/g, '>');
+        string = string.replace(/&quot;/g, '"');
+        string = string.replace(/&#39;/g, "'");
+        string = string.replace(/&#x2F;/g, '/');
+        return string;
     }
-//HTML ENCODERS END
 
     return {
         init: init
