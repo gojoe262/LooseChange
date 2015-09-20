@@ -84,6 +84,7 @@ var gJsonCacher = function(config){
             }).fail(function () {
                 //Not found, keep exists at false
             }).always(function () {
+                deferred.notify();
                 promisedAjaxCall({
                     //include file id if exists
                     url: "https://www.googleapis.com/upload/drive/v2/files" + (exists ? '/' + objId : '') + "?uploadType=multipart",

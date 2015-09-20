@@ -2,6 +2,8 @@ var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
+        NProgress.configure({showSpinner: false});
+        NProgress.inc();
         // $('#btnSave').click(function () {
         //     $('#btnSave').prop('disabled', true);
         //     var items = getTable();
@@ -12,15 +14,18 @@ var index = function(){
         authorizer = new gAuthorizer();
         authorizer.authorize({immediate: true})
             .done(function () {
+                NProgress.set(0.55);
                 //If authorization successful, load jsonCacher and show the page
                 $('#pageContent').show();
                 $('#transactionTable').hide();
                 jsonCacher = new gJsonCacher();
                 jsonCacher.init()
                     .done(function () {
-                        loadTable();
+                        NProgress.set(.85)
+                        loadTable().done(function () {
+                            NProgress.done();
+                        });
                     });
-
             }).fail(function () {
                 //If authorization fail, redirect the user to the login page.
                 sessionStorage.setItem('loose-change-redirect-origin', 'transaction-table.html');
@@ -40,13 +45,17 @@ var index = function(){
      * Get the transactions and load them into the table.
      */
     function loadTable() {
+        var deferred = $.Deferred();
         jsonCacher.getObject('Transactions')
             .done(function(name, transactions){
                 setTable(transactions);
+                deferred.resolve();
             })
             .fail(function(){
                 //transactions object not found
+                deferred.reject();
             });
+        return deferred.promise();
     }
 
     /**
@@ -64,11 +73,23 @@ var index = function(){
                 '<td style="text-align: right;">' + htmlStringEncode(accounting.formatMoney(row['amount'])) + '</td>' +
                 '<td>' + htmlStringEncode(row['category']) + '</td>' +
                 '<td>' + htmlStringEncode(row['comment']) + '</td>' +
-                '<td>' + htmlStringEncode("edit/remove") + '</td>' +
+                '<td>' +
+                        '<button type="button" class="btn btn-info btn-edit">' +
+                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                        '<span class="sr-only">Edit</span>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-danger btn-remove">' +
+                        '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' +
+                        '<span class="sr-only">Delete</span>' +
+                        '</button>' +
+                '</td>' +
             '</tr>';
             tableBody += htmlRow;
         }
         $('#transactionTableBody').html(tableBody);
+        setTimeout(function () {
+            $('.btn-remove').bind("click", removeTransaction);
+        }, 0);
         setupFootable();
     }
 
@@ -92,6 +113,30 @@ var index = function(){
             });
         }
         return items;
+    }
+
+    /**
+     * Remove the transaction
+     */
+    function removeTransaction() {
+        var par = $(this).parent().parent();
+        //If it is expanded, then delete the expanded data as well.
+        if(par.next().hasClass('footable-row-detail')){
+            par.next().fadeOut(400, function () { par.next().remove(); });
+        }
+        par.fadeOut(400, function () {
+            par.remove();
+            //Upload the update table
+            setTimeout(function () {
+                NProgress.set(0.1);
+                var items = getTable();
+                jsonCacher.uploadObject('Transactions', items).progress(function () {
+                    NProgress.set(0.75)
+                }).done(function () {
+                    NProgress.done();
+                })
+            },2);
+        });
     }
 
     function htmlStringEncode(string) {
