@@ -1,4 +1,10 @@
 .btn-edit{
-    margin-right:10px;
+    width: 50%;
+    float:right;
+}
+
+.btn-remove{
+    margin-left:10px;
     margin-bottom: 2px;
+    float:right;
 }

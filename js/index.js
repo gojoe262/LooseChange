@@ -74,13 +74,13 @@ var index = function(){
                 '<td>' + htmlStringEncode(row['category']) + '</td>' +
                 '<td>' + htmlStringEncode(row['comment']) + '</td>' +
                 '<td>' +
-                        '<button type="button" class="btn btn-info btn-edit">' +
-                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
-                        '<span class="sr-only">Edit</span>' +
-                        '</button>' +
                         '<button type="button" class="btn btn-danger btn-remove">' +
                         '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' +
                         '<span class="sr-only">Delete</span>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-info btn-edit">' +
+                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                        '<span class="sr-only">Edit</span>' +
                         '</button>' +
                 '</td>' +
             '</tr>';
