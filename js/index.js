@@ -28,7 +28,7 @@ var index = function(){
                     });
             }).fail(function () {
                 //If authorization fail, redirect the user to the login page.
-                sessionStorage.setItem('loose-change-redirect-origin', 'transaction-table.html');
+                sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
                 window.location.replace("login.html");
             });
     }
