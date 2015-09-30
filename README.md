@@ -1,6 +1,11 @@
 # LooseChange
 Loose Change is a website where you can quickly keep track of your spending and income. Please be patient as this project is still under development.
 
+[Website](https://gojoe262.github.io/LooseChange/)
+
+[Roadmap for Development](https://trello.com/b/ql1qaUfd/requirements-web-app)
+
+
 ####Focus 1
 Our primary focus is speed. We allow users to quickly add transactions. Unlike
 traditional methods, such as Excel spreadsheets, our design and functionality focuses
@@ -20,3 +25,5 @@ provides visual feedback for the raw data.
 ---
 ###Mockups
 ![Imgur](http://i.imgur.com/NaqzMZS.png)
+
+
