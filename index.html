@@ -29,71 +29,97 @@
 </head>
 
 <body role="document">
-    <!-- Fixed navbar -->
+    <!-- ********** FIXED TOP NAVBAR ******************-->
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Loose Change</a>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Loose Change</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Home</a></li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Home</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
     </nav>
 
-    <!-- ********** MAIN CONTENT START ******************-->
+    <!-- ********** PAGE CONTENT ******************-->
+    <section id='pageContent' class="container collapse" style="padding-bottom: 120px;">
+        <table id='transactionTable' class="toggle-arrow" class='collapse'>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th data-hide='phone'>Category</th>
+                    <th data-hide='phone,tablet'>Comment</th>
+                    <th>Edit/Remove</th>
+                </tr>
+            </thead>
+            <tbody id='transactionTableBody'>
+            </tbody>
+        </table>
+    </section>
 
-    <!-- PAGE CONTENT-->
-    <div id='pageContent' class="container collapse" >
-        <!-- <button id='btnSave' type="button" class="btn btn-default">Save</button> -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Transactions</h3>
-            </div>
-            <div>  <!-- class="panel-body" -->
-                <table id='transactionTable' class="toggle-arrow" class='collapse'>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th data-hide='phone'>Category</th>
-                            <th data-hide='phone,tablet'>Comment</th>
-                            <th>Edit/Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody id='transactionTableBody'>
-                    </tbody>
-                </table>
-            </div>
+
+    <!-- ********** FIXED FOOTER NAVBAR ******************-->
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container" style="height: 50px;">
+            <!-- USE THIS DIALOG PLUGIN http://nakupanda.github.io/bootstrap3-dialog/ -->
+            <button id="btn-add" type="button" class="btn btn-large btn-primary pull-right" style="height: 95%; width: 110px;">
+            <!-- <button id="btn-add" type="button" class="btn btn-large btn-primary pull-right" > -->
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span>Add</span>
+            </button>
         </div>
+    </nav>
+
+    <!-- ********** HIDDEN TEMPLATES ******************-->
+    <div id="add-transaction-dialog" class='collapse'>
+        <label for="dialog-input-dateTemplate">Date</label>
+        <input id="dialog-input-dateTemplate" type="text" readonly>
+        <label for="dialog-input-amountTemplate">Amount</label>
+        <input id="dialog-input-amountTemplate" type="text" style="text-align: right;">
+        <label for="dialog-input-categoryTemplate">Category</label>
+        <input id="dialog-input-categoryTemplate" type="text">
+        <label for="dialog-input-commentTemplate">Comment</label>
+        <input id="dialog-input-commentTemplate" type="text">
     </div>
 
-    <!-- PAGE CSS -->
+    <input id="date-picker" type="text" class="collapse">
+
+
+    <!-- ********** PAGE CSS ******************-->
     <link href="css/shared/footable/footable.core.css" rel="stylesheet" type="text/css"/>
     <link href="css/shared/footable/footable.standalone.css" rel="stylesheet" type="text/css" />
     <link href="css/shared/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+    <link href="css/shared/bootstrap-dialog/bootstrap-dialog.css" rel="stylesheet" type="text/css"/>
+    <link href="css/shared/pickadate/default.css" rel="stylesheet" type="text/css"/>
+    <link href="css/shared/pickadate/default.date.css" rel="stylesheet" type="text/css"/>
     <link href="css/index.css" rel="stylesheet" type="text/css"/>
 
 
-    <!-- PAGE JS -->
+
+    <!-- ********** PAGE JS ******************-->
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/shared/footable/footable.js"></script>
     <script type="text/javascript" src="js/shared/nprogress/nprogress.js"></script>
     <script type="text/javascript" src="js/shared/accounting/accounting.min.js"></script>
-    <script type="text/javascript" src='js/shared/gAuthorizer/gAuthorizer.js'></script>
     <script type="text/javascript" src='js/shared/gJsonCacher/gJsonCacher.js'></script>
+    <script type="text/javascript" src='js/shared/gAuthorizer/gAuthorizer.js'></script>
+    <script type="text/javascript" src='js/shared/bootstrap-dialog/bootstrap-dialog.js'></script>
+    <script type="text/javascript" src="js/shared/pickadate/picker.js"></script>
+    <script type="text/javascript" src="js/shared/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="js/shared/jquery.mask/jquery.mask.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
-    <!-- INLINE JS-->
+    <!-- ********** INLINE JS ******************-->
     <script type="text/javascript">
         var page;
         $(document).ready(function(){
@@ -101,8 +127,5 @@
             page.init();
         });
     </script>
-
-    <!-- ********** MAIN CONTENT END ********************-->
-
 </body>
 </html>

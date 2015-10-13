@@ -3,7 +3,7 @@
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
- 
+
  body {
   padding-top: 70px;
   padding-bottom: 30px;
@@ -22,7 +22,7 @@
 .theme-showcase .navbar .container {
   width: auto;
 }
- 
+
 .btn-default,
 .btn-primary,
 .btn-success,
@@ -136,8 +136,9 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: #265a88;
-  background-position: 0 -15px;
+  background: 0px -15px #265A88 repeat-x;
+  /*background-color: #265a88;*/
+  /*background-position: 0 -15px;*/
 }
 .btn-primary:active,
 .btn-primary.active {

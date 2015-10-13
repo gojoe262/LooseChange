@@ -2,6 +2,7 @@ var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
+
         NProgress.configure({showSpinner: false});
         NProgress.inc();
         // $('#btnSave').click(function () {
@@ -24,6 +25,7 @@ var index = function(){
                         NProgress.set(.85)
                         loadTable().done(function () {
                             NProgress.done();
+                            setupFooter();
                         });
                     });
             }).fail(function () {
@@ -31,6 +33,7 @@ var index = function(){
                 sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
                 window.location.replace("login.html");
             });
+        $('#datePickerTest').pickadate();
     }
 
     /**
@@ -38,7 +41,69 @@ var index = function(){
      * Footable styles the table and makes it reactive.
      */
     function setupFootable(){
-        $('#transactionTable').footable().show().trigger('footable_resize');
+        $('#transactionTable').footable().show();
+        $('#transactionTable').trigger('footable_resize');
+        $('#transactionTable').trigger('footable_redraw');
+    }
+
+    /**
+     * Set up the footer panel at the bottom of the page.
+     */
+    function setupFooter() {
+        $("#btn-add").bind("click", function () {
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_LARGE,
+                title: "Add Transaction",
+                message: $("#add-transaction-dialog").html().replace(/Template/g, ''),
+                buttons: [
+                    {
+                        label: 'Cancel',
+                        action: function(dialogItself){
+                            dialogItself.close();
+                        }
+                    },
+                    {
+                        label: 'Add',
+                        cssClass: 'btn-success',
+                        icon: 'glyphicon glyphicon-plus',
+                        action: function(dialogItself){
+                            //Validate and add the trasnaction
+                            var date = $('#dialog-input-date').attr('data-value');
+                            var amount = Number($('#dialog-input-amount').val().replace(/,/g, ''));
+                            var category = $('#dialog-input-category').val();
+                            var comment = $('#dialog-input-comment').val();
+
+                            dialogItself.close();
+                            setTimeout(function () {
+                                addTransaction({
+                                    date: date,
+                                    amount: amount,
+                                    category: category,
+                                    comment: comment});
+                            }, 0);
+                        }
+                    }
+                ],
+                onshown: function(dialogRef){
+                    $('#dialog-input-amount').mask("#,##0.00", {reverse: true, placeholder: "0.00"});
+                    //https://github.com/amsul/pickadate.js/issues/481
+                    //http://jsfiddle.net/J92K6/
+                    var $input = $("#date-picker").pickadate({
+                        format: 'ddd, dd mmm yyyy',
+                        onClose: function () {
+                            //Copy the date to the actual input box that is inside the dialog box.
+                            $('#dialog-input-date').val($('#date-picker').val());
+                            $('#dialog-input-date').attr('data-value', this.get('select', 'yyyy-mm-dd'));
+                        }
+                    });
+                    var picker = $input.pickadate('picker');
+                    $('#dialog-input-date').on('focus', function(event) {
+                        event.stopPropagation();
+                        picker.open();
+                    });
+                },
+            });
+        });
     }
 
     /**
@@ -116,6 +181,24 @@ var index = function(){
     }
 
     /**
+     * Add a transaction
+     */
+    function addTransaction(transaction){
+        var transactionList = getTable();
+        transactionList.push(transaction);
+        setTimeout(function () {
+            NProgress.set(0.1);
+            jsonCacher.uploadObject('Transactions', transactionList)
+            .progress(function () {
+                NProgress.set(0.75);
+            }).done(function () {
+                NProgress.done();
+                setTable(transactionList);
+            });
+        }, 0);
+    }
+
+    /**
      * Remove the transaction
      */
     function removeTransaction() {
@@ -130,7 +213,8 @@ var index = function(){
             setTimeout(function () {
                 NProgress.set(0.1);
                 var items = getTable();
-                jsonCacher.uploadObject('Transactions', items).progress(function () {
+                jsonCacher.uploadObject('Transactions', items)
+                .progress(function () {
                     NProgress.set(0.75)
                 }).done(function () {
                     NProgress.done();
