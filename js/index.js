@@ -2,38 +2,30 @@ var index = function(){
     var jsonCacher, authorizer;
 
     function init(){
-
         NProgress.configure({showSpinner: false});
         NProgress.inc();
-        // $('#btnSave').click(function () {
-        //     $('#btnSave').prop('disabled', true);
-        //     var items = getTable();
-        //     jsonCacher.uploadObject('TestingGetJson', items).done(function () {
-        //         $('#btnSave').prop('disabled', false);
-        //     });
-        // });
         authorizer = new gAuthorizer();
         authorizer.authorize({immediate: true})
-            .done(function () {
-                NProgress.set(0.55);
-                //If authorization successful, load jsonCacher and show the page
-                $('#pageContent').show();
-                $('#transactionTable').hide();
-                jsonCacher = new gJsonCacher();
-                jsonCacher.init()
-                    .done(function () {
-                        NProgress.set(.85)
-                        loadTable().done(function () {
-                            NProgress.done();
-                            setupFooter();
-                        });
+        .done(function () {
+            NProgress.set(0.55);
+            //If authorization successful, load jsonCacher and show the page
+            $('#pageContent').show();
+            $('#transactionTable').hide();
+            jsonCacher = new gJsonCacher();
+            jsonCacher.init()
+                .done(function () {
+                    NProgress.set(.85)
+                    loadTable().done(function () {
+                        NProgress.done();
+                        initAddTransactionDialog();
+                        initFooter();
                     });
-            }).fail(function () {
-                //If authorization fail, redirect the user to the login page.
-                sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
-                window.location.replace("login.html");
-            });
-        $('#datePickerTest').pickadate();
+                });
+        }).fail(function () {
+            //If authorization fail, redirect the user to the login page.
+            sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
+            window.location.replace("login.html");
+        });
     }
 
     /**
@@ -47,62 +39,45 @@ var index = function(){
     }
 
     /**
-     * Set up the footer panel at the bottom of the page.
+     * Initialize the footer panel at the bottom of the page.
      */
-    function setupFooter() {
+    function initFooter() {
         $("#btn-add").bind("click", function () {
-            BootstrapDialog.show({
-                size: BootstrapDialog.SIZE_LARGE,
-                title: "Add Transaction",
-                message: $("#add-transaction-dialog").html().replace(/Template/g, ''),
-                buttons: [
-                    {
-                        label: 'Cancel',
-                        action: function(dialogItself){
-                            dialogItself.close();
-                        }
-                    },
-                    {
-                        label: 'Add',
-                        cssClass: 'btn-success',
-                        icon: 'glyphicon glyphicon-plus',
-                        action: function(dialogItself){
-                            //Validate and add the trasnaction
-                            var date = $('#dialog-input-date').attr('data-value');
-                            var amount = Number($('#dialog-input-amount').val().replace(/,/g, ''));
-                            var category = $('#dialog-input-category').val();
-                            var comment = $('#dialog-input-comment').val();
+            $('#add-transaction-dialog').modal('show');
+        });
+    }
 
-                            dialogItself.close();
-                            setTimeout(function () {
-                                addTransaction({
-                                    date: date,
-                                    amount: amount,
-                                    category: category,
-                                    comment: comment});
-                            }, 0);
-                        }
-                    }
-                ],
-                onshown: function(dialogRef){
-                    $('#dialog-input-amount').mask("#,##0.00", {reverse: true, placeholder: "0.00"});
-                    //https://github.com/amsul/pickadate.js/issues/481
-                    //http://jsfiddle.net/J92K6/
-                    var $input = $("#date-picker").pickadate({
-                        format: 'ddd, dd mmm yyyy',
-                        onClose: function () {
-                            //Copy the date to the actual input box that is inside the dialog box.
-                            $('#dialog-input-date').val($('#date-picker').val());
-                            $('#dialog-input-date').attr('data-value', this.get('select', 'yyyy-mm-dd'));
-                        }
-                    });
-                    var picker = $input.pickadate('picker');
-                    $('#dialog-input-date').on('focus', function(event) {
-                        event.stopPropagation();
-                        picker.open();
-                    });
-                },
-            });
+    /**
+     * Initialize the Add Transaction Modal Dialog
+     */
+    function initAddTransactionDialog() {
+        $('#dialog-input-amount').mask("#,##0.00", {reverse: true, placeholder: "0.00"});
+        $("#dialog-input-date").datepicker({
+            dateFormat: 'D, d M yy'
+            // ISO Standard: yy-mm-dd
+        });
+        $("#add-transaction-button").click(function () {
+            //Validate and add the trasnaction
+            //Convert date to ISO 8601 Format "yy-mm-dd"
+            var date = $.datepicker.formatDate("yy-mm-dd", ($.datepicker.parseDate('D, d M yy', $('#dialog-input-date').val())));
+            var amount = Number($('#dialog-input-amount').val().replace(/,/g, ''));
+            var category = $('#dialog-input-category').val();
+            var comment = $('#dialog-input-comment').val();
+            //Hide Dialog
+            $('#add-transaction-dialog').modal('hide');
+            //Reset input textboxes
+            $('#dialog-input-date').val('');
+            $('#dialog-input-amount').val('');
+            $('#dialog-input-category').val('');
+            $('#dialog-input-comment').val('');
+            //Add transaction
+            setTimeout(function () {
+                addTransaction({
+                    date: date,
+                    amount: amount,
+                    category: category,
+                    comment: comment});
+            }, 0);
         });
     }
 
@@ -129,7 +104,6 @@ var index = function(){
      */
     function setTable(items) {
         var tableBody = '';
-
         for (var i = 0 ; i < items.length ; i++) {
             var row = items[i];
             var htmlRow =

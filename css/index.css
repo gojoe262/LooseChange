@@ -8,3 +8,11 @@
     margin-bottom: 2px;
     float:right;
 }
+
+#add-transaction-dialog input {
+    margin-bottom: 20px;
+}
+
+.navbar-fixed-bottom .container {
+    padding: 0;
+}
