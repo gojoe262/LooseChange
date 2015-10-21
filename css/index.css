@@ -16,3 +16,7 @@
 .navbar-fixed-bottom .container {
     padding: 0;
 }
+
+div.ui-datepicker{
+    font-size: 18px;
+}
