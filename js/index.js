@@ -51,7 +51,21 @@ var index = function(){
      * Initialize the Add Transaction Modal Dialog
      */
     function initAddTransactionDialog() {
-        $('#dialog-input-amount').mask("#,##0.00", {reverse: true, placeholder: "0.00"});
+        $('#dialog-input-amount').on("keyup", function () {
+            return false;
+        });
+        $('#dialog-input-amount').on("keydown", function () {
+            var previousVal = $('#dialog-input-amount').val();
+            setTimeout(function () {
+                console.log("keydown delay:" + $('#dialog-input-amount').val());
+                var value = $('#dialog-input-amount').val();
+                if(value != '.'){
+                    if(isNaN(value)){
+                        $('#dialog-input-amount').val(previousVal);
+                    }
+                }
+            },0);
+        });
         $("#dialog-input-date").datepicker({
             dateFormat: 'D, d M yy'
             // ISO Standard: yy-mm-dd
