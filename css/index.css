@@ -1,3 +1,9 @@
+/* Footer Navbar */
+.navbar-fixed-bottom .container {
+    padding: 0;
+}
+
+/* Table */
 .btn-edit{
     width: 50%;
     float:right;
@@ -9,18 +15,7 @@
     float:right;
 }
 
-#add-transaction-dialog input {
-    margin-bottom: 20px;
-}
-
-.navbar-fixed-bottom .container {
-    padding: 0;
-}
-
-div.ui-datepicker{
-    font-size: 18px;
-}
-
+/* Add Transaction Modal */
 .modal.fade:not(.in).bottom .modal-dialog {
 	-webkit-transform: translate3d(0, 200%, 0);
 	transform: translate3d(0, 200%, 0);
@@ -29,4 +24,16 @@ div.ui-datepicker{
 .modal.fade:not(.in).bottom-right .modal-dialog {
 	-webkit-transform: translate3d(200%, 200%, 0);
 	transform: translate3d(200%, 200%, 0);
+}
+
+#add-transaction-dialog input {
+    margin-bottom: 20px;
+}
+
+div.ui-datepicker{
+    font-size: 18px;
+}
+
+.error {
+    outline: 2px solid #F00;
 }

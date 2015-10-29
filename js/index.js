@@ -37,6 +37,7 @@ var index = function(){
      */
     function initFooter() {
         $("#btn-add").bind("click", function () {
+            clearErrorForAddTransactionInput();
             $('#add-transaction-dialog').modal('show');
         });
     }
@@ -64,28 +65,63 @@ var index = function(){
             // ISO Standard: yy-mm-dd
         });
         $("#add-transaction-button").click(function () {
-            //Validate and add the trasnaction
-            //Convert date to ISO 8601 Format "yy-mm-dd"
-            var date = $.datepicker.formatDate("yy-mm-dd", ($.datepicker.parseDate('D, d M yy', $('#dialog-input-date').val())));
-            var amount = Number($('#dialog-input-amount').val().replace(/,/g, ''));
-            var category = $('#dialog-input-category').val();
-            var comment = $('#dialog-input-comment').val();
-            //Hide Dialog
-            $('#add-transaction-dialog').modal('hide');
-            //Reset input textboxes
-            $('#dialog-input-date').val('');
-            $('#dialog-input-amount').val('');
-            $('#dialog-input-category').val('');
-            $('#dialog-input-comment').val('');
-            //Add transaction
-            setTimeout(function () {
-                addTransaction({
-                    date: date,
-                    amount: amount,
-                    category: category,
-                    comment: comment});
-            }, 0);
+            //Validate
+            var errorFound = validateAddTransactionInput();
+            if(!errorFound){
+                //Convert date to ISO 8601 Format "yy-mm-dd"
+                var date = $.datepicker.formatDate("yy-mm-dd", ($.datepicker.parseDate('D, d M yy', $.trim($('#dialog-input-date').val()))));
+                var amount = Number($.trim($('#dialog-input-amount').val()));
+                var category = $.trim($('#dialog-input-category').val());
+                var comment = $.trim($('#dialog-input-comment').val());
+                //Hide Dialog
+                $('#add-transaction-dialog').modal('hide');
+                //Reset input textboxes
+                $('#dialog-input-date').val('');
+                $('#dialog-input-amount').val('');
+                $('#dialog-input-category').val('');
+                $('#dialog-input-comment').val('');
+                //Add transaction
+                setTimeout(function () {
+                    addTransaction({
+                        date: date,
+                        amount: amount,
+                        category: category,
+                        comment: comment});
+                }, 0);
+            }
         });
+    }
+
+    /**
+     * Validates the input when adding a transaction.
+     */
+    function validateAddTransactionInput(){
+        var errorFound = false;
+        clearErrorForAddTransactionInput();
+        if($.trim($('#dialog-input-date').val()) == ""){
+            $('#dialog-input-date').addClass("error");
+            errorFound = true;
+        }
+
+        if($.trim($('#dialog-input-amount').val()) == "" || isNaN(Number($('#dialog-input-amount').val()))){
+            $('#dialog-input-amount').addClass("error");
+            errorFound = true;
+        }
+
+        if($.trim($('#dialog-input-category').val()) == ""){
+            $('#dialog-input-category').addClass("error");
+            errorFound = true;
+        }
+        return errorFound;
+    }
+
+    /**
+     * Clears any errors shown in the Add Transaction Dialog
+     */
+    function clearErrorForAddTransactionInput(){
+        $('#dialog-input-date').removeClass("error");
+        $('#dialog-input-amount').removeClass("error");
+        $('#dialog-input-category').removeClass("error");
     }
 
     /**
