@@ -42,24 +42,45 @@ var index = function(){
         });
     }
 
+    function allowNumericInputOnly(selector) {
+        $(selector).on("keyup", function () {
+            return false;
+        });
+        $(selector).on("keydown", function () {
+            var previousVal = $(selector).val();
+            var inputbox = this;
+            var prevCaretPos = inputbox.selectionStart;
+            setTimeout(function () {
+                var value = $(selector).val();
+                if(value != '.' && isNaN(value)){
+                    $(selector).val(previousVal);
+                    inputbox.selectionStart = prevCaretPos;
+                    inputbox.selectionEnd = prevCaretPos;
+                }
+            },0);
+        });
+    }
+
     /**
      * Initialize the Add Transaction Modal Dialog
      */
     function initAddTransactionDialog() {
-        $('#dialog-input-amount').on("keyup", function () {
-            return false;
-        });
-        $('#dialog-input-amount').on("keydown", function () {
-            var previousVal = $('#dialog-input-amount').val();
-            setTimeout(function () {
-                var value = $('#dialog-input-amount').val();
-                if(value != '.'){
-                    if(isNaN(value)){
-                        $('#dialog-input-amount').val(previousVal);
-                    }
-                }
-            },0);
-        });
+        allowNumericInputOnly("#dialog-input-amount");
+        // $('#dialog-input-amount').on("keyup", function () {
+        //     return false;
+        // });
+        // $('#dialog-input-amount').on("keydown", function () {
+        //     var previousVal = $('#dialog-input-amount').val();
+        //     setTimeout(function () {
+        //         var value = $('#dialog-input-amount').val();
+        //         if(value != '.'){
+        //             if(isNaN(value)){
+        //                 $('#dialog-input-amount').val(previousVal);
+        //             }
+        //         }
+        //     },0);
+        // });
+
         $("#dialog-input-date").datepicker({
             dateFormat: 'D, d M yy'
             // ISO Standard: yy-mm-dd
