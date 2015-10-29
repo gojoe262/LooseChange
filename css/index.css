@@ -20,3 +20,13 @@
 div.ui-datepicker{
     font-size: 18px;
 }
+
+.modal.fade:not(.in).bottom .modal-dialog {
+	-webkit-transform: translate3d(0, 200%, 0);
+	transform: translate3d(0, 200%, 0);
+}
+
+.modal.fade:not(.in).bottom-right .modal-dialog {
+	-webkit-transform: translate3d(200%, 200%, 0);
+	transform: translate3d(200%, 200%, 0);
+}
