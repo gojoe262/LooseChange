@@ -1,41 +1,35 @@
 var index = function(){
-    var jsonCacher, authorizer;
+    var _jsonCacher, _authorizer, _transactionList;
 
     function init(){
         NProgress.configure({showSpinner: false});
         NProgress.inc();
-        authorizer = new gAuthorizer();
-        authorizer.authorize({immediate: true})
+        _authorizer = new gAuthorizer();
+        _authorizer.authorize({immediate: true})
         .done(function () {
             NProgress.set(0.55);
             //If authorization successful, load jsonCacher and show the page
             $('#pageContent').show();
             $('#transactionTable').hide();
-            jsonCacher = new gJsonCacher();
-            jsonCacher.init()
-                .done(function () {
-                    NProgress.set(.85)
-                    loadTable().done(function () {
-                        NProgress.done();
-                        initAddTransactionDialog();
-                        initFooter();
-                    });
+            _jsonCacher = new gJsonCacher();
+            _jsonCacher.init().done(function () {
+                NProgress.set(.85);
+                _jsonCacher.getObject('Transactions').done(function(name, transactions){
+                    _transactionList = transactions;
+                    refreshTable(_transactionList);
+                    NProgress.done();
+                    initAddTransactionDialog();
+                    initFooter();
+                }).fail(function(){
+                    //transactions object not found
+                    console.log("Could not get Transactions");
                 });
+            });
         }).fail(function () {
             //If authorization fail, redirect the user to the login page.
             sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
             window.location.replace("login.html");
         });
-    }
-
-    /**
-     * Set up footable on the html table.
-     * Footable styles the table and makes it reactive.
-     */
-    function setupFootable(){
-        $('#transactionTable').footable().show();
-        $('#transactionTable').trigger('footable_resize');
-        $('#transactionTable').trigger('footable_redraw');
     }
 
     /**
@@ -57,7 +51,6 @@ var index = function(){
         $('#dialog-input-amount').on("keydown", function () {
             var previousVal = $('#dialog-input-amount').val();
             setTimeout(function () {
-                console.log("keydown delay:" + $('#dialog-input-amount').val());
                 var value = $('#dialog-input-amount').val();
                 if(value != '.'){
                     if(isNaN(value)){
@@ -98,12 +91,11 @@ var index = function(){
     /**
      * Get the transactions and load them into the table.
      */
-    function loadTable() {
+    function getTransactionsFromStorage() {
         var deferred = $.Deferred();
-        jsonCacher.getObject('Transactions')
+        _jsonCacher.getObject('Transactions')
             .done(function(name, transactions){
-                setTable(transactions);
-                deferred.resolve();
+                deferred.resolve(transactions);
             })
             .fail(function(){
                 //transactions object not found
@@ -116,7 +108,7 @@ var index = function(){
      * Builds the HTML Table out of items.
      * http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
      */
-    function setTable(items) {
+    function refreshTable(items) {
         var tableBody = '';
         for (var i = 0 ; i < items.length ; i++) {
             var row = items[i];
@@ -147,9 +139,19 @@ var index = function(){
     }
 
     /**
+     * Set up footable on the html table.
+     * Footable styles the table and makes it reactive.
+     */
+    function setupFootable(){
+        $('#transactionTable').footable().show();
+        $('#transactionTable').trigger('footable_resize');
+        $('#transactionTable').trigger('footable_redraw');
+    }
+
+    /**
      * Get the HTML Table and return it as an array
      */
-    function getTable(){
+    function getTransactionListFromTable(){
         var rows = $('#transactionTableBody tr[class!="footable-row-detail"]'); //Get all table rows <tr>
         var items = [];
         for(var i = 0; i < rows.length; i++){
@@ -171,17 +173,16 @@ var index = function(){
     /**
      * Add a transaction
      */
-    function addTransaction(transaction){
-        var transactionList = getTable();
-        transactionList.push(transaction);
+    function addTransaction(transaction) {
+        _transactionList.push(transaction);
         setTimeout(function () {
             NProgress.set(0.1);
-            jsonCacher.uploadObject('Transactions', transactionList)
+            _jsonCacher.uploadObject('Transactions', _transactionList)
             .progress(function () {
                 NProgress.set(0.75);
+                refreshTable(_transactionList);
             }).done(function () {
                 NProgress.done();
-                setTable(transactionList);
             });
         }, 0);
     }
@@ -200,8 +201,8 @@ var index = function(){
             //Upload the update table
             setTimeout(function () {
                 NProgress.set(0.1);
-                var items = getTable();
-                jsonCacher.uploadObject('Transactions', items)
+                _transactionList = getTransactionListFromTable();
+                _jsonCacher.uploadObject('Transactions', _transactionList)
                 .progress(function () {
                     NProgress.set(0.75)
                 }).done(function () {
