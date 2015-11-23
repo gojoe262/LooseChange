@@ -28,13 +28,13 @@ var gJsonCacher = function(config){
     /**
      * Get object from Google Drive Application Data folder.
      * @param inObjectName
-     * @return promise: done(objectName, object), fail(errorText)
+     * @return promise: done(objectName, object), fail(errorType, msg)
      */
     function getObject(inObjectName) {
         //deferred - allows use for .done(), .fail(), & .always()
         var deferred = $.Deferred();
 
-        doesObjectExists(inObjectName)
+        doesObjectExist(inObjectName)
             .done(function (objectId, objectDownloadUrl) {
                 promisedAjaxCall({
                     url: objectDownloadUrl,
@@ -42,10 +42,10 @@ var gJsonCacher = function(config){
                 }).done(function(object){
                     deferred.resolve(inObjectName, object);
                 }).fail(function(request, status, error){
-                    deferred.reject(status + ' ' + error.message);
+                    deferred.reject("ERROR", status + " " + error);
                 });
             }).fail(function (errText) {
-                deferred.reject(errText);
+                deferred.reject("DOES_NOT_EXIST", errText);
             });
 
         return deferred.promise();
@@ -76,7 +76,7 @@ var gJsonCacher = function(config){
 
         var exists = false;
         var objId = '';
-        doesObjectExists(inObjectName)
+        doesObjectExist(inObjectName)
             .done(function (objectId, objectDownloadUrl) {
                 //Object was found! Update exists and objId to be used later in always
                 exists = true;
@@ -109,16 +109,26 @@ var gJsonCacher = function(config){
     function deleteObject(inObjectName){
         var deferred = $.Deferred();
 
-        doesObjectExists(inObjectName)
+        doesObjectExist(inObjectName)
             .done(function (objectId, objectDownloadUrl) {
-                var requestDelete = gapi.client.drive.files.delete({
-                    'fileId': objectId
-                });
-                requestDelete.execute(function(resp) {
+                promisedAjaxCall({
+                    //include file id if exists
+                    url: "https://www.googleapis.com/drive/v2/files/" + objectId,
+                    type: "DELETE"
+                }).done(function(){
                     deferred.resolve(inObjectName);
+                }).fail(function(request, status, error){
+                    deferred.reject("ERROR", status + " " + error);
                 });
+
+                // var requestDelete = gapi.client.drive.files.delete({
+                //     'fileId': objectId
+                // });
+                // requestDelete.execute(function(resp) {
+                //     deferred.resolve(inObjectName);
+                // });
             }).fail(function (errText) {
-                deferred.reject(errText);
+                deferred.reject("DOES_NOT_EXIST", errText);
             });
         return deferred.promise();
     }
@@ -128,7 +138,7 @@ var gJsonCacher = function(config){
      * @return promise: done(objectId, objectDownloadUrl) - found
      *                  fail(errText) - not found
      */
-    function doesObjectExists(inObjectName){
+    function doesObjectExist(inObjectName){
         var deferred = $.Deferred();
 
         getObjectList().done(function(objectList){
@@ -161,12 +171,25 @@ var gJsonCacher = function(config){
      */
     function getObjectList(){
         var deferred = $.Deferred();
-        var request = gapi.client.drive.files.list({
-            'q': '\'appdata\' in parents'
-        });
-        request.execute(function(resp) {
+        promisedAjaxCall({
+            url: "https://www.googleapis.com/drive/v2/files",
+            type: "GET",
+            q: "'appdata' in parents"
+        }).done(function (resp) {
             deferred.resolve(resp.items);
+        }).fail(function () {
+            deferred.reject("Unable to get object list.");
         });
+
+
+
+
+        // var request = gapi.client.drive.files.list({
+        //     'q':
+        // });
+        // request.execute(function(resp) {
+        //     deferred.resolve(resp.items);
+        // });
         return deferred.promise();
     }
 
@@ -194,6 +217,7 @@ var gJsonCacher = function(config){
         getObjectList: getObjectList,
         getObject: getObject,
         uploadObject: uploadObject,
-        deleteObject: deleteObject
+        deleteObject: deleteObject,
+        doesObjectExist: doesObjectExist,
 	};
 };

@@ -1,5 +1,5 @@
 var index = function(){
-    var _jsonCacher, _authorizer, _transactionList;
+    var _jsonCacher, _authorizer, _transactionList, _yearMonth;
 
     function init(){
         NProgress.configure({showSpinner: false});
@@ -7,22 +7,21 @@ var index = function(){
         _authorizer = new gAuthorizer();
         _authorizer.authorize({immediate: true})
         .done(function () {
-            NProgress.set(0.55);
+            NProgress.set(.45);
             //If authorization successful, load jsonCacher and show the page
+            console.debug("Authorization successful.");
             $('#pageContent').show();
             $('#transactionTable').hide();
             _jsonCacher = new gJsonCacher();
             _jsonCacher.init().done(function () {
-                NProgress.set(.85);
-                _jsonCacher.getObject('Transactions').done(function(name, transactions){
-                    _transactionList = transactions;
-                    refreshTable(_transactionList);
-                    NProgress.done();
+                NProgress.set(.65);
+                console.debug("_jsonCacher initialized successfully.");
+                //Defaults to today's date
+                setPageYearMonth($.datepicker.formatDate("yy-mm", new Date()))
+                .done(function () {
                     initAddTransactionDialog();
                     initFooter();
-                }).fail(function(){
-                    //transactions object not found
-                    console.log("Could not get Transactions");
+                    NProgress.done();
                 });
             });
         }).fail(function () {
@@ -32,6 +31,41 @@ var index = function(){
         });
     }
 
+    function transactionObjectName(){
+        return 'Transaction_' + _yearMonth;
+    }
+
+    function setPageYearMonth(inYearMonth) {
+        var deferred = $.Deferred();
+        var fatalError = false;
+        _yearMonth = inYearMonth;
+        var transactionObjName = transactionObjectName();
+        _jsonCacher.getObject(transactionObjName)
+        .done(function(name, transactions){
+            console.debug(transactionObjName + " downloaded. Setting up page...");
+            _transactionList = transactions;
+        }).fail(function(errorType, message){
+            //transactions object not found
+            if(errorType === "DOES_NOT_EXIST"){
+                console.debug(transactionObjName + " not found. Setting up page for " + _yearMonth + "...");
+                _transactionList = [];
+            } else {
+                console.error(message);
+                fatalError = true;
+            }
+        }).always(function () {
+            if(fatalError){
+                deferred.reject();
+            } else{
+                $("#page-year-month").html(_yearMonth);
+                refreshTable(_transactionList);
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise();
+    }
+
     /**
      * Initialize the footer panel at the bottom of the page.
      */
@@ -39,6 +73,24 @@ var index = function(){
         $("#btn-add").bind("click", function () {
             clearErrorForAddTransactionInput();
             $('#add-transaction-dialog').modal('show');
+        });
+
+        $("#btn-prev").bind("click", function () {
+            NProgress.set(.30);
+            var date = $.datepicker.parseDate("yy-mm-dd", _yearMonth + "-01");
+            date.setMonth(date.getMonth() - 1);
+            setPageYearMonth($.datepicker.formatDate("yy-mm", date)).done(function () {
+                NProgress.done();
+            });
+        });
+
+        $("#btn-next").bind("click", function () {
+            NProgress.set(.30);
+            var date = $.datepicker.parseDate("yy-mm-dd", _yearMonth + "-01");
+            date.setMonth(date.getMonth() + 1);
+            setPageYearMonth($.datepicker.formatDate("yy-mm", date)).done(function () {
+                NProgress.done();
+            });
         });
     }
 
@@ -66,20 +118,6 @@ var index = function(){
      */
     function initAddTransactionDialog() {
         allowNumericInputOnly("#dialog-input-amount");
-        // $('#dialog-input-amount').on("keyup", function () {
-        //     return false;
-        // });
-        // $('#dialog-input-amount').on("keydown", function () {
-        //     var previousVal = $('#dialog-input-amount').val();
-        //     setTimeout(function () {
-        //         var value = $('#dialog-input-amount').val();
-        //         if(value != '.'){
-        //             if(isNaN(value)){
-        //                 $('#dialog-input-amount').val(previousVal);
-        //             }
-        //         }
-        //     },0);
-        // });
 
         $("#dialog-input-date").datepicker({
             dateFormat: 'D, d M yy'
@@ -143,22 +181,6 @@ var index = function(){
         $('#dialog-input-date').removeClass("error");
         $('#dialog-input-amount').removeClass("error");
         $('#dialog-input-category').removeClass("error");
-    }
-
-    /**
-     * Get the transactions and load them into the table.
-     */
-    function getTransactionsFromStorage() {
-        var deferred = $.Deferred();
-        _jsonCacher.getObject('Transactions')
-            .done(function(name, transactions){
-                deferred.resolve(transactions);
-            })
-            .fail(function(){
-                //transactions object not found
-                deferred.reject();
-            });
-        return deferred.promise();
     }
 
     /**
@@ -231,23 +253,40 @@ var index = function(){
      * Add a transaction
      */
     function addTransaction(transaction) {
-        _transactionList.push(transaction);
-        setTimeout(function () {
-            NProgress.set(0.1);
-            _jsonCacher.uploadObject('Transactions', _transactionList)
-            .progress(function () {
-                NProgress.set(0.75);
-                refreshTable(_transactionList);
-            }).done(function () {
-                NProgress.done();
+        var transactionYearMonth = $.datepicker.formatDate("yy-mm", $.datepicker.parseDate('yy-mm-dd', transaction["date"]));
+
+        if(transactionYearMonth === _yearMonth){
+            //Transaction yearMonth matches the page's yearMonth. Transaction can be added to this page.
+            console.debug("Adding transaction.");
+            _transactionList.push(transaction);
+            setTimeout(function () {
+                NProgress.set(0.1);
+                _jsonCacher.uploadObject(transactionObjectName(), _transactionList)
+                .progress(function () {
+                    NProgress.set(0.75);
+                    refreshTable(_transactionList);
+                }).done(function (objectName) {
+                    console.debug(transactionObjectName() + " saved.");
+                    NProgress.done();
+                });
+            }, 0);
+        } else {
+            console.debug("Page not set to " + transactionYearMonth +".\nAttempting to switch page to " + transactionYearMonth + "...")
+            setPageYearMonth(transactionYearMonth)
+            .done(function () {
+                //Recursive and try to add it again once the page is set to the correct yearMonth.
+                addTransaction(transaction);
+            }).fail(function () {
+                console.error("Transaction not added.");
             });
-        }, 0);
+        }
     }
 
     /**
      * Remove the transaction
      */
     function removeTransaction() {
+        console.debug("Removing Transaction.");
         var par = $(this).parent().parent();
         //If it is expanded, then delete the expanded data as well.
         if(par.next().hasClass('footable-row-detail')){
@@ -259,12 +298,23 @@ var index = function(){
             setTimeout(function () {
                 NProgress.set(0.1);
                 _transactionList = getTransactionListFromTable();
-                _jsonCacher.uploadObject('Transactions', _transactionList)
-                .progress(function () {
-                    NProgress.set(0.75)
-                }).done(function () {
-                    NProgress.done();
-                })
+                if(_transactionList.length === 0){
+                    _jsonCacher.deleteObject(transactionObjectName())
+                    .done(function () {
+                        console.debug("No transactions in Transaction_" + transactionObjectName() + ".\nIn order to conserve space, Transaction_" + transactionObjectName() + " object has been deleted");
+                    })
+                    .fail(function () {
+                        console.error("Unable to delete Transaction_" + transactionObjectName());
+                    });
+                } else {
+                    _jsonCacher.uploadObject(transactionObjectName(), _transactionList)
+                    .progress(function () {
+                        NProgress.set(0.75)
+                    }).done(function () {
+                        console.debug(transactionObjectName() + " saved.");
+                        NProgress.done();
+                    })
+                }
             },2);
         });
     }

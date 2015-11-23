@@ -69,9 +69,16 @@
     <!-- ********** FIXED FOOTER NAVBAR ******************-->
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container" style="height: 50px;">
-            <!-- USE THIS DIALOG PLUGIN http://nakupanda.github.io/bootstrap3-dialog/ -->
+
+            <button id="btn-prev" type="button" class="btn btn-lg btn-default" style="height: 95%; width: 50px;">
+                <span class="glyphicon glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
+            </button>
+            <span id="page-year-month"></span>
+            <button id="btn-next" type="button" class="btn btn-lg btn-default" style="height: 95%; width: 50px;">
+                <span class="glyphicon glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            </button>
+
             <button id="btn-add" type="button" class="btn btn-lg btn-primary pull-right" style="height: 95%; width: 110px;">
-            <!-- <button id="btn-add" type="button" class="btn btn-large btn-primary pull-right" > -->
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 <span>Add</span>
             </button>
