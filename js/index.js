@@ -1,69 +1,28 @@
 var index = function(){
-    var _jsonCacher, _authorizer, _transactionList, _yearMonth;
+    var _transactionDAO, _transactionList, _date;
 
+    /**
+     * Initializer for index.js
+     */
     function init(){
-        NProgress.configure({showSpinner: false});
+        NProgress.configure({ showSpinner: false });
         NProgress.inc();
-        _authorizer = new gAuthorizer();
-        _authorizer.authorize({immediate: true})
+        _transactionDAO = new transactionDAO();
+        _transactionDAO.init()
         .done(function () {
-            NProgress.set(.45);
-            //If authorization successful, load jsonCacher and show the page
-            console.debug("Authorization successful.");
             $('#pageContent').show();
             $('#transactionTable').hide();
-            _jsonCacher = new gJsonCacher();
-            _jsonCacher.init().done(function () {
-                NProgress.set(.65);
-                console.debug("_jsonCacher initialized successfully.");
-                //Defaults to today's date
-                setPageYearMonth($.datepicker.formatDate("yy-mm", new Date()))
-                .done(function () {
-                    initAddTransactionDialog();
-                    initFooter();
-                    NProgress.done();
-                });
+            loadTableWithTransactions(new Date())
+            .done(function () {
+                initAddTransactionDialog();
+                initFooter();
+                NProgress.done();
             });
         }).fail(function () {
             //If authorization fail, redirect the user to the login page.
             sessionStorage.setItem('loose-change-redirect-origin', 'index.html');
             window.location.replace("login.html");
         });
-    }
-
-    function transactionObjectName(){
-        return 'Transaction_' + _yearMonth;
-    }
-
-    function setPageYearMonth(inYearMonth) {
-        var deferred = $.Deferred();
-        var fatalError = false;
-        _yearMonth = inYearMonth;
-        var transactionObjName = transactionObjectName();
-        _jsonCacher.getObject(transactionObjName)
-        .done(function(name, transactions){
-            console.debug(transactionObjName + " downloaded. Setting up page...");
-            _transactionList = transactions;
-        }).fail(function(errorType, message){
-            //transactions object not found
-            if(errorType === "DOES_NOT_EXIST"){
-                console.debug(transactionObjName + " not found. Setting up page for " + _yearMonth + "...");
-                _transactionList = [];
-            } else {
-                console.error(message);
-                fatalError = true;
-            }
-        }).always(function () {
-            if(fatalError){
-                deferred.reject();
-            } else{
-                $("#page-year-month").html(_yearMonth);
-                refreshTable(_transactionList);
-                deferred.resolve();
-            }
-        });
-
-        return deferred.promise();
     }
 
     /**
@@ -74,42 +33,25 @@ var index = function(){
             clearErrorForAddTransactionInput();
             $('#add-transaction-dialog').modal('show');
         });
-
+        //Previous month
         $("#btn-prev").bind("click", function () {
             NProgress.set(.30);
-            var date = $.datepicker.parseDate("yy-mm-dd", _yearMonth + "-01");
+            var date = _date;
             date.setMonth(date.getMonth() - 1);
-            setPageYearMonth($.datepicker.formatDate("yy-mm", date)).done(function () {
+            loadTableWithTransactions(date)
+            .done(function () {
                 NProgress.done();
             });
         });
-
+        //Next month
         $("#btn-next").bind("click", function () {
             NProgress.set(.30);
-            var date = $.datepicker.parseDate("yy-mm-dd", _yearMonth + "-01");
+            var date = _date;
             date.setMonth(date.getMonth() + 1);
-            setPageYearMonth($.datepicker.formatDate("yy-mm", date)).done(function () {
+            loadTableWithTransactions(date)
+            .done(function () {
                 NProgress.done();
             });
-        });
-    }
-
-    function allowNumericInputOnly(selector) {
-        $(selector).on("keyup", function () {
-            return false;
-        });
-        $(selector).on("keydown", function () {
-            var previousVal = $(selector).val();
-            var inputbox = this;
-            var prevCaretPos = inputbox.selectionStart;
-            setTimeout(function () {
-                var value = $(selector).val();
-                if(value != '.' && isNaN(value)){
-                    $(selector).val(previousVal);
-                    inputbox.selectionStart = prevCaretPos;
-                    inputbox.selectionEnd = prevCaretPos;
-                }
-            },0);
         });
     }
 
@@ -175,6 +117,28 @@ var index = function(){
     }
 
     /**
+     * Sets up an input to only accept numeric inputs
+     */
+    function allowNumericInputOnly(selector) {
+        $(selector).on("keyup", function () {
+            return false;
+        });
+        $(selector).on("keydown", function () {
+            var previousVal = $(selector).val();
+            var inputbox = this;
+            var prevCaretPos = inputbox.selectionStart;
+            setTimeout(function () {
+                var value = $(selector).val();
+                if(value != '.' && isNaN(value)){
+                    $(selector).val(previousVal);
+                    inputbox.selectionStart = prevCaretPos;
+                    inputbox.selectionEnd = prevCaretPos;
+                }
+            },0);
+        });
+    }
+
+    /**
      * Clears any errors shown in the Add Transaction Dialog
      */
     function clearErrorForAddTransactionInput(){
@@ -187,7 +151,7 @@ var index = function(){
      * Builds the HTML Table out of items.
      * http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
      */
-    function refreshTable(items) {
+    function setDataTableItems(items) {
         var tableBody = '';
         for (var i = 0 ; i < items.length ; i++) {
             var row = items[i];
@@ -228,6 +192,27 @@ var index = function(){
     }
 
     /**
+     * Load the table with the transactions for the given date.
+     * This will load the full month of transactions.
+     */
+    function loadTableWithTransactions(inDate){
+        var deferred = $.Deferred();
+        _transactionDAO.getTransactionsForDate(inDate)
+        .done(function (transactions) {
+            _transactionList = transactions;
+            _date = inDate;
+            $("#page-selected-date").html($.datepicker.formatDate('M yy', _date));
+            setDataTableItems(_transactionList);
+            deferred.resolve();
+        })
+        .fail(function (message) {
+            console.error(message);
+            deferred.reject();
+        });
+        return deferred.promise();
+    }
+
+    /**
      * Get the HTML Table and return it as an array
      */
     function getTransactionListFromTable(){
@@ -253,26 +238,23 @@ var index = function(){
      * Add a transaction
      */
     function addTransaction(transaction) {
-        var transactionYearMonth = $.datepicker.formatDate("yy-mm", $.datepicker.parseDate('yy-mm-dd', transaction["date"]));
+        NProgress.inc();
+        var transactionDate = $.datepicker.parseDate('yy-mm-dd', transaction["date"]);
 
-        if(transactionYearMonth === _yearMonth){
-            //Transaction yearMonth matches the page's yearMonth. Transaction can be added to this page.
+        if(transactionDate.getMonth() === _date.getMonth() &&
+           transactionDate.getYear() === _date.getYear()) {
+            //Transaction date matches the current page's date. Transaction can be added to this page.
             console.debug("Adding transaction.");
             _transactionList.push(transaction);
-            setTimeout(function () {
-                NProgress.set(0.1);
-                _jsonCacher.uploadObject(transactionObjectName(), _transactionList)
-                .progress(function () {
-                    NProgress.set(0.75);
-                    refreshTable(_transactionList);
-                }).done(function (objectName) {
-                    console.debug(transactionObjectName() + " saved.");
-                    NProgress.done();
-                });
-            }, 0);
+            _transactionDAO.setTransactionsForDate(transactionDate, _transactionList)
+            .done(function () {
+                NProgress.done();
+                setDataTableItems(_transactionList);
+                console.debug("Transaction added.");
+            });
         } else {
-            console.debug("Page not set to " + transactionYearMonth +".\nAttempting to switch page to " + transactionYearMonth + "...")
-            setPageYearMonth(transactionYearMonth)
+            console.debug("Page not set to correct date.\nSwitching page to the correct date.")
+            loadTableWithTransactions(transactionDate)
             .done(function () {
                 //Recursive and try to add it again once the page is set to the correct yearMonth.
                 addTransaction(transaction);
@@ -296,29 +278,26 @@ var index = function(){
             par.remove();
             //Upload the update table
             setTimeout(function () {
-                NProgress.set(0.1);
+                NProgress.inc();
                 _transactionList = getTransactionListFromTable();
                 if(_transactionList.length === 0){
-                    _jsonCacher.deleteObject(transactionObjectName())
+                    _transactionDAO.deleteTransactionForDate(_date)
                     .done(function () {
-                        console.debug("No transactions in Transaction_" + transactionObjectName() + ".\nIn order to conserve space, Transaction_" + transactionObjectName() + " object has been deleted");
-                    })
-                    .fail(function () {
-                        console.error("Unable to delete Transaction_" + transactionObjectName());
+                        NProgress.done();
                     });
                 } else {
-                    _jsonCacher.uploadObject(transactionObjectName(), _transactionList)
-                    .progress(function () {
-                        NProgress.set(0.75)
-                    }).done(function () {
-                        console.debug(transactionObjectName() + " saved.");
+                    _transactionDAO.setTransactionsForDate(_date, _transactionList)
+                    .done(function () {
                         NProgress.done();
-                    })
+                    });
                 }
             },2);
         });
     }
 
+    /**
+     * Encode html safe string
+     */
     function htmlStringEncode(string) {
         string = string.replace(/&/g, '&amp;');
         string = string.replace(/</g, '&lt;');
@@ -329,6 +308,9 @@ var index = function(){
         return string;
     }
 
+    /**
+     * Decode html safe string
+     */
     function htmlStringDecode(string){
         string = string.replace(/&amp;/g, '&');
         string = string.replace(/&lt;/g, '<');

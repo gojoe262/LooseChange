@@ -180,16 +180,6 @@ var gJsonCacher = function(config){
         }).fail(function () {
             deferred.reject("Unable to get object list.");
         });
-
-
-
-
-        // var request = gapi.client.drive.files.list({
-        //     'q':
-        // });
-        // request.execute(function(resp) {
-        //     deferred.resolve(resp.items);
-        // });
         return deferred.promise();
     }
 
@@ -213,7 +203,6 @@ var gJsonCacher = function(config){
      */
 	return {
         init: init,
-
         getObjectList: getObjectList,
         getObject: getObject,
         uploadObject: uploadObject,

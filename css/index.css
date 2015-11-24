@@ -15,17 +15,6 @@
     float:right;
 }
 
-/* Add Transaction Modal */
-.modal.fade:not(.in).bottom .modal-dialog {
-	-webkit-transform: translate3d(0, 200%, 0);
-	transform: translate3d(0, 200%, 0);
-}
-
-.modal.fade:not(.in).bottom-right .modal-dialog {
-	-webkit-transform: translate3d(200%, 200%, 0);
-	transform: translate3d(200%, 200%, 0);
-}
-
 #add-transaction-dialog input {
     margin-bottom: 20px;
 }
@@ -38,7 +27,7 @@ div.ui-datepicker{
     outline: 2px solid #F00;
 }
 
-#page-year-month{
+#page-selected-date{
     color: lightgrey;
     font-size: 16px;
 }
