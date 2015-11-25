@@ -28,6 +28,15 @@ div.ui-datepicker{
 }
 
 #page-selected-date{
-    color: lightgrey;
-    font-size: 16px;
+    margin: 0 20px 0 20px;
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+.panel-body {
+    padding: 0 0 0 0;
+}
+
+.panel-heading {
+    padding: 5px 10px 5px 10px;
 }
