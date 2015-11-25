@@ -15,7 +15,7 @@ var index = function(){
             loadTableWithTransactions(new Date())
             .done(function () {
                 initAddTransactionDialog();
-                initFooter();
+                initTableUtils();
                 NProgress.done();
             });
         }).fail(function () {
@@ -26,9 +26,9 @@ var index = function(){
     }
 
     /**
-     * Initialize the footer panel at the bottom of the page.
+     * Initialize the table utilities
      */
-    function initFooter() {
+    function initTableUtils() {
         $("#btn-add").bind("click", function () {
             clearErrorForAddTransactionInput();
             $('#add-transaction-dialog').modal('show');
@@ -65,6 +65,7 @@ var index = function(){
             dateFormat: 'D, d M yy'
             // ISO Standard: yy-mm-dd
         });
+
         $("#add-transaction-button").click(function () {
             //Validate
             var errorFound = validateAddTransactionInput();
