@@ -1,5 +1,5 @@
 var transactionDAO = function (){
-    var _authorizer, _jsonCacher;
+    var _authorizer, _jsonCacher, _date, _transactions;
 
     function init(){
         var deferred = $.Deferred();
@@ -22,20 +22,36 @@ var transactionDAO = function (){
         return 'Transaction_' + $.datepicker.formatDate("yy-mm", inDate);
     }
 
-    function getTransactionsForDate(inDate){
+    function getTransactionsForDate(inDate, forceRefresh){
         var deferred = $.Deferred();
 
-        _jsonCacher.getObject(getObjectName(inDate))
-        .done(function(name, transactions){
-            deferred.resolve(transactions);
-        }).fail(function(errorType, message){
-            //transactions object not found
-            if(errorType === "DOES_NOT_EXIST"){
-                deferred.resolve([]);
-            } else {
-                deferred.reject(message);
-            }
-        });
+        forceRefresh = forceRefresh !== 'undefined' ? forceRefresh : true;
+
+        //If the date is different, then we have to force the refresh.
+        if(inDate.getMonth() !== _date.getMonth() ||
+             inDate.getYear() !== _date.getYear()){
+            forceRefresh = true;
+        }
+
+        if(forceRefresh){
+            _jsonCacher.getObject(getObjectName(inDate))
+            .done(function(name, transactions){
+                _transactions = transactions;
+                _date = inDate;
+                deferred.resolve(transactions);
+            }).fail(function(errorType, message){
+                //transactions object not found
+                if(errorType === "DOES_NOT_EXIST"){
+                    _transactions = [];
+                    _date = inDate;
+                    deferred.resolve([]);
+                } else {
+                    deferred.reject(message);
+                }
+            });
+        } else {
+            deferred.resolve(_transactions);
+        }
 
         return deferred.promise();
     }
