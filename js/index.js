@@ -1,5 +1,5 @@
 var index = function(){
-    var _transactionDAO, _transactionList, _date;
+    var _transactionDAO, _date;
 
     /**
      * Initializer for index.js
@@ -12,6 +12,7 @@ var index = function(){
         .done(function () {
             $('#pageContent').show();
             $('#transactionTable').hide();
+            NProgress.set(.70);
             loadTableWithTransactions(new Date())
             .done(function () {
                 initAddTransactionDialog();
@@ -35,7 +36,7 @@ var index = function(){
         });
         //Previous month
         $("#btn-prev").bind("click", function () {
-            NProgress.set(.30);
+            NProgress.set(.70);
             var date = _date;
             date.setMonth(date.getMonth() - 1);
             loadTableWithTransactions(date)
@@ -45,7 +46,7 @@ var index = function(){
         });
         //Next month
         $("#btn-next").bind("click", function () {
-            NProgress.set(.30);
+            NProgress.set(.70);
             var date = _date;
             date.setMonth(date.getMonth() + 1);
             loadTableWithTransactions(date)
@@ -198,12 +199,13 @@ var index = function(){
      */
     function loadTableWithTransactions(inDate){
         var deferred = $.Deferred();
-        _transactionDAO.getTransactionsForDate(inDate)
+        console.debug("Loading table with transactions from " + $.datepicker.formatDate('M yy', inDate) + "...");
+        _transactionDAO.getTransactionsForDate({ date:inDate })
         .done(function (transactions) {
-            _transactionList = transactions;
             _date = inDate;
             $("#page-selected-date").html($.datepicker.formatDate('M yy', _date));
-            setDataTableItems(_transactionList);
+            setDataTableItems(transactions);
+            console.debug("Successfully loaded table with transactions from " + $.datepicker.formatDate('M yy', inDate) + "...");
             deferred.resolve();
         })
         .fail(function (message) {
@@ -239,37 +241,30 @@ var index = function(){
      * Add a transaction
      */
     function addTransaction(transaction) {
-        NProgress.inc();
+        NProgress.set(.30);
         var transactionDate = $.datepicker.parseDate('yy-mm-dd', transaction["date"]);
-
-        if(transactionDate.getMonth() === _date.getMonth() &&
-           transactionDate.getYear() === _date.getYear()) {
-            //Transaction date matches the current page's date. Transaction can be added to this page.
-            console.debug("Adding transaction.");
-            _transactionList.push(transaction);
-            _transactionDAO.setTransactionsForDate(transactionDate, _transactionList)
+        _transactionDAO.getTransactionsForDate({ date: transactionDate, forceRefresh: true })
+        .done(function (transactions) {
+            console.debug("Adding transaction...");
+            transactions.push(transaction);
+            NProgress.set(.75);
+            _transactionDAO.setTransactionsForDate(transactionDate, transactions)
             .done(function () {
+                loadTableWithTransactions(transactionDate);
                 NProgress.done();
-                setDataTableItems(_transactionList);
-                console.debug("Transaction added.");
+                console.debug("Successfully added transaction.");
             });
-        } else {
-            console.debug("Page not set to correct date.\nSwitching page to the correct date.")
-            loadTableWithTransactions(transactionDate)
-            .done(function () {
-                //Recursive and try to add it again once the page is set to the correct yearMonth.
-                addTransaction(transaction);
-            }).fail(function () {
-                console.error("Transaction not added.");
-            });
-        }
+        }).fail(function (errMsg) {
+            console.error(errMsg);
+        });
     }
 
     /**
      * Remove the transaction
      */
     function removeTransaction() {
-        console.debug("Removing Transaction.");
+        console.debug("Removing transaction...");
+        NProgress.inc();
         var par = $(this).parent().parent();
         //If it is expanded, then delete the expanded data as well.
         if(par.next().hasClass('footable-row-detail')){
@@ -277,18 +272,20 @@ var index = function(){
         }
         par.fadeOut(400, function () {
             par.remove();
+            NProgress.set(.70);
             //Upload the update table
             setTimeout(function () {
-                NProgress.inc();
-                _transactionList = getTransactionListFromTable();
-                if(_transactionList.length === 0){
+                var transactions = getTransactionListFromTable();
+                if(transactions.length === 0){
                     _transactionDAO.deleteTransactionForDate(_date)
                     .done(function () {
+                        console.debug("Successfully removed transaction.");
                         NProgress.done();
                     });
                 } else {
-                    _transactionDAO.setTransactionsForDate(_date, _transactionList)
+                    _transactionDAO.setTransactionsForDate(_date, transactions)
                     .done(function () {
+                        console.debug("Successfully removed transaction.");
                         NProgress.done();
                     });
                 }

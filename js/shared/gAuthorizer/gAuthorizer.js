@@ -53,6 +53,7 @@ var gAuthorizer = function (config) {
      */
     function handleAuthResult(authResult, deferred) {
         if (authResult && !authResult.error) {
+            console.debug("Successfully authorized gAuthorizer.");
             deferred.resolve();
         } else {
             deferred.reject();

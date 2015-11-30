@@ -18,6 +18,7 @@ var gJsonCacher = function(config){
         gapi.load('client', {
             'callback': function(){
                 gapi.client.load('drive', 'v2', function(){
+                    console.debug("Successfully initialized gJsonCacher.");
                     deferred.resolve();
                 });
             }
