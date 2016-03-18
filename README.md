@@ -1,7 +1,7 @@
 # LooseChange
 Loose Change is a website where you can quickly keep track of your spending and income. Please be patient as this project is still under development.
 
-[Website](https://gojoe262.github.io/LooseChange/)
+[Website](https://joe-schueller.github.io/LooseChange/)
 
 [Roadmap for Development](https://trello.com/b/ql1qaUfd/requirements-web-app)
 
